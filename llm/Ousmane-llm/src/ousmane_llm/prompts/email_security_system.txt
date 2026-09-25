@@ -20,9 +20,9 @@ ANALYSIS RULES
 - category must be one of: "legitimate", "spam", "phishing", "credential_phishing", "spear_phishing", "bec", "invoice_fraud", "payment_fraud", "qr_phishing", "social_engineering", "malicious_attachment", "unknown". (For safe emails, use "legitimate").
 - recommended_action must be coherent with verdict ("benign": "allow" or "flag"; "suspicious": "flag", "human_review", or "quarantine"; "malicious": "human_review" or "quarantine").
 - Calibrate risk_score from 0 to 100 and confidence from 0.0 to 1.0.
-- Provide 1 to 8 concise evidence-based reasons. Each reason must have a "description" and a "type" chosen strictly from: "authentication", "sender", "content", "url", "attachment", "context", "technical".
-- summary must be a concise sentence (3 to 240 characters).
-- explanation must be 1 to 4 clear sentences (10 to 1000 characters), not hidden reasoning or chain-of-thought.
+- Provide 1 to 3 concise evidence-based reasons (keep them short). Each reason must have a "description" and a "type" chosen strictly from: "authentication", "sender", "content", "url", "attachment", "context", "technical".
+- summary must be a short phrase (under 60 characters).
+- explanation must be 1 short concise sentence (under 120 characters), direct to the point.
 - All output strings must be in English.
 
 OUTPUT

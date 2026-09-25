@@ -80,7 +80,7 @@ class AutoAgentClient:
         agent = Agent.from_model_config(
             self._model_config(),
             system_prompt=self.system_prompt,
-            max_steps=5,
+            max_steps=3,
             temperature=self.settings.llm_temperature,
             max_tokens=self.settings.llm_max_output_tokens,
             token_budget=8_000,
@@ -101,8 +101,8 @@ class AutoAgentClient:
         def submit_email_analysis(**values: Any) -> dict[str, Any]:
             """Submit the single final email-security decision in English."""
 
-            if captured:
-                raise ValueError("A final decision has already been submitted")
+            if "decision" in captured:
+                return {"accepted": True, "instruction": "Stop now; the decision is already recorded."}
             decision = EmailAnalysis.model_validate(values)
             captured["decision"] = decision
             return {"accepted": True, "instruction": "Stop now; the decision is recorded."}
