@@ -1,0 +1,51 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-models:/root/.ollama
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+  model-puller:
+    image: ollama/ollama:latest
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+      LLM_MODEL: ${LLM_MODEL:-qwen2.5:3b}
+    entrypoint: ["/bin/sh", "-c"]
+    command: ["ollama pull $${LLM_MODEL:-qwen2.5:3b}"]
+    depends_on:
+      ollama:
+        condition: service_healthy
+    restart: "no"
+
+  ousmane-llm:
+    build: .
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      LLM_PROVIDER: ollama
+      LLM_MODEL: ${LLM_MODEL:-qwen2.5:3b}
+      LLM_BASE_URL: http://ollama:11434/v1
+      LLM_API_KEY: ollama
+      RESULTS_DIR: /app/data/results
+      API_HOST: 0.0.0.0
+      API_PORT: 8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data/results:/app/data/results
+      - ../../extraction/data/normalized:/input:ro
+    depends_on:
+      model-puller:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+volumes:
+  ollama-models:
