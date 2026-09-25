@@ -39,7 +39,12 @@ def create_app(
     async def analyze(payload: dict[str, Any]) -> dict[str, Any]:
         try:
             result = await asyncio.to_thread(analyzer.analyze, payload)
-            return result.model_dump(mode="json")
+            return {
+                "verdict": result.verdict,
+                "risk_score": result.risk_score,
+                "explanation": result.explanation,
+                "recommended_action": result.recommended_action,
+            }
         except ValidationError as exc:
             raise HTTPException(status_code=422, detail=exc.errors()) from exc
         except AnalysisGenerationError as exc:

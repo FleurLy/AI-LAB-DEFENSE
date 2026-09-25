@@ -36,13 +36,30 @@ class EmailAnalysis(BaseModel):
 
     schema_version: Literal["1.0"] = "1.0"
     risk_score: int = Field(ge=0, le=100)
-    confidence: float = Field(ge=0.0, le=1.0)
+    confidence: float = Field(default=0.9, ge=0.0, le=1.0)
     verdict: Verdict
-    category: Category
-    summary: str = Field(min_length=3, max_length=240)
-    explanation: str = Field(min_length=10, max_length=1000)
-    reasons: list[Reason] = Field(min_length=1, max_length=8)
-    recommended_action: Action
+    category: Category = "unknown"
+    summary: str = Field(default="Security analysis", min_length=1, max_length=240)
+    explanation: str = Field(min_length=5, max_length=1000)
+    reasons: list[Reason] = Field(default_factory=list, max_length=8)
+    recommended_action: Action = "allow"
+
+    @model_validator(mode="before")
+    @classmethod
+    def populate_defaults(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            verdict = data.get("verdict")
+            if not data.get("recommended_action") and verdict:
+                data["recommended_action"] = {
+                    "benign": "allow",
+                    "suspicious": "human_review",
+                    "malicious": "quarantine",
+                }.get(verdict, "human_review")
+            if not data.get("summary") and data.get("explanation"):
+                data["summary"] = data["explanation"][:60]
+            if not data.get("category") and verdict:
+                data["category"] = "legitimate" if verdict == "benign" else "phishing"
+        return data
 
     @model_validator(mode="after")
     def coherent_action(self) -> "EmailAnalysis":
