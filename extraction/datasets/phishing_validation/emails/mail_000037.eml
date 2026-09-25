@@ -1,0 +1,53 @@
+Message-ID: <mail_000037@hotmail.com>
+Date: Mon, 25 Jun 2007 23:37:28 -0700
+Subject: Patch hunk rejection?
+From: "Hotmail Team" <employee_6c02ebec@hotmail.com>
+To: colleague_65da27cd@braille.uwo.ca
+Return-Path: <employee_6c02ebec@hotmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="===============3684205949404255824=="
+Reply-To: Hotmail Team <employee_6c02ebec@hotmail.com>
+Authentication-Results: validation.local; spf=pass; dkim=pass
+ header.d=hotmail.com; dmarc=pass header.from=hotmail.com
+
+--===============3684205949404255824==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hiya,
+    Spie, when I tried to apply Speakup patches to the kernel [REFERENCE_NUMB=
+ER] I downloaded from [ORGANIZATION], I got a couple of messages about hunk r=
+ejections.  They occured in keyboard.c and vt.c.  I was wondering if these we=
+re well-understood problems with the patch, or are just a sign that I do inde=
+ed need to use [REFERENCE_NUMBER] or something like that without relying on a=
+ [ORGANIZATION] package?
+Thanks,
+[NAME].
+
+Speakup mailing list
+[EMAIL_ADDRESS]
+http://speech.braille.uwo.ca/mailman/listinfo/speakup
+
+--===============3684205949404255824==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+<html><body>
+<p>Hiya,
+    Spie, when I tried to apply Speakup patches to the kernel [REFERENCE_NUMB=
+ER] I downloaded from [ORGANIZATION], I got a couple of messages about hunk r=
+ejections.  They occured in keyboard.c and vt.c.  I was wondering if these we=
+re well-understood problems with the patch, or are just a sign that I do inde=
+ed need to use [REFERENCE_NUMBER] or something like that without relying on a=
+ [ORGANIZATION] package?
+Thanks,
+[NAME].</p>
+<p>Speakup mailing list
+[EMAIL_ADDRESS]
+<a href=3D"http://speech.braille.uwo.ca/mailman/listinfo/speakup">http://spee=
+ch.braille.uwo.ca/mailman/listinfo/speakup</a></p>
+</body></html>
+
+--===============3684205949404255824==--

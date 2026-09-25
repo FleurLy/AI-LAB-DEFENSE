@@ -1,0 +1,52 @@
+Message-ID: <mail_000015@cornell.edu>
+Date: Tue, 24 Sep 2002 08:22:08 -0400
+Subject: 615 Paper 19
+From: "Cornell Team" <employee_b3273562@cornell.edu>
+To: colleague_32ee04d5@cs.cornell.edu
+Return-Path: <employee_b3273562@cornell.edu>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Authentication-Results: validation.local; spf=pass; dkim=pass
+ header.d=cornell.edu; dmarc=pass header.from=cornell.edu
+
+[ORGANIZATION] is the first paper we have looked at which is based on=20
+clustering.  [ORGANIZATION] tries to established routes based on bandwidth.  =
+This is=20
+the performance measurement it uses and in this way it is Quality of=20
+Service algorithm which tries to satisfy minimum bandwidth requirement of a=20
+node.  [ORGANIZATION] has three main parts to it: finding the core graph,=20
+propagation of bandwidth information amoung the core, and route=20
+computation.  One of the goals with having core nodes is to minimise the=20
+changes in the network core when topology changes.  Changes are only effect=20
+local neighbour hoods, and other core nodes do not have to worry about this.
+
+[ORGANIZATION] also has this idea of increase and decrease waves to denote hi=
+gh=20
+bandwidth stable links and short unstable low bandwidth links.  This is the=20
+basis of how [ORGANIZATION] calculates routes based on bandwidth.  The idea i=
+s that=20
+short decrease waves are only travel far enough to be local within a=20
+neighbour hood, and long increase waves are used for links between=20
+neighbourhoods.  In this way, short unreliable links do not need to be=20
+propagated to the whole network, where as more important stable bandwidth=20
+information is.  There are many ideas in this paper that I like about=20
+[ORGANIZATION], and it would be interesting to see how this algorithm work in=
+ real=20
+life.  Though they have many tables and results from simulations, they only=20
+briefly mention their implementation on [PRODUCT].  They only briefly mention=
+ed=20
+that there were implementation difficulties.  What they found on the [PRODUCT=
+]=20
+implementation would have been interesting.
+
+Some things research would be to see how having core nodes and effectively=20
+a hierarchy effect the other properties of an ad-hoc network.  Intuitively,=20
+core nodes are used more and require more computation and communication=20
+power.  This probably means that they can be a bottle neck and their=20
+battery power (which we have established is important) can run out quickly.=20
+Perhaps the electing of a core node should take into consideration whether=20
+the core can handle the work that is required from it.  And for practical=20
+reasons, one would like to research, does typical ad-hoc network really=20
+need this sort of structure?  Do ad-hoc networks typically get large enough=20
+and stay alive long enough to require a hierarchy structure?

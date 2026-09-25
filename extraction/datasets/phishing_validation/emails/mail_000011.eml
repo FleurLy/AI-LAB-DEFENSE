@@ -1,0 +1,48 @@
+Message-ID: <mail_000011@mrc-cbu.cam.ac.uk>
+Date: Tue, 18 Apr 2000 16:29:33 +0100
+Subject: [DMDX] Re:
+From: "Mrc-cbu Team" <employee_144221dc@mrc-cbu.cam.ac.uk>
+To: colleague_4ec65daa@psy1.psych.arizona.edu
+Return-Path: <employee_144221dc@mrc-cbu.cam.ac.uk>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+Authentication-Results: validation.local; spf=pass; dkim=pass
+ header.d=mrc-cbu.cam.ac.uk; dmarc=pass header.from=mrc-cbu.cam.ac.uk
+
+At [TIME] [DATE] +0100, you wrote:
+A while ago, [NAME] talked about using the line keyword 
+to present multiple lines of text:
+
+0 <ln 0> "Hello", <ln 2> "World";
+
+I can get this to work fine, but I can't get DMDX to do the 
+same thing for my experimental items.  I want to present 
+two words, one above the other.  Of course, I could create 
+loads of bitmaps, but it would be much simpler if I could 
+just specify what I want in an .rtf file.  
+
+The script I have been trying to use is the following:
+
+1 " "/ "+"/ * <ln -1> "beg", <ln 1> "leg" ;
+
+I get an error message saying 'No media File Name' which I 
+don't get when I leave out the line keywords.
+
+Does anyone have any suggestions?  
+
+I can't seem to replicate this problem. What version number of DMDX are you
+using? 
+
+If you email me a copy of your rtf file, I'll try and figure it out and
+then post the solution to you and the list.
+
+Matt
+
+ [NAME]
+ [ORGANIZATION]
+ [ADDRESS]
+
+ email: 
+   tel: [PHONE_NUMBER] (#[REFERENCE_NUMBER])
+   Fax: [PHONE_NUMBER]

@@ -1,0 +1,22 @@
+Message-ID: <mail_000013@uk.airsysatm.thomson-csf.com>
+Date: Mon, 03 Jul 2000 13:21:19 +0100
+Subject: 6.8nF Capacitor
+From: "Uk Team" <employee_c24f4e34@uk.airsysatm.thomson-csf.com>
+To: colleague_247e0a5d@media.mit.edu
+Return-Path: <employee_c24f4e34@uk.airsysatm.thomson-csf.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+Reply-To: Uk Team <employee_c24f4e34@uk.airsysatm.thomson-csf.com>
+Authentication-Results: validation.local; spf=pass; dkim=pass
+ header.d=uk.airsysatm.thomson-csf.com; dmarc=pass
+ header.from=uk.airsysatm.thomson-csf.com
+
+I have found that [ORGANIZATION] have only stopped stocking the 5% tolerance
+caps, they still do 10% versions. How critical is the capacitors value
+?. I could probably try testing a batch of them in the shop using a
+multimeter but I couldn't guarentee how close I would get.
+
+Thanks again
+
+[NAME]

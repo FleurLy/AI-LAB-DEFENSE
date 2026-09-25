@@ -1,0 +1,13 @@
+From: Microsoft Security <security@example.com>
+Reply-To: Support <support@other-domain.example>
+Return-Path: <bounce@another-domain.example>
+To: user@company.test
+Subject: URGENT - Votre mot de passe expire aujourd'hui
+Date: Fri, 25 Sep 2026 18:30:00 +0000
+Message-ID: <phishing-link@example.com>
+Authentication-Results: mx.company.test; spf=fail; dkim=none; dmarc=fail
+MIME-Version: 1.0
+Content-Type: text/html; charset=UTF-8
+
+<html><body><p>Votre compte sera suspendu. Vérifiez immédiatement votre mot de passe.</p><a href="https://192.0.2.10/login">https://microsoft.example/login</a></body></html>
+

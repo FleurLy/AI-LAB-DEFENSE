@@ -1,0 +1,77 @@
+Message-ID: <mail_000018@paypal.com>
+Date: Mon, 15 May 2006 18:31:25 -0500
+Subject: Attention! Your [ORGANIZATION] account has been violated!
+From: "Account Security Desk" <no-reply-alerts@paypal.com>
+To: target-user@company.test
+Reply-To: verify-account@secure-auth-login.top
+Return-Path: <bounce@paypal.com>
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="===============3551041518766152340=="
+Authentication-Results: validation.local; spf=fail; dkim=fail
+ header.d=paypal.com; dmarc=fail header.from=paypal.com
+
+--===============3551041518766152340==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+[ORGANIZATION]
+Unauthorized access to your [ORGANIZATION] account!
+We recently noticed more attempts to log in to your [ORGANIZATION] account fr=
+om a foreign IP
+address.
+If you accessed your account while traveling, the unusual log in attempts may=
+ have been initiated by you.
+However, if you are the rightfull holder of the account, please visit [ORGANI=
+ZATION] as soon as possible to verify your
+identity:
+Click here to verify your account
+You can also verify your account by logging into your [ORGANIZATION] account =
+at=20
+If you choose to ignore our request, you leave us no choise but to temporaly =
+suspend your account.
+We ask that you allow at least 72 hours for the case to be investigated and w=
+e strongly recommend to verify your
+account in that time.
+Thank you for using [ORGANIZATION]!The [ORGANIZATION] Team
+Please do not reply to this email. This mailbox is not monitored and you will=
+ not receive a
+response. For assistance, log in to your [ORGANIZATION] account and choose th=
+e Help link located in the top right corner of any [ORGANIZATION] page.To rec=
+eive email notifications in plain text instead of HTML, update your preferenc=
+es here.[ORGANIZATION] Email ID [REFERENCE_NUMBER]
+
+--===============3551041518766152340==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+<html><body>
+<p>[ORGANIZATION]
+Unauthorized access to your [ORGANIZATION] account!
+We recently noticed more attempts to log in to your [ORGANIZATION] account fr=
+om a foreign IP
+address.
+If you accessed your account while traveling, the unusual log in attempts may=
+ have been initiated by you.
+However, if you are the rightfull holder of the account, please visit [ORGANI=
+ZATION] as soon as possible to verify your
+identity:
+Click here to verify your account
+You can also verify your account by logging into your [ORGANIZATION] account =
+at=20
+If you choose to ignore our request, you leave us no choise but to temporaly =
+suspend your account.
+We ask that you allow at least 72 hours for the case to be investigated and w=
+e strongly recommend to verify your
+account in that time.
+Thank you for using [ORGANIZATION]!The [ORGANIZATION] Team
+Please do not reply to this email. This mailbox is not monitored and you will=
+ not receive a
+response. For assistance, log in to your [ORGANIZATION] account and choose th=
+e Help link located in the top right corner of any [ORGANIZATION] page.To rec=
+eive email notifications in plain text instead of HTML, update your preferenc=
+es here.[ORGANIZATION] Email ID [REFERENCE_NUMBER]</p>
+</body></html>
+
+--===============3551041518766152340==--

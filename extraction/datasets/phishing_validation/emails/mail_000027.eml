@@ -1,0 +1,34 @@
+Message-ID: <mail_000027@mmwebserv.com>
+Date: Wed, 18 Apr 2007 16:29:30 -0400
+Subject: Where Clause Help.
+From: "Mmwebserv Team" <employee_0ab9887f@mmwebserv.com>
+To: colleague_e6383fc6@perl.org
+Return-Path: <employee_0ab9887f@mmwebserv.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+Authentication-Results: validation.local; spf=pass; dkim=pass
+ header.d=mmwebserv.com; dmarc=pass header.from=mmwebserv.com
+
+I believe this is a very simple question or at least I'm hoping
+
+I am trying to select items from a table where the miles field is not
+null or blank and the below statement does not work.  Does anyone have
+any suggestions?
+
+Thanks!
+
+ 
+
+            @resultkeys = ("Date","People","Miles","Savings");
+
+            $sql = "SELECT c.objectid,c.dateadded as
+\\"Date\\",c.totalpeople as \\"People\\", ";
+
+            $sql .= "c.miles as Miles, c.totalsaved as \\"Savings\\" ";
+
+            $sql .= "FROM [ORGANIZATION].CONFERENCE c";
+
+            $sql .= " WHERE c.miles  "";
+
+            $sql .= " ORDER BY c.datestart";

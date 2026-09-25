@@ -1,0 +1,15 @@
+services:
+  mail-service:
+    build: .
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      DATA_DIR: /app/data
+      SMTP_HOST: 0.0.0.0
+    ports:
+      - "${SMTP_PORT:-1025}:${SMTP_PORT:-1025}"
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+

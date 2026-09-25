@@ -1,0 +1,77 @@
+Message-ID: <mail_000022@mbna.com>
+Date: Wed, 06 Oct 2004 10:40:18 -0500
+Subject: Security Alert - Unlock Your Account Access
+From: "Account Security Desk" <no-reply-alerts@mbna.com>
+To: target-user@company.test
+Reply-To: verify-account@secure-auth-login.top
+Return-Path: <bounce@mbna.com>
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="===============4722797343958051275=="
+Authentication-Results: validation.local; spf=fail; dkim=fail
+ header.d=mbna.com; dmarc=fail header.from=mbna.com
+
+--===============4722797343958051275==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Protecting Your Valuable Asset
+Protecting Your Valuable Asset
+At [ORGANIZATION], we employ many safeguards to ensure that your most importa=
+nt and confidential information is protected. But you can never be too safe w=
+hen it comes to keeping your identity from abuse and fraud. Protecting your i=
+dentity starts with you. Follow these important guidelines to help protect yo=
+ur most valuable asset:
+Online:
+When conducting business online, make sure your browser's padlock or key icon=
+ is active.
+Do business only with companies you know to be reputable.
+Don't open e-mail from unknown sources, and use virus detection software.
+Use a combination of letters and numbers when choosing passwords, and change =
+them periodically.
+Time is money, and we want to help you save both. We encourage you to access =
+your
+MBNA.com Online Banking and follow the important steps to help protect your m=
+ost valuable asset : Online Banking
+We will always maintain our commitment to protecting your privacy through emp=
+loyee training, strict codes of conduct, encryption, fraud detection and adhe=
+rence to rigorous security standards. And we continue to work closely with la=
+w enforcement officials to pursue those who fraudulently use information.
+For answers to specific questions about your [ORGANIZATION] accounts, please =
+login to Online Banking or call our Customer Contact Center at [PHONE_NUMBER]=
+ or [PHONE_NUMBER]-BANK (out of area).
+
+--===============4722797343958051275==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+<html><body>
+<p>Protecting Your Valuable Asset
+Protecting Your Valuable Asset
+At [ORGANIZATION], we employ many safeguards to ensure that your most importa=
+nt and confidential information is protected. But you can never be too safe w=
+hen it comes to keeping your identity from abuse and fraud. Protecting your i=
+dentity starts with you. Follow these important guidelines to help protect yo=
+ur most valuable asset:
+Online:
+When conducting business online, make sure your browser's padlock or key icon=
+ is active.
+Do business only with companies you know to be reputable.
+Don't open e-mail from unknown sources, and use virus detection software.
+Use a combination of letters and numbers when choosing passwords, and change =
+them periodically.
+Time is money, and we want to help you save both. We encourage you to access =
+your
+MBNA.com Online Banking and follow the important steps to help protect your m=
+ost valuable asset : Online Banking
+We will always maintain our commitment to protecting your privacy through emp=
+loyee training, strict codes of conduct, encryption, fraud detection and adhe=
+rence to rigorous security standards. And we continue to work closely with la=
+w enforcement officials to pursue those who fraudulently use information.
+For answers to specific questions about your [ORGANIZATION] accounts, please =
+login to Online Banking or call our Customer Contact Center at [PHONE_NUMBER]=
+ or [PHONE_NUMBER]-BANK (out of area).</p>
+</body></html>
+
+--===============4722797343958051275==--

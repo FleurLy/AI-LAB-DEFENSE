@@ -1,0 +1,9 @@
+From: Example News <news@example.org>
+To: reader@example.net
+Subject: Les nouvelles de septembre
+Date: Fri, 25 Sep 2026 10:00:00 +0200
+MIME-Version: 1.0
+Content-Type: text/html; charset=UTF-8
+
+<html><body><h1>Bonjour</h1><p>Voici notre sélection mensuelle.</p><a href="https://example.org/articles">Lire les articles</a></body></html>
+

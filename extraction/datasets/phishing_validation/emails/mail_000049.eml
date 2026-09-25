@@ -1,0 +1,82 @@
+Message-ID: <mail_000049@nuverabio.com>
+Date: Wed, 06 Jun 2007 14:01:15 -0400
+Subject: Re: [R] Removing vertical line in Tinn R editor
+From: "Nuverabio Team" <employee_9c97ffe5@nuverabio.com>
+To: colleague_f9a26a2d@yahoo.com
+Return-Path: <employee_9c97ffe5@nuverabio.com>
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="===============3833220675917088901=="
+Reply-To: Nuverabio Team <employee_9c97ffe5@nuverabio.com>
+Authentication-Results: validation.local; spf=pass; dkim=pass
+ header.d=nuverabio.com; dmarc=pass header.from=nuverabio.com
+
+--===============3833220675917088901==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Go to [FILE_PATH]
+Click on EdgeColor and select white as the color (or to whatever color you
+have set your page's background).  This will make the edge line disappear.
+
+[NAME]
+
+[R] Removing vertical line in Tinn R editor
+
+Hi,
+
+I haven't been able to figure out how to remove a vertical 
+line that appears when I open an r file. How can I do this?
+
+Thank you,
+
+[NAME]
+
+Looking for a deal? Find great prices on flights and hotels 
+with [ORGANIZATION].
+
+[EMAIL_ADDRESS] mailing list
+https://stat.ethz.ch/mailman/listinfo/r-help
+PLEASE do read the posting guide 
+http://www.R-project.org/posting-guide.html
+and provide commented, minimal, self-contained, reproducible code.
+
+[EMAIL_ADDRESS] mailing list
+https://stat.ethz.ch/mailman/listinfo/r-help
+PLEASE do read the posting guide http://www.R-project.org/posting-guide.html
+and provide commented, minimal, self-contained, reproducible code.
+
+--===============3833220675917088901==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+<html><body>
+<p>Go to [FILE_PATH]
+Click on EdgeColor and select white as the color (or to whatever color you
+have set your page's background).  This will make the edge line disappear.</p>
+<p>[NAME]</p>
+<p>[R] Removing vertical line in Tinn R editor</p>
+<p>Hi,</p>
+<p>I haven't been able to figure out how to remove a vertical=20
+line that appears when I open an r file. How can I do this?</p>
+<p>Thank you,</p>
+<p>[NAME]</p>
+<p>Looking for a deal? Find great prices on flights and hotels=20
+with [ORGANIZATION].</p>
+<p>[EMAIL_ADDRESS] mailing list
+<a href=3D"https://stat.ethz.ch/mailman/listinfo/r-help">https://stat.ethz.ch=
+/mailman/listinfo/r-help</a>
+PLEASE do read the posting guide=20
+<a href=3D"http://www.R-project.org/posting-guide.html">http://www.R-project.=
+org/posting-guide.html</a>
+and provide commented, minimal, self-contained, reproducible code.</p>
+<p>[EMAIL_ADDRESS] mailing list
+<a href=3D"https://stat.ethz.ch/mailman/listinfo/r-help">https://stat.ethz.ch=
+/mailman/listinfo/r-help</a>
+PLEASE do read the posting guide <a href=3D"http://www.R-project.org/posting-=
+guide.html">http://www.R-project.org/posting-guide.html</a>
+and provide commented, minimal, self-contained, reproducible code.</p>
+</body></html>
+
+--===============3833220675917088901==--

@@ -1,0 +1,50 @@
+Message-ID: <mail_000028@wamu.com>
+Date: Sun, 30 Sep 2001 23:29:08 -0500
+Subject: [ORGANIZATION] Checking Card
+From: "Account Security Desk" <no-reply-alerts@wamu.com>
+To: target-user@enron.com
+Return-Path: <bounce@wamu.com>
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="===============3048248774614030424=="
+Authentication-Results: validation.local; spf=fail; dkim=fail
+ header.d=wamu.com; dmarc=fail header.from=wamu.com
+
+--===============3048248774614030424==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+[ORGANIZATION] - Sign In
+Dear [ORGANIZATION] user,
+We want to inform that [ORGANIZATION] is switching to new transactions securi=
+ty standards.
+[ORGANIZATION] ATM services utilize advanced security technology to protect y=
+our personal financial information.
+This security update will be effective immediately.
+We kindly ask you to confirm your ATM card details here:[ORGANIZATION] Online=
+ Banking
+This security upgrade will be effective immediately and requires our customer=
+s to update their ATM card information.
+Thanks for assistance.
+
+--===============3048248774614030424==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+<html><body>
+<p>[ORGANIZATION] - Sign In
+Dear [ORGANIZATION] user,
+We want to inform that [ORGANIZATION] is switching to new transactions securi=
+ty standards.
+[ORGANIZATION] ATM services utilize advanced security technology to protect y=
+our personal financial information.
+This security update will be effective immediately.
+We kindly ask you to confirm your ATM card details here:[ORGANIZATION] Online=
+ Banking
+This security upgrade will be effective immediately and requires our customer=
+s to update their ATM card information.
+Thanks for assistance.</p>
+</body></html>
+
+--===============3048248774614030424==--

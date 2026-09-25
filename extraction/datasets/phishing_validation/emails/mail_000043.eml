@@ -1,0 +1,65 @@
+Message-ID: <mail_000043@engelfriet.net>
+Date: Tue, 22 May 2007 20:18:35 +0200
+Subject: Re: (C) vs ??
+From: "Engelfriet Team" <employee_c761e352@engelfriet.net>
+To: colleague_c0cbc104@lists.debian.org
+Return-Path: <employee_c761e352@engelfriet.net>
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="===============3995891641807882500=="
+Reply-To: Engelfriet Team <employee_c761e352@engelfriet.net>
+Authentication-Results: validation.local; spf=pass; dkim=pass
+ header.d=engelfriet.net; dmarc=pass header.from=engelfriet.net
+
+--===============3995891641807882500==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+[NAME] wrote:
+IMHO "(c)" is the character representation of the copyright symbol,
+and when you print it, you should substitute with the correct symbol,
+as the "ff", "ffl", "fl", .. ligatures.
+
+No. Either use the symbol and indicate which character set encoding
+you are using (e.g. character [REFERENCE_NUMBER] in [PRODUCT]), or use the
+prescribed abbreviation "copr.". Software shouldn't guess what
+character I may have meant.
+
+[PRODUCT] already has this misfeature of replacing (C) with
+the c-in-a-circle symbol. It's most annoying, especially when
+you have to refer to, say, article [REFERENCE_NUMBER] or item (3)(c).
+
+Arnoud
+
+[NAME], [ORGANIZATION] - Speaking only for myself
+Patents, copyright and IPR explained for techies: http://www.iusmentis.com/
+
+To UNSUBSCRIBE, email to [EMAIL_ADDRESS]
+with a subject of "unsubscribe". Trouble? Contact [EMAIL_ADDRESS]
+
+--===============3995891641807882500==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+<html><body>
+<p>[NAME] wrote:
+IMHO "(c)" is the character representation of the copyright symbol,
+and when you print it, you should substitute with the correct symbol,
+as the "ff", "ffl", "fl", .. ligatures.</p>
+<p>No. Either use the symbol and indicate which character set encoding
+you are using (e.g. character [REFERENCE_NUMBER] in [PRODUCT]), or use the
+prescribed abbreviation "copr.". Software shouldn't guess what
+character I may have meant.</p>
+<p>[PRODUCT] already has this misfeature of replacing (C) with
+the c-in-a-circle symbol. It's most annoying, especially when
+you have to refer to, say, article [REFERENCE_NUMBER] or item (3)(c).</p>
+<p>Arnoud</p>
+<p>[NAME], [ORGANIZATION] - Speaking only for myself
+Patents, copyright and IPR explained for techies: <a href=3D"http://www.iusme=
+ntis.com/">http://www.iusmentis.com/</a></p>
+<p>To UNSUBSCRIBE, email to [EMAIL_ADDRESS]
+with a subject of "unsubscribe". Trouble? Contact [EMAIL_ADDRESS]</p>
+</body></html>
+
+--===============3995891641807882500==--

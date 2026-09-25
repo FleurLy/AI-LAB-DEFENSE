@@ -1,0 +1,61 @@
+Message-ID: <mail_000085@enron.com>
+Date: Mon, 14 Jan 2002 13:45:21 -0600
+Subject: RE: [ORGANIZATION] WKEND NOTES - [DATE]
+From: "Enron Team" <employee_2b2e007b@enron.com>
+To: colleague_8d5a298e@enron.com
+Return-Path: <employee_2b2e007b@enron.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Reply-To: Enron Team <employee_2b2e007b@enron.com>
+Authentication-Results: validation.local; spf=pass; dkim=fail
+ header.d=enron.com; dmarc=pass header.from=enron.com
+
+Thanks [NAME].
+
+[USERNAME]	RE: [ORGANIZATION] WKEND NOTES - [DATE]
+
+Here is some information on the paths in question.
+
+[NAME]'s Info:
+Contract [REFERENCE_NUMBER] lowered their Intraday 2 volume to [FINANCIAL_INF=
+O].([PRODUCT])
+The [PRODUCT] on [ORGANIZATION] is [FINANCIAL_INFO].
+The actual [PRODUCT] volume is [FINANCIAL_INFO].  [ORGANIZATION] rounded the =
+volume sown and [ORGANIZATION] rounded the volume up.
+Contract [REFERENCE_NUMBER] was manually scheduled down by [FINANCIAL_INFO] f=
+or the Final [TIME] Cycle
+
+[ORGANIZATION] actions
+(1)   When you inspect the contract [REFERENCE_NUMBER] ([ORGANIZATION]), you =
+notice that the [PRODUCT] is 5922 on both receipt and delivery because their =
+is no fuel.
+(2)   When you inspect the contract [REFERENCE_NUMBER] ([ORGANIZATION]), the =
+[PRODUCT] is [FINANCIAL_INFO] for receipt and 5922 for delivery.  That is cal=
+culating each side seperately.
+(3)   When the volume was entered for [REFERENCE_NUMBER], I assumed they ente=
+red the receipt side volume of [FINANCIAL_INFO] ([PRODUCT] caclualted from ab=
+ove).  The fuel is then calculated from that 	and the delivery side is popula=
+ted.  The fuel rate is .0131 which calculates the fuel volume of [FINANCIAL_I=
+NFO] (rounded up to [FINANCIAL_INFO]) which in turn calculates the delivery v=
+olume to be 	[FINANCIAL_INFO].
+
+[NAME]	RE: [ORGANIZATION] WKEND NOTES - [DATE]
+
+I have started the process to find out why [ORGANIZATION] and [ORGANIZATION]'=
+s [PRODUCT] rounds differently.
+
+[USERNAME]	RE: [ORGANIZATION] WKEND NOTES - [DATE]
+
+	[NAME] and [NAME], could we look into [ORGANIZATION] and [ORGANIZATION] roun=
+ding in the same direction for [PRODUCT]?
+	It seems like that would be more effective.  Thanks. [NAME]	[ORGANIZATION] W=
+KEND NOTES - [DATE]
+
+Ladies & Gentlemen:
+
+Attached is [ORGANIZATION]'s Weekend Notes for [DATE].
+ << File: [FILE_NAME] >>=20
+Best regards,
+[NAME]
+[ORGANIZATION] ([ORGANIZATION])

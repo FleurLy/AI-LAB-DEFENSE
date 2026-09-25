@@ -1,0 +1,121 @@
+Message-ID: <mail_000091@tronicplanet.de>
+Date: Sat, 14 Jan 2006 23:44:34 +0100
+Subject: Re: cuflow on [PRODUCT] running [PRODUCT] ([PRODUCT])
+From: "Tronicplanet Team" <employee_b2b1e11d@tronicplanet.de>
+To: colleague_a08dc7c0@columbia.edu
+Return-Path: <employee_b2b1e11d@tronicplanet.de>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============3566282056300231860=="
+Reply-To: Tronicplanet Team <employee_b2b1e11d@tronicplanet.de>
+Authentication-Results: validation.local; spf=pass; dkim=fail
+ header.d=tronicplanet.de; dmarc=pass header.from=tronicplanet.de
+
+--===============3566282056300231860==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+hi [NAME],
+
+thanx for the information. the problem depends on debian-bug
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=327367
+the maintainer compiled [PRODUCT] before [PRODUCT] :(
+this bug is at least up to [PRODUCT] 3.1r1, it got fixed in testing
+(for etch), but didnt want to upgrade, cause libc would also get exchanged.
+
+so i downloaded [FILE_NAME] and compiled (quick and dirty) [FILE_NAME],
+but your checklist is not complete.
+
+untar the [PRODUCT] tar.gz
+cd [FILE_NAME]
+configure                                   <--
+make                                          <--
+cd contrib
+tar -zxvf [FILE_NAME]
+cd [PRODUCT]-1.051
+perl Makefile.PL
+make
+make install
+
+afterwards i delete [FILE_PATH] and linked
+[FILE_PATH] to [FILE_PATH]
+
+afterwards flow-scan and CUFlow worked fine.
+
+thanx [NAME]
+
+cu
+[NAME]
+
+[NAME] schrieb:
+[PRODUCT] and [PRODUCT] are different. [PRODUCT] is required for [PRODUCT].
+
+Thanks, [NAME]
+
+[NAME] wrote:
+[NAME] schrieb:
+
+Good morning [NAME].
+
+The error you are seeing is related to the [FILE_NAME] perl module. The
+module must be configured and compiled for use with [PRODUCT] files.
+I'm not sure how to correctly install it when using a debian package
+of [PRODUCT]. Using the [PRODUCT] tarball, you would do the
+following:
+
+untar the [PRODUCT] tar.gz
+cd [FILE_NAME]
+cd contrib
+tar -zxvf [FILE_NAME]
+cd [PRODUCT]-1.051
+perl Makefile.PL
+make
+make install
+
+The [PRODUCT] Makefile will look for the [PRODUCT] files itself. It
+expects to find them in the same folder path, so it's important to
+follow this exactly as described above.
+
+Let us know how it goes.
+
+Thanks, [NAME]
+
+P.S. You'll find the same notes here near the bottom of the page.
+http://www.dynamicnetworks.us/netflow/2-getting-started.html
+
+hi [NAME],
+
+thanx for the answer, but i dont want [PRODUCT], cause its old and dont get
+developed, than i want the [PRODUCT]?
+
+does i missunderstand something?
+
+[NAME]
+
+[NAME]
+https://keyserver1.pgp.com/vkd/DownloadKey.event?keyid=0x65CEC0FC275931BF
+Key fingerprint = [PHONE_NUMBER]
+
+--===============3566282056300231860==
+MIME-Version: 1.0
+Content-Type: application/pdf
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="invoice_text.pdf"
+
+JVBERi0xLjcKJcK1wrYKJSBXcml0dGVuIGJ5IE11UERGIDEuMjguMgoKMSAwIG9iago8PC9UeXBl
+L0NhdGFsb2cvUGFnZXMgMiAwIFIvSW5mbzw8L1Byb2R1Y2VyKE11UERGIDEuMjguMik+Pj4+CmVu
+ZG9iagoKMiAwIG9iago8PC9UeXBlL1BhZ2VzL0NvdW50IDEvS2lkc1s0IDAgUl0+PgplbmRvYmoK
+CjMgMCBvYmoKPDwvRm9udDw8L2hlbHYgNSAwIFI+Pj4+CmVuZG9iagoKNCAwIG9iago8PC9UeXBl
+L1BhZ2UvTWVkaWFCb3hbMCAwIDU5NSA4NDJdL1JvdGF0ZSAwL1Jlc291cmNlcyAzIDAgUi9QYXJl
+bnQgMiAwIFIvQ29udGVudHNbNiAwIFJdPj4KZW5kb2JqCgo1IDAgb2JqCjw8L1R5cGUvRm9udC9T
+dWJ0eXBlL1R5cGUxL0Jhc2VGb250L0hlbHZldGljYS9FbmNvZGluZy9XaW5BbnNpRW5jb2Rpbmc+
+PgplbmRvYmoKCjYgMCBvYmoKPDwvTGVuZ3RoIDE0My9GaWx0ZXIvRmxhdGVEZWNvZGU+PgpzdHJl
+YW0KeNoljT0KQkEMhPucIjcwP7uTfSAWgo2dsJ1YyHMXCy1sPL/hmSFMCN8k9KFjJ2VJKYdxhHB/
+0+45Xl9W5T75uq+AYsWCAo2SPjFM0kcg5wWOauLFqzc3E3uYJDezM2dSapZtREtG/gRalJSE+92m
+TVheWrc/A2EDNVrmHyG5qzbTNZbDrZ/p1OlCP5qUKu4KZW5kc3RyZWFtCmVuZG9iagoKeHJlZgow
+IDcKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDQyIDAwMDAwIG4gCjAwMDAwMDAxMjAgMDAw
+MDAgbiAKMDAwMDAwMDE3MiAwMDAwMCBuIAowMDAwMDAwMjEzIDAwMDAwIG4gCjAwMDAwMDAzMjAg
+MDAwMDAgbiAKMDAwMDAwMDQwOSAwMDAwMCBuIAoKdHJhaWxlcgo8PC9TaXplIDcvUm9vdCAxIDAg
+Ui9JRFs8NTM3ODJDQzM5NEMyOEVDMkEyMjNDMkFBQzM5MEMzOUI+PEM5MTg0QTM4NkY0OTQzNTlC
+MDg1OENFOEIwMjk1NEVBPl0+PgpzdGFydHhyZWYKNjIxCiUlRU9GCg==
+
+--===============3566282056300231860==--

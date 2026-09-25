@@ -1,0 +1,29 @@
+Message-ID: <mail_000053@gmail.com>
+Date: Thu, 14 Jun 2007 13:51:13 -0400
+Subject: Re: 'Keys' Question
+From: "Gmail Team" <employee_0e04ae7b@gmail.com>
+To: colleague_c8e46c64@yahoo.com
+Return-Path: <employee_0e04ae7b@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+Authentication-Results: validation.local; spf=fail; dkim=none
+ header.d=gmail.com; dmarc=fail header.from=gmail.com
+
+On [DATE],   wrote:
+On [DATE], [TIME],  ([NAME]) wrote:
+Most likely the second line should look like this:
+
+@TablePreReq   = keys(%{$[PRODUCT]{[FILE_NAME]}});
+
+This gets it to compile. I was a bit puzzled because this code is in
+production (apparently as is in the original) but it will not compile.
+
+Could the configuration of the file in question affect the compile at
+this point? Intuitively, it should not -- unless perl does something
+very different from what others do.
+
+What version of Perl does the production machine have installed?
+
+To unsubscribe, e-mail: 
+For additional commands, e-mail:

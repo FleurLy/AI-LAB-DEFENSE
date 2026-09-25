@@ -1,0 +1,22 @@
+Message-ID: <mail_000005@enron.com>
+Date: Fri, 28 Dec 2001 13:55:33 -0600
+Subject: NOTIFICATION:  [PRODUCT] Outage - Friday, [DATE]
+From: "Enron Team" <employee_335cc56b@enron.com>
+To: colleague_79d9ff02@enron.com
+Return-Path: <employee_335cc56b@enron.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Authentication-Results: validation.local; spf=pass; dkim=pass
+ header.d=enron.com; dmarc=pass header.from=enron.com
+
+This is a notice to inform you that the server where your [PRODUCT] mailbox r=
+esides is scheduled for an outage tonight.  Your mailbox will be temporarily =
+unavailable starting anytime after [TIME] and may continue to be unavailable =
+until [TIME], when all server maintenance work have been completed.  [PRODUCT=
+] Web Access ([PRODUCT]) will also be unavailable during this time. =20
+
+[PRODUCT] users:  Message delivery may be delayed for a few minutes.
+=20
+If you have any questions, please call the Resolution Center at [REFERENCE_NU=
+MBER].

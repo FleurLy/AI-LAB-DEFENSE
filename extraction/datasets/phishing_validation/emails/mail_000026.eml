@@ -1,0 +1,87 @@
+Message-ID: <mail_000026@ebay.com>
+Date: Mon, 28 Jan 2002 10:29:24 +0000
+Subject: Your [ORGANIZATION] account
+From: "Account Security Desk" <no-reply-alerts@ebay.com>
+To: target-user@enron.com
+Reply-To: verify-account@secure-auth-login.top
+Return-Path: <bounce@ebay.com>
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="===============8282588986319047798=="
+Authentication-Results: validation.local; spf=fail; dkim=fail
+ header.d=ebay.com; dmarc=fail header.from=ebay.com
+
+--===============8282588986319047798==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+[ORGANIZATION] Case ID number: [REFERENCE_NUMBER]
+Recently, our Account Review Team identified some unusual activity in your ac=
+count.
+In accordance with [ORGANIZATION] User Agreement and to ensure that your acco=
+unt has not been compromised, access to your account was limited.
+Your account access will remain limited until this issue has been resolved. P=
+rotecting the security of your [ORGANIZATION] account is our primary concern,=
+ and we apologize for any inconvenience this may cause.
+In order to secure your account and quickly restore full access, we may requi=
+re some specific information from you. To restore your account to its regular=
+ status, you must complete the following steps:
+1. Verify your primary e-mail address by clicking the verification link
+2. Confirm your identity by completing the account verification process
+Once you have updated your account records, your [ORGANIZATION] session will =
+not be interrupted and will continue as normal.
+To verify your [ORGANIZATION] records ,click on the following link:
+ Bay&ssPageName=3Dh:h:[ORGANIZATION]:UK
+We encourage you to log in and restore full access as soon as possible. Shoul=
+d access to your account remain limited for an extended period of time, it ma=
+y result in further limitations on the use of your account or may result in e=
+ventual account closure.
+Thank you for your prompt attention to this matter. Please understand that th=
+is is a security measure meant to help protect you and your account.
+We apologize for any inconvenience.
+Sincerely,
+[ORGANIZATION] Account Review Department
+Accounts Management As outlined in our User Agreement, [ORGANIZATION] will pe=
+riodically send you information about site changes and enhancements.
+Visit our Privacy Policy and User Agreement if you have any questions. E-mail=
+ ID: [REFERENCE_NUMBER]
+
+--===============8282588986319047798==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+<html><body>
+<p>[ORGANIZATION] Case ID number: [REFERENCE_NUMBER]
+Recently, our Account Review Team identified some unusual activity in your ac=
+count.
+In accordance with [ORGANIZATION] User Agreement and to ensure that your acco=
+unt has not been compromised, access to your account was limited.
+Your account access will remain limited until this issue has been resolved. P=
+rotecting the security of your [ORGANIZATION] account is our primary concern,=
+ and we apologize for any inconvenience this may cause.
+In order to secure your account and quickly restore full access, we may requi=
+re some specific information from you. To restore your account to its regular=
+ status, you must complete the following steps:
+1. Verify your primary e-mail address by clicking the verification link
+2. Confirm your identity by completing the account verification process
+Once you have updated your account records, your [ORGANIZATION] session will =
+not be interrupted and will continue as normal.
+To verify your [ORGANIZATION] records ,click on the following link:
+ Bay&amp;ssPageName=3Dh:h:[ORGANIZATION]:UK
+We encourage you to log in and restore full access as soon as possible. Shoul=
+d access to your account remain limited for an extended period of time, it ma=
+y result in further limitations on the use of your account or may result in e=
+ventual account closure.
+Thank you for your prompt attention to this matter. Please understand that th=
+is is a security measure meant to help protect you and your account.
+We apologize for any inconvenience.
+Sincerely,
+[ORGANIZATION] Account Review Department
+Accounts Management As outlined in our User Agreement, [ORGANIZATION] will pe=
+riodically send you information about site changes and enhancements.
+Visit our Privacy Policy and User Agreement if you have any questions. E-mail=
+ ID: [REFERENCE_NUMBER]</p>
+</body></html>
+
+--===============8282588986319047798==--

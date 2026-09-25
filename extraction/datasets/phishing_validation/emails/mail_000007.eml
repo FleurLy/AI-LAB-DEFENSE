@@ -1,0 +1,35 @@
+Message-ID: <mail_000007@singnet.com.sg>
+Date: Thu, 18 Mar 1999 18:43:54 +0800
+Subject: Using the DC to DC converter
+From: "Singnet Team" <employee_aa2915ce@singnet.com.sg>
+To: colleague_247e0a5d@media.mit.edu
+Return-Path: <employee_aa2915ce@singnet.com.sg>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Reply-To: Singnet Team <employee_aa2915ce@singnet.com.sg>
+Authentication-Results: validation.local; spf=pass; dkim=pass
+ header.d=singnet.com.sg; dmarc=pass header.from=singnet.com.sg
+
+Hi,
+I intend to use a [FINANCIAL_INFO] source battery going thru a DC to DC conve=
+rter to get
+a [FINANCIAL_INFO] source. Then this [FINANCIAL_INFO] will connect to my diff=
+use sensor which
+operrate at [FINANCIAL_INFO].
+
+ The sensor's current consumption maximum is  [FINANCIAL_INFO].
+If the output Watt of the DC-DC convertor at the [FINANCIAL_INFO] source is [=
+FINANCIAL_INFO], can I
+said that the the current is   [FINANCIAL_INFO] =3D [FINANCIAL_INFO]   (P=3DV=
+I)  ?
+
+If the current supply to the sensor is  [FINANCIAL_INFO] and the sensor co
+nsumption is max [FINANCIAL_INFO], will it damaged my sensor ? Or should I us=
+e less
+than [FINANCIAL_INFO] ?=20
+My battery source is [FINANCIAL_INFO],[FINANCIAL_INFO] before going thru the =
+convertor.
+
+rgds,
+[NAME]

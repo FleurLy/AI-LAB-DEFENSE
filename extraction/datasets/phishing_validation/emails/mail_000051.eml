@@ -1,0 +1,90 @@
+Message-ID: <mail_000051@optushome.com.au>
+Date: Thu, 26 Apr 2007 22:58:02 +1000
+Subject: Re: Test of scripts with [PRODUCT]
+From: "Optushome Team" <employee_e113340a@optushome.com.au>
+To: colleague_e6383fc6@perl.org
+Return-Path: <employee_e113340a@optushome.com.au>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Authentication-Results: validation.local; spf=fail; dkim=none
+ header.d=optushome.com.au; dmarc=fail header.from=optushome.com.au
+
+On [DATE] at [TIME],  wrote:
+Hi,
+
+Recently i wrote a perl module that includes package and a script.
+As part of the module sanity tests, I would like to run the script and verify=
+ a success.
+For that, I am using [PRODUCT] and [PRODUCT].
+Is there any recommendations how to do this?
+
+under your programs create a t directory (t for testing) and add a
+series of scripts to test your application as [FILE_NAME].
+
+My [ORGANIZATION] module has the following test script.  I also have a check
+to ensure that pod is coded in the modules.
+
+vi:set sw=3D4 ts=3D4 et cin:
+$Id: [FILE_NAME],v 1.2 [DATE] [NAME] Exp $
+
+=3Dhead1 NAME
+
+[FILE_NAME]
+
+=3Dhead1 DESCRIPTION
+
+Ensure that the [ORGANIZATION] module is functioning correctly.
+
+=3DHEAD1 AUTHOR
+
+[NAME]
+
+=3Dcut
+
+Libraries
+use strict;
+use warnings;
+
+use [PRODUCT];
+use File::Temp;
+use File::Basename;
+
+use lib ;
+use [ORGANIZATION];
+
+my $handle;
+my $filename;
+my $filename2;
+my $basename;
+my @files; # for glob
+
+plan( tests=3D>4 );   ## number of test coded.
+
+($handle, $filename) =3D mkstemp(  );
+($handle, $filename2) =3D mkstemp(  );
+close( $handle );
+
+[ORGANIZATION]::rename_timestamp( $filename );
+
+ok( ! (-f $filename"$filename should not exist" );
+
+@files =3D glob( "$filename*" );
+
+ok( @files =3D=3D 1, "$filename* should have one entry" );
+
+unlink( $filename );
+
+[ORGANIZATION]( $filename2, $filename );
+
+ok( -f $filename, "moving file to new file name" );
+
+mkdir( $filename2 );
+
+[ORGANIZATION]( $filename, $filename2 );
+
+$basename =3D $filename2.'/'.basename($filename);
+ok( -f $basename, "Moving from file to directory" );
+
+To unsubscribe, e-mail:=20
+For additional commands, e-mail:

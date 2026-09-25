@@ -1,0 +1,86 @@
+Message-ID: <mail_000057@aol.com>
+Date: Wed, 28 Oct 1998 08:15:51 -0500
+Subject: Re: [PRODUCT] a [PRODUCT]
+From: "Aol Team" <employee_bbe6808c@aol.com>
+To: colleague_247e0a5d@media.mit.edu
+Return-Path: <employee_bbe6808c@aol.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Authentication-Results: validation.local; spf=fail; dkim=none
+ header.d=aol.com; dmarc=fail header.from=aol.com
+
+In a message dated [DATE] [TIME],  writes:
+
+<< Hi [NAME],
+=20
+ 	Good to hear from you, feel free to post this to the list.
+=20
+ 	I feel that the flash parts are easier to use because you don't need to
+ wait for the UV eraser to do its things during development, the flash parts
+ are electrically erasable.  But the problem is that [ORGANIZATION] currently
+ only has one flash chip available, the [REFERENCE_NUMBER].  Note that the po=
+pular [REFERENCE_NUMBER]
+ is now obsolete the [REFERENCE_NUMBER] is very similar.  If you can live wit=
+hin the
+ constraints of having only 1 8 bit timer, no hardware UART, no A/D, and a
+ max speed of [FINANCIAL_INFO] then its fine, otherwise you need to move up t=
+o one of
+ the EPROM parts.  I feel that with good simulation, which is an absolute
+ requirement for the [PRODUCT], then it doesn't really matter because you will
+ know your code is going to work and the erase/burn cycles are minimized.  I
+ also try to keep  4 or 5 of each type of [PRODUCT] I'm working with on hand =
+so I
+ can have a couple in the eraser at all times.
+=20
+ I hope that helps,
+=20
+ [NAME]
+
+Hi [NAME],
+
+	Good to hear from you, feel free to post this to the list.
+
+	I feel that the flash parts are easier to use because you don't need to
+wait for the UV eraser to do its things during development, the flash parts
+are electrically erasable.  But the problem is that [ORGANIZATION] currently
+only has one flash chip available, the [REFERENCE_NUMBER].  Note that the pop=
+ular [REFERENCE_NUMBER]
+is now obsolete the [REFERENCE_NUMBER] is very similar.  If you can live with=
+in the
+constraints of having only 1 8 bit timer, no hardware UART, no A/D, and a
+max speed of [FINANCIAL_INFO] then its fine, otherwise you need to move up to=
+ one of
+the EPROM parts.  I feel that with good simulation, which is an absolute
+requirement for the [PRODUCT], then it doesn't really matter because you will
+know your code is going to work and the erase/burn cycles are minimized.  I
+also try to keep  4 or 5 of each type of [PRODUCT] I'm working with on hand s=
+o I
+can have a couple in the eraser at all times.
+
+I hope that helps,
+
+[NAME]
+
+=20
+
+At [TIME] [DATE] [TIME], you wrote:
+Ben,
+I have envoked your name on the Handy board list.  There was a
+question as to whether EPROM or FLASH was the better [PRODUCT].  I suggested
+EPROM (Its what I use), and mention that I believed you preferred
+FLASH.  I suggested  as a contact point so you might get a
+question.  If you would like to get a copy of my post, send me a message
+that I can reply to.  I cann't tell if this post is going to you or your
+sales staff.
+
+[NAME]
+([NAME] now in [ADDRESS])
+P.S.  I take most of my mail at:
+
+My aol browser is down, so I use [ORGANIZATION] to wander the web.
+
+[NAME]                           mailto:
+[ORGANIZATION]                  =20
+
+SLI-OEM - The most cost effective Serial LCD available!

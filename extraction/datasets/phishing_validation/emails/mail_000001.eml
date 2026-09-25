@@ -1,0 +1,41 @@
+Message-ID: <mail_000001@cs.umt.edu>
+Date: Sat, 11 Apr 1998 20:17:11 -0600
+Subject: Re: Smooth PWM in [PRODUCT]?
+From: "Cs Team" <employee_30885a0f@cs.umt.edu>
+To: colleague_247e0a5d@media.mit.edu
+Return-Path: <employee_30885a0f@cs.umt.edu>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Reply-To: Cs Team <employee_30885a0f@cs.umt.edu>
+Authentication-Results: validation.local; spf=pass; dkim=pass
+ header.d=cs.umt.edu; dmarc=pass header.from=cs.umt.edu
+
+At [TIME] [DATE] [TIME], [NAME] wrote:
+I apologize for asking a question I think I've seen answered,
+but I can't find it in the mail archives.
+
+Is it possible to use [NAME]'s smooth PWM routines with
+[ORGANIZATION]' commercial [PRODUCT]?  Since they use a different version
+of pcode.s19 than the freeware [PRODUCT], I assume the smooth-PWM [PRODUCT]
+would have to be applied to that, and I haven't found a way of doing
+so.
+
+Yes, it is possible.  It must be, 'cause I've been doing it.
+
+You simply need to download Julian's [FILE_NAME] (rename your other one
+first) and put it in the [PRODUCT]31\\libs directory (or whatever you call it=
+).  [PRODUCT]
+3.1 ought to [PRODUCT] load it instead of the original version.  You'll
+know when you've got it, because [PRODUCT] [NAME] give you a warning that you=
+'re
+using an out-of-date pcode (due to the old version number in Julian's pcode).
+
+BTW, no apologies are necessary.  Everyone on the list is more than happy to
+help, I'm sure.  Good luck, [NAME].
+
+[NAME]
+\\_@__|o)\\\\            (\\/\\\\,
+[NAME],             The fellow who agrees with everything you say
+[NAME],                      is either a fool or he is getting ready
+& [ORGANIZATION]                                   to skin you.  --Kin Hubbard

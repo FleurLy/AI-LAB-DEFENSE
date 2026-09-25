@@ -1,0 +1,29 @@
+Message-ID: <mail_000019@enron.com>
+Date: Fri, 25 Jan 2002 12:22:50 -0600
+Subject: [ORGANIZATION] and  Corporate Change Control
+From: "Enron Team" <employee_fd8c3d54@enron.com>
+To: colleague_nan@company.test
+Return-Path: <employee_fd8c3d54@enron.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Reply-To: Enron Team <employee_fd8c3d54@enron.com>
+Authentication-Results: validation.local; spf=pass; dkim=pass
+ header.d=enron.com; dmarc=pass header.from=enron.com
+
+The following items were presented in this week's corporate change control
+
+[DATE]=09
+Beginning at [TIME], the Telephony team will remove the telephone switch from=
+ 3AC and migrate phone numbers.  The maintenance is expected to last approxim=
+ately one hour.  Each block of numbers will experience an outage of a few min=
+utes during which calls made to an affected number will not go through and wi=
+ll not roll to voice mail.  The numbers affected are: [PHONE_NUMBER]; [PHONE_=
+NUMBER]; [PHONE_NUMBER]; [PHONE_NUMBER]; ..8699; [PHONE_NUMBER]; [PHONE_NUMBE=
+R].  The number  to access voice mail will not be affected by this maintenanc=
+e.  However, any number within these maintenance groups will be affected rega=
+rdless of whether it was moved from 3AC.  This change will impact [ORGANIZATI=
+ON] users.
+
+[ORGANIZATION] Solution Center - [ADDRESS], at=20
+[ORGANIZATION] Solution Center - [ADDRESS], at

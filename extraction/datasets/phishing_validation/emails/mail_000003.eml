@@ -1,0 +1,42 @@
+Message-ID: <mail_000003@psy1.psych.arizona.edu>
+Date: Wed, 08 Dec 1999 11:21:05 -0700
+Subject: [DMDX] Re: DMDX clips WAV files
+From: "Psy1 Team" <employee_67223241@psy1.psych.arizona.edu>
+To: colleague_4ec65daa@psy1.psych.arizona.edu
+Return-Path: <employee_67223241@psy1.psych.arizona.edu>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Authentication-Results: validation.local; spf=pass; dkim=pass
+ header.d=psy1.psych.arizona.edu; dmarc=pass
+ header.from=psy1.psych.arizona.edu
+
+At [TIME], you wrote:
+At [TIME], you wrote:
+
+This interacts in some way with frame duration as set in the parameter line
+altering the amount clipped although we have not been able to work out
+exactly what this is doing.
+
+Of course it does, DMDX is tied to the refresh interval, always,
+regardless of whether it's displaying audio or visual stimuli.  How would
+it work otherwise?
+
+  If you want precise acoustic relative timing I suggest you build single
+wave files per item.  The kind of functionality you need was offered in [PROD=
+UCT],
+[PRODUCT] as opposed to [PRODUCT].  It has been left as an orphan
+DOS program tied to [ORGANIZATION]' [PRODUCT] drviers as alomost no one needs=
+ that
+level of functionality.
+
+[NAME] ([INITIALS])
+
+ /"\\
+ \\ /
+  X  ASCII RIBBON CAMPAIGN - AGAINST HTML MAIL
+ / \\=20
+
+Law of Probable Dispersal:
+	Whatever it is that hits the fan will not be evenly
+distributed.

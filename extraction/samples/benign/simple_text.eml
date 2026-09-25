@@ -1,0 +1,16 @@
+From: Alice Example <alice@example.org>
+To: Bob Example <bob@example.net>
+Subject: Compte rendu de réunion
+Date: Fri, 25 Sep 2026 09:00:00 +0200
+Message-ID: <simple-text@example.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Bonjour Bob,
+
+Voici le compte rendu de notre réunion. Aucun suivi urgent n'est nécessaire.
+
+Bien cordialement,
+Alice
+

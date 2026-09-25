@@ -1,0 +1,70 @@
+Message-ID: <mail_000024@paypal.com>
+Date: Tue, 24 Jul 2001 07:01:31 +0100
+Subject: Please Update Your Account Information
+From: "Account Security Desk" <no-reply-alerts@paypal.com>;paypal.com>
+To: target-user@enron.com
+Return-Path: <bounce@paypal.com;paypal.com>
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="===============0905934508133107949=="
+Authentication-Results: validation.local; spf=fail; dkim=fail
+ header.d=paypal.com; dmarc=fail header.from=paypal.com
+
+--===============0905934508133107949==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Dear [ORGANIZATION] valued member,Due to
+concerns, for the safety and integrity of the [ORGANIZATION] we
+have issued this warning message.It has come to our
+attention that your account information needsto be updated due
+to inactive members, frauds and spoof reports.If you could
+please take 5-10 minutes out of your online experience and
+renewyour records you will not run into any future problems with
+the online service.However, failure to update your records will
+result in account suspension This notification expires on
+[DATE].Once you have updated your account
+records your [ORGANIZATION] accountservice will not be interrupted and
+will continue as normal.Please follow the link below and
+login to your accountand renew your account information
+https://www.paypal.com/us
+Sincerely,[ORGANIZATION] customer department!
+Please do not
+reply to this e-mail. Mail sent to this address cannot be
+answered. For assistance, log in to your [ORGANIZATION] account and choose th=
+e "Help"
+link in the footer of any page.To receive
+email notifications in plain text instead of HTML, update your
+preferences here.
+
+--===============0905934508133107949==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+<html><body>
+<p>Dear [ORGANIZATION] valued member,Due to
+concerns, for the safety and integrity of the [ORGANIZATION] we
+have issued this warning message.It has come to our
+attention that your account information needsto be updated due
+to inactive members, frauds and spoof reports.If you could
+please take 5-10 minutes out of your online experience and
+renewyour records you will not run into any future problems with
+the online service.However, failure to update your records will
+result in account suspension This notification expires on
+[DATE].Once you have updated your account
+records your [ORGANIZATION] accountservice will not be interrupted and
+will continue as normal.Please follow the link below and
+login to your accountand renew your account information
+<a href=3D"https://www.paypal.com/us">https://www.paypal.com/us</a>
+Sincerely,[ORGANIZATION] customer department!
+Please do not
+reply to this e-mail. Mail sent to this address cannot be
+answered. For assistance, log in to your [ORGANIZATION] account and choose th=
+e "Help"
+link in the footer of any page.To receive
+email notifications in plain text instead of HTML, update your
+preferences here.</p>
+</body></html>
+
+--===============0905934508133107949==--

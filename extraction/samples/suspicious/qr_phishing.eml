@@ -1,0 +1,32 @@
+From: Billing <billing@example.com>
+To: user@company.test
+Subject: Confirmez votre compte
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============7718844942762686860=="
+
+--===============7718844942762686860==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Scannez le code joint pour confirmer votre compte.
+
+--===============7718844942762686860==
+Content-Type: image/png
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="qr_code.png"
+MIME-Version: 1.0
+
+iVBORw0KGgoAAAANSUhEUgAAAUoAAAFKAQAAAABTUiuoAAACRElEQVR4nO2bUarjMAxFrxTD+0xg
+FtClJDuYJXVNbwfJUmYBD5LPgQQNkt20DHRwB15ial1K6ibn44KQLdkpCTI1cS4JOMqOwtFssaNw
+NFvsKFSUFHQUQMMSACy320NJXrPEb432opoBGdsVmDqABjR2VwrzmiN+b3RJKUTXX0QyYiO7balW
+mtd60fDXb5m6ZiW0X0GwHGGAHcV/Rwtov0iwfEh5XtlRRLUiMsaZMOzrFiAia3FeUXtuTXGZauyy
+Uj//0FFavL7VADuKF6Ml+28BVr38Js23Awywo3gRpb3BwtTdM0pHi7ZfJXnNEr81Ol1W0NCK0HVu
+JIVHIzhdNMuK8loxitgAj2jitJfa4XaFFR3xgfXO4+leuXo02JX6uSMBtkBaZaD/DLCmC2jn26rG
+Z3vl6lHE3NJNp6heR5pMNoqp5rlVWAX/0xJoC2JlYSroTVsoxStXjwa7kn1gi9fSpalvumjchkao
+EK9cPYqHmbAXrS3aNPU9bHLEQoTP9srVo7gVgakwjFtN92hZBD1aRaGy51bqk1UpZHv7xWV4zRLX
+cXYM7ZMx2anWHrfvN5AlzsPeH304O7Z2eNZNJz1FPspAjjiLqunsOMmO+4m0Gtz0KFlVjNcMcTXo
+plu79oaGrlv36ZCPMvBM/PRJrShd466GbRtq3Gy790AD/xCjdjSkbzvLWvS9DLIWOejLGbqgjfvh
+F5/tlatH8fgOWtxvtwZLm665kXuzLN5v4XSU/F8LcDRb7CgczRY7Ckez9UKV8Qe73RDEBzFIaAAA
+AABJRU5ErkJggg==
+
+--===============7718844942762686860==--

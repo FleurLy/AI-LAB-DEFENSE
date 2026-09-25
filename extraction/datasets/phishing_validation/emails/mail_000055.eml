@@ -1,0 +1,122 @@
+Message-ID: <mail_000055@hotmail.com>
+Date: Mon, 02 Jul 2007 04:38:05 -0700
+Subject: Re: Problem with runaway format
+From: "Hotmail Team" <employee_dd1a2326@hotmail.com>
+To: colleague_e6383fc6@perl.org
+Return-Path: <employee_dd1a2326@hotmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Reply-To: Hotmail Team <employee_dd1a2326@hotmail.com>
+Authentication-Results: validation.local; spf=fail; dkim=none
+ header.d=hotmail.com; dmarc=fail header.from=hotmail.com
+
+On [DATE], [TIME],  ([NAME]) wrote:
+I have a script which places data 4 levels deep in a HoHoHoH.  It grabs ticke=
+ts
+in our ticket system using the systems API and places attributes about each
+piece of activity into the hash. The has is called %tickets.  It looks like
+
+$tickets{action_creator}{ticket_customer}{ticket_number}{ticket_subject}.
+
+Each is self explanatory with the value under ticket_subject being the total
+time the action creator spent on the whole ticket.  The actual code
+
+gather up all of the tickets, transactions, and time for each user and
+successively place
+all data into a HoHoH working down from user to environment to ticket
+we go through each date in the range individually so we can make sure we only
+get the transactions that
+have been added during the date range
+foreach my $date (@searchDate) {
+while (my $ticket =3D $tix->Next) {
+$tikSubj{$ticket->id} =3D $ticket->Subject;
+my $env =3D $ticket->FirstCustomFieldValue('Environment');
+my $transactions =3D $ticket->Transactions;
+while (my $transaction  =3D $transactions->Next) {
+my $creator     =3D $transaction->CreatorObj;
+
+we need to make sure the transaction is in the date
+range requested
+it's set up like this so we can chop the timestamp off
+of the Created string
+(my $checkDate  =3D $transaction->Created) =3D~ s/\\s.*$//;
+
+we only want transactions that are within the date
+range, have TimeWorked
+set, and the creator of which is one of the actual
+users and not someone
+that was created upon ticket submission or Cc addition
+next unless (($checkDate eq $date) &&
+($creator->Privileged) && ($transaction->[NAME]));
+
+if all of the above stipulations are met add the time
+worked to the hash
+
+$tickets{$creator->Name}{$env}{$ticket->id}{$ticket->Subject} +=3D
+$transaction->[NAME];
+}
+}
+
+}
+
+And the formatting
+
+foreach my $user (keys %tickets) {
+open TIMESHEET,
+">" . "_" .
+"$[DATE].txt" or die "Can't open file: $!";
+print TIMESHEET "List of tickets worked on by $user during week ending
+$[DATE]", "\\n\\n";
+
+foreach my $env (sort keys %{ $tickets{$user} }){
+
+format TIMESHEET_TOP =3D
+@<<<<<<<<<<<<<<<<<<<<
+$env
+Ticket ID                      Subject                      hh:mm
+
+.
+
+write TIMESHEET_TOP;
+
+foreach my $id (sort keys %{ $tickets{$user}{$env} }) {
+foreach my $subject (keys %{ $tickets{$user}{$env}{$id} }) {
+format TIMESHEET =3D
+@  ^<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  @>>>>
+$id, $tickets{$user}{$env}{$id},
+$tickets{$user}{$env}{$id}{$subject}
+
+I know little about the 'format' function (never use it) but what is
+it you are trying to print in the above statement? It looks to me like
+you are trying to print the $id variable and then some hash
+references.
+
+[NAME]
+
+~~          ^<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+$tickets{$user}{$env}{$id}
+.
+
+write TIMESHEET;
+}
+print TIMESHEET "\\n";
+}
+}
+
+}
+
+The problem didn't surface until I went from using the %tikSubj hash seen near
+the top of the code snippet to a multi-level hash.  But then, using %tikSubj
+presents its own bug for some reason.
+
+Knowing that you don't know the intricacies of the system I'm working with, I
+won't be sad if no one has any input ;).
+
+Thanks
+[NAME]
+
+Keep up with me and what I'm up to:
+
+To unsubscribe, e-mail:=20
+For additional commands, e-mail:

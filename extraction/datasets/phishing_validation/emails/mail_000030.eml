@@ -1,0 +1,112 @@
+Message-ID: <mail_000030@paypal.com>
+Date: Sun, 07 Apr 2002 18:17:43 +0600
+Subject: [ORGANIZATION] Account Suspension
+From: "Account Security Desk" <no-reply-alerts@paypal.com>
+To: target-user@company.test
+Reply-To: verify-account@secure-auth-login.top
+Return-Path: <bounce@paypal.com>
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="===============4929753457756719808=="
+Authentication-Results: validation.local; spf=fail; dkim=fail
+ header.d=paypal.com; dmarc=fail header.from=paypal.com
+
+--===============4929753457756719808==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Pay
+Security
+Assistance
+It has come to our attention that your account information needs to be
+updated as part of our continuing commitment to protect your account and to
+reduce the instance of fraud on our website. Just update your personal record=
+s and
+you will not run into
+any future problems with the online service.
+However, failure to update your records until [DATE] your account considered =
+as suspension.
+Please update your records as soon as this email being sent.
+Our system requires further account
+verification.
+Case ID Number: [REFERENCE_NUMBER]
+Once you have updated your account records, your session will not be
+interrupted and will continue as normal.
+as
+soon as possible. Allowing your account access to remain
+limited for an extended period of
+time may result in further limitations on
+the use of your account and possible account
+closure.
+Click here to update your
+account
+You can
+also confirm your identity by logging into your [ORGANIZATION] account
+at http://images.paypal.com/en_US/i/logo/email_logo.gif
+and you will be directed to the verifying page.
+Thank you for using [ORGANIZATION]!
+The [ORGANIZATION] Team
+Please do
+not reply to this e-mail. Mail sent to this address cannot be
+answered. For assistance,
+log
+in
+to your [ORGANIZATION] account and choose the "Help" link in the footer of
+any page.
+To receive email notifications in plain text
+instead of HTML, update
+your preferences here.
+[ORGANIZATION] Email ID [REFERENCE_NUMBER]
+
+--===============4929753457756719808==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+<html><body>
+<p>Pay
+Security
+Assistance
+It has come to our attention that your account information needs to be
+updated as part of our continuing commitment to protect your account and to
+reduce the instance of fraud on our website. Just update your personal record=
+s and
+you will not run into
+any future problems with the online service.
+However, failure to update your records until [DATE] your account considered =
+as suspension.
+Please update your records as soon as this email being sent.
+Our system requires further account
+verification.
+Case ID Number: [REFERENCE_NUMBER]
+Once you have updated your account records, your session will not be
+interrupted and will continue as normal.
+as
+soon as possible. Allowing your account access to remain
+limited for an extended period of
+time may result in further limitations on
+the use of your account and possible account
+closure.
+Click here to update your
+account
+You can
+also confirm your identity by logging into your [ORGANIZATION] account
+at <a href=3D"http://images.paypal.com/en_US/i/logo/email_logo.gif">http://im=
+ages.paypal.com/en_US/i/logo/email_logo.gif</a>
+and you will be directed to the verifying page.
+Thank you for using [ORGANIZATION]!
+The [ORGANIZATION] Team
+Please do
+not reply to this e-mail. Mail sent to this address cannot be
+answered. For assistance,
+log
+in
+to your [ORGANIZATION] account and choose the "Help" link in the footer of
+any page.
+To receive email notifications in plain text
+instead of HTML, update
+your preferences here.
+[ORGANIZATION] Email ID [REFERENCE_NUMBER]</p>
+</body></html>
+
+--===============4929753457756719808==--

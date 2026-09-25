@@ -1,0 +1,53 @@
+Message-ID: <mail_000047@centroin.com.br>
+Date: Sun, 20 May 2007 21:15:17 +0000
+Subject: [R] Running an R script without running R
+From: "Centroin Team" <employee_997d9194@centroin.com.br>
+To: colleague_12295f8d@stat.math.ethz.ch
+Return-Path: <employee_997d9194@centroin.com.br>
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="===============4222178827413851963=="
+Authentication-Results: validation.local; spf=pass; dkim=pass
+ header.d=centroin.com.br; dmarc=pass header.from=centroin.com.br
+
+--===============4222178827413851963==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Is there any way to run an R script without running R?
+
+As an example, suppose I have a tcl/tk interface that asks
+for a number (in a GUI) and displays its factorial. Is there a
+way to invoke this script without invoking R?
+
+I'm using [PRODUCT] in [PRODUCT].
+
+[NAME]
+
+ [ORGANIZATION]
+<|[https://stat.ethz.ch/mailman/listinfo/r-help]|>
+PLEASE do read the posting guide <|[http://www.R-project.org/posting-guide.ht=
+ml]|>
+and provide commented, minimal, self-contained, reproducible code.
+
+--===============4222178827413851963==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+<html><body>
+<p>Is there any way to run an R script without running R?</p>
+<p>As an example, suppose I have a tcl/tk interface that asks
+for a number (in a GUI) and displays its factorial. Is there a
+way to invoke this script without invoking R?</p>
+<p>I'm using [PRODUCT] in [PRODUCT].</p>
+<p>[NAME]</p>
+<p> [ORGANIZATION]
+&lt;|[<a href=3D"https://stat.ethz.ch/mailman/listinfo/r-help]|&gt;">https://=
+stat.ethz.ch/mailman/listinfo/r-help]|&gt;</a>
+PLEASE do read the posting guide &lt;|[<a href=3D"http://www.R-project.org/po=
+sting-guide.html]|&gt;">http://www.R-project.org/posting-guide.html]|&gt;</a>
+and provide commented, minimal, self-contained, reproducible code.</p>
+</body></html>
+
+--===============4222178827413851963==--

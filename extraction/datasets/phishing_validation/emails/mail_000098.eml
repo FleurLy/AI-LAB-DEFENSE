@@ -1,0 +1,39 @@
+Message-ID: <mail_000098@westernboos.com>
+Date: Sat, 23 Jun 2007 11:41:24 -0500
+Subject: Re" Your Pharmacy Invoice #[REFERENCE_NUMBER]  [DATE]
+From: "Electronic Billing System" <billing@westernboos.com>
+To: target-user@flax9.uwaterloo.ca
+Reply-To: accounting-desk@payment-gateway-support.info
+Return-Path: <bounce@westernboos.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============7943543311468269533=="
+Authentication-Results: validation.local; spf=pass; dkim=pass
+ header.d=westernboos.com; dmarc=fail header.from=westernboos.com
+
+--===============7943543311468269533==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Online Pharmacy - Wholesale Prices[DATE]
+
+Now you have the opportunity to save your time and money! With US based onlin=
+e pharmacy store you can buy any pill u need! Forget about prescriptions and =
+doctors. Now you save your time.=20
+
+Instant shipping, perfect support!=20
+
+[NAME]
+
+"Humor is perhaps a sense of intellectual perspective: an awareness that some=
+ things are really important, others not; and that the two kinds are most odd=
+ly jumbled in everyday affairs." [NAME]
+
+--===============7943543311468269533==
+MIME-Version: 1.0
+Content-Type: application/pdf
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="corrupt.pdf"
+
+JVBERi0xLjcKY29ycnVwdCB2YWxpZGF0aW9uIHNhbXBsZQ==
+
+--===============7943543311468269533==--

@@ -1,0 +1,49 @@
+Message-ID: <mail_000039@gmail.com>
+Date: Wed, 09 May 2007 12:08:20 -0400
+Subject: Re: looping through a file
+From: "Gmail Team" <employee_0e04ae7b@gmail.com>
+To: colleague_483a8b3e@350.com
+Return-Path: <employee_0e04ae7b@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+Authentication-Results: validation.local; spf=pass; dkim=pass
+ header.d=gmail.com; dmarc=pass header.from=gmail.com
+
+On [DATE], [NAME]  wrote:
+[NAME] wrote:
+but if they appear in the file in a different sequence then you also
+need to rewind and start looking at the beginning of the file once
+again like this:
+
+ID:
+foreach my $prime_id ( [USERNAME] ) {
+while ( my $line = <[FILE_PATH]> ) {
+if ( $line =~ /$prime_id/ ) {
+print "$line\\n";
+seek [FILE_PATH], 0, 0;
+next ID;
+}
+}
+}
+
+Would using:
+
+last(); # Break from while back to foreach
+
+..instead of
+
+next(ID);
+
+ not produce the same result here?
+
+Yes, that would be equivalent.
+
+[NAME]
+
+Just a technical nitpick, but it is only equivalent because there is
+no code after the while loop.  If there were code then the last would
+let it execute, but the next(ID) would not.
+
+To unsubscribe, e-mail: 
+For additional commands, e-mail:

@@ -1,0 +1,31 @@
+Message-ID: <mail_000021@psy1.psych.arizona.edu>
+Date: Fri, 26 Nov 1999 17:55:28 -0700
+Subject: [DMDX] Re:
+From: "Psy1 Team" <employee_67223241@psy1.psych.arizona.edu>
+To: colleague_4ec65daa@psy1.psych.arizona.edu
+Return-Path: <employee_67223241@psy1.psych.arizona.edu>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+Authentication-Results: validation.local; spf=pass; dkim=pass
+ header.d=psy1.psych.arizona.edu; dmarc=pass
+ header.from=psy1.psych.arizona.edu
+
+At [TIME] [DATE] [TIME], you wrote:
+How have people fared with standard joy sticks and game pads?  Any
+recommendations here?
+
+  Standard joysticks and gamepads with the RawJoystick input device are as
+good as a PIO12 (identical as far as timing and CPU load are concerned),
+better really as they require fewer parts to be bought and in most cases
+don't need an interface card as most machines have a joystick port already.
+
+[NAME] ([INITIALS])
+
+ /"\\
+ \\ /
+  X  ASCII RIBBON CAMPAIGN - AGAINST HTML MAIL
+ / \\ 
+
+Pohl's law:
+	Nothing is so good that somebody, somewhere, will not hate it.

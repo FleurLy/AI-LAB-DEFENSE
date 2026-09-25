@@ -1,0 +1,112 @@
+Message-ID: <mail_000008@paypal.com>
+Date: Sun, 04 Jun 1995 10:50:08 +0300
+Subject: [ORGANIZATION] Account Suspended For Security Reason
+From: "Account Security Desk" <no-reply-alerts@paypal.com>
+To: target-user@company.test
+Return-Path: <bounce@paypal.com>
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="===============7135341420474541446=="
+Authentication-Results: validation.local; spf=fail; dkim=fail
+ header.d=paypal.com; dmarc=fail header.from=paypal.com
+
+--===============7135341420474541446==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Dear [ORGANIZATION] Account Holder,
+[ORGANIZATION] is constantly working to ensure security
+by regularly screening the accounts in our system. We recently reviewed
+your account, and we need more information to help us provide you with
+a secure service. Until we can collect this information, your access to
+sensitive account features will be limited. We would like to restore
+your access as soon as possible, and we apologize for the
+inconvenience.
+Why is my account access limited?Your account access has been limited for the=
+ following reason(s):
+On the [DATE]: We would like to ensure
+that your account was not accessed by an unauthorised third party from a fore=
+ign
+IP address.
+Because protecting the security of your account is our primary concern,
+we have temporarily suspended access to your e [ORGANIZATION] account. We
+understand that this may be an inconvenience but please understand that
+this temporary suspension is for your protection.
+(Your case ID for this reason is [REFERENCE_NUMBER].)
+How can I restore my account access?
+Please
+Click Here to login and follow the instructions to the Resolution Centre
+to
+complete the "Steps to Restore Account Access."
+Once logged In, follow instructions to the final step. You will be asked to
+complete all requested information. Once your account details are verified
+successfully, we will send you a confirmation email and restore your account =
+access.
+Please do not try to contact us during the verification process as you will n=
+ot
+get any response from us until verification is complete.
+Sincerely,
+[ORGANIZATION] Security Department!
+Please do not
+reply to this e-mail. Mail sent to this address cannot be answered.
+For assistance,
+log in to
+your [ORGANIZATION] account and choose the "Help" link in the footer of any
+page.
+To receive email notifications in plain text instead of HTML, update
+your preferences
+here.
+[REFERENCE_NUMBER]
+
+--===============7135341420474541446==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+<html><body>
+<p>Dear [ORGANIZATION] Account Holder,
+[ORGANIZATION] is constantly working to ensure security
+by regularly screening the accounts in our system. We recently reviewed
+your account, and we need more information to help us provide you with
+a secure service. Until we can collect this information, your access to
+sensitive account features will be limited. We would like to restore
+your access as soon as possible, and we apologize for the
+inconvenience.
+Why is my account access limited?Your account access has been limited for the=
+ following reason(s):
+On the [DATE]: We would like to ensure
+that your account was not accessed by an unauthorised third party from a fore=
+ign
+IP address.
+Because protecting the security of your account is our primary concern,
+we have temporarily suspended access to your e [ORGANIZATION] account. We
+understand that this may be an inconvenience but please understand that
+this temporary suspension is for your protection.
+(Your case ID for this reason is [REFERENCE_NUMBER].)
+How can I restore my account access?
+Please
+Click Here to login and follow the instructions to the Resolution Centre
+to
+complete the "Steps to Restore Account Access."
+Once logged In, follow instructions to the final step. You will be asked to
+complete all requested information. Once your account details are verified
+successfully, we will send you a confirmation email and restore your account =
+access.
+Please do not try to contact us during the verification process as you will n=
+ot
+get any response from us until verification is complete.
+Sincerely,
+[ORGANIZATION] Security Department!
+Please do not
+reply to this e-mail. Mail sent to this address cannot be answered.
+For assistance,
+log in to
+your [ORGANIZATION] account and choose the "Help" link in the footer of any
+page.
+To receive email notifications in plain text instead of HTML, update
+your preferences
+here.
+[REFERENCE_NUMBER]</p>
+</body></html>
+
+--===============7135341420474541446==--

@@ -1,0 +1,32 @@
+Message-ID: <mail_000089@elka.pw.edu.pl>
+Date: Fri, 29 Oct 2004 15:46:51 +0200
+Subject: validated CDF of the Gaussian distribution (fwd)
+From: "Elka Team" <employee_a5b220fb@elka.pw.edu.pl>
+To: colleague_99004f63@interval.louisiana.edu
+Return-Path: <employee_a5b220fb@elka.pw.edu.pl>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+Authentication-Results: validation.local; spf=pass; dkim=fail
+ header.d=elka.pw.edu.pl; dmarc=pass header.from=elka.pw.edu.pl
+
+It seems it didn't arrive, so I resend it.
+Excucse me if you receive multiply copies.
+
+Forwarded message
+Date: [DATE] [TIME]
+validated CDF of the Gaussian distribution
+
+Dear Interval Researchers,
+
+I need to have the validated values of CDF of the normal distribution.
+Obviously, it can be simply obtained by integrating (in interval
+arithmetic) the formula for the PDF (which is well-known).
+
+Two questions arrise:
+
+1) Did anyone do it before ?
+2) Which method of integration can you recommend ?
+
+Thank you for any advices and best regards
+	[NAME]
