@@ -1,0 +1,33 @@
+services:
+  mail-service:
+    build:
+      context: extraction
+    environment:
+      DATA_DIR: /app/data
+      SMTP_HOST: 0.0.0.0
+      SMTP_PORT: 1025
+    ports:
+      - "1025:1025"
+    volumes:
+      - ./extraction/data:/app/data
+    restart: unless-stopped
+
+  ousmane-llm:
+    build:
+      context: llm/Ousmane-llm
+    environment:
+      LLM_PROVIDER: ollama
+      LLM_MODEL: ${LLM_MODEL:-qwen2.5:3b}
+      LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434/v1}
+      LLM_API_KEY: ollama
+      RESULTS_DIR: /app/data/results
+      API_HOST: 0.0.0.0
+      API_PORT: 8000
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./llm/Ousmane-llm/data/results:/app/data/results
+      - ./extraction/data/normalized:/input:ro
+    restart: unless-stopped
