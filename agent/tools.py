@@ -1,6 +1,29 @@
 import re
 import difflib
+import joblib
+from pathlib import Path
 from urllib.parse import urlparse
+
+# ============================================================
+# 0. CHARGEMENT DU MODÈLE ENTRAÎNÉ (agent/spam_email_classifier/model)
+# ============================================================
+HERE = Path(__file__).resolve().parent
+SPAM_MODEL_PATH = HERE / "spam_email_classifier" / "model" / "spam_tfidf_loreg.joblib"
+
+_MODEL = None  # cache, chargé une seule fois (lazy)
+
+
+def get_model():
+    """Charge (une seule fois) et retourne le modèle spam entraîné (TF-IDF + LogReg)."""
+    global _MODEL
+    if _MODEL is None:
+        if not SPAM_MODEL_PATH.exists():
+            raise FileNotFoundError(
+                f"Modèle introuvable à {SPAM_MODEL_PATH}. "
+                "Vérifie que agent/spam_email_classifier/model/ contient bien le .joblib."
+            )
+        _MODEL = joblib.load(SPAM_MODEL_PATH)
+    return _MODEL
 
 # ============================================================
 # 1. CHECK EXPÉDITEUR (sender)
@@ -114,11 +137,16 @@ def check_pieces_jointes(data: dict) -> dict:
 # ============================================================
 # 5. CHECK CONTENU — via ton modèle déjà entraîné
 # ============================================================
-def check_contenu(data: dict, model) -> dict:
+def check_contenu(data: dict, model=None) -> dict:
     """
     model : ton modèle déjà entraîné (scikit-learn, ou autre),
     qui expose model.predict_proba() ou équivalent.
+    Si non fourni, on charge automatiquement le modèle entraîné
+    présent dans agent/spam_email_classifier/model/.
     """
+    if model is None:
+        model = get_model()
+
     subject = data.get("subject", "")
     body = data.get("body", "")
     text = f"{subject} {body}"
