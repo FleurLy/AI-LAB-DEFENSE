@@ -1,0 +1,129 @@
+{
+  "schema_version": "1.0",
+  "email": {
+    "from": {
+      "name": "Microsoft Security",
+      "address": "security@example.com"
+    },
+    "reply_to": "support@other-domain.com",
+    "to": [
+      "user@company.com"
+    ],
+    "cc": [],
+    "subject": "URGENT - Votre mot de passe expire",
+    "body_text": "Bonjour, votre mot de passe expire aujourd'hui...",
+    "language": "fr",
+    "sent_at": "2026-09-25T18:30:00Z",
+    "message_id": "<abc123@example.com>"
+  },
+  "attachments": [
+    {
+      "name": "facture.pdf",
+      "mime_type": "application/pdf",
+      "size_bytes": 184532,
+      "sha256": "abc123...",
+      "content_text": "FACTURE N°4582\nMontant : 4 850 €...",
+      "visual_description": null,
+      "extraction": {
+        "method": "text",
+        "success": true
+      },
+      "urls": [
+        "https://example.com/payment"
+      ],
+      "qr_codes": [],
+      "security": {
+        "extension_mime_mismatch": false,
+        "encrypted": false,
+        "contains_macro": false,
+        "contains_executable": false
+      }
+    },
+    {
+      "name": "qr_code.png",
+      "mime_type": "image/png",
+      "size_bytes": 48321,
+      "sha256": "def456...",
+      "content_text": "Scannez ce QR code pour confirmer votre compte.",
+      "visual_description": "Logo Microsoft avec un QR code au centre.",
+      "extraction": {
+        "method": "vision",
+        "success": true
+      },
+      "urls": [],
+      "qr_codes": [
+        "https://fake-login.example"
+      ],
+      "security": {
+        "extension_mime_mismatch": false,
+        "encrypted": false,
+        "contains_macro": false,
+        "contains_executable": false
+      }
+    }
+  ],
+  "urls": [
+    {
+      "source": "email_body",
+      "display_text": "Se connecter",
+      "url": "https://micros0ft-login.example.xyz",
+      "domain": "micros0ft-login.example.xyz",
+      "uses_ip_address": false,
+      "uses_punycode": false,
+      "is_shortened": false,
+      "display_domain_mismatch": true
+    },
+    {
+      "source": "attachment:qr_code.png",
+      "display_text": null,
+      "url": "https://fake-login.example",
+      "domain": "fake-login.example",
+      "uses_ip_address": false,
+      "uses_punycode": false,
+      "is_shortened": false,
+      "display_domain_mismatch": false
+    }
+  ],
+  "authentication": {
+    "spf": "fail",
+    "dkim": "none",
+    "dmarc": "fail"
+  },
+  "sender": {
+    "from_domain": "example.com",
+    "reply_to_domain": "other-domain.com",
+    "return_path": "bounce@another-domain.com",
+    "return_path_domain": "another-domain.com",
+    "from_reply_to_mismatch": true,
+    "from_return_path_mismatch": true
+  },
+  "routing": {
+    "source": "smtp",
+    "received_at": "2026-09-25T18:30:02Z",
+    "received_hops": 4
+  },
+  "content_signals": {
+    "contains_credential_request": true,
+    "contains_payment_request": false,
+    "contains_urgent_language": true,
+    "contains_threat_language": true,
+    "contains_secrecy_request": false,
+    "contains_personal_data_request": false,
+    "contains_external_link": true,
+    "contains_attachment": true,
+    "contains_qr_code": true
+  },
+  "technical_signals": {
+    "spf_failed": true,
+    "dkim_failed": false,
+    "dmarc_failed": true,
+    "reply_to_mismatch": true,
+    "return_path_mismatch": true,
+    "url_count": 2,
+    "suspicious_url_count": 2,
+    "attachment_count": 2,
+    "executable_attachment_count": 0,
+    "encrypted_attachment_count": 0,
+    "qr_code_count": 1
+  }
+}

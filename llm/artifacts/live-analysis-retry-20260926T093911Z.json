@@ -1,0 +1,97 @@
+{
+  "started_at": "2026-09-26T09:39:04.405254+00:00",
+  "payload_file": "examples/email_analysis.json",
+  "transport": "FastAPI ASGI with real OpenRouter HTTPS calls",
+  "diagnostic_override": {
+    "LLM_TIMEOUT_SECONDS": 120.0
+  },
+  "diagnostics": {
+    "llm": {
+      "upstream_or_error_status": 429,
+      "provider_message": "Provider returned error",
+      "exception_chain": [
+        "ProviderError",
+        "OpenAIRateLimitError",
+        "RateLimitError",
+        "HTTPStatusError"
+      ],
+      "elapsed_seconds": 0.447
+    },
+    "jev": {
+      "result_received": true,
+      "elapsed_seconds": 6.432
+    }
+  },
+  "health_status": 200,
+  "elapsed_seconds": 6.781,
+  "http_status": 200,
+  "response": {
+    "llm": {
+      "status": "error",
+      "model": "google/gemma-4-26b-a4b-it:free",
+      "error": {
+        "code": "provider_error",
+        "message": "The analysis provider could not complete the request.",
+        "status_code": 502
+      }
+    },
+    "jev": {
+      "status": "success",
+      "model": "typesafe/jev-router",
+      "result": {
+        "social_engineering_probability": 0.98,
+        "phishing_probability": 0.98,
+        "impersonation_probability": 0.95,
+        "urgency_probability": 0.9,
+        "authority_pressure_probability": 0.85,
+        "secrecy_probability": 0.05,
+        "credential_request_probability": 0.95,
+        "payment_request_probability": 0.25,
+        "personal_data_request_probability": 0.2,
+        "procedure_bypass_probability": 0.15,
+        "requested_action": "provide_credentials",
+        "attack_type": "credential_theft",
+        "evidence": [
+          {
+            "type": "authentication",
+            "description": "SPF and DMARC checks both failed, indicating unauthorized sender routing.",
+            "source": "authentication",
+            "severity": "high",
+            "confidence": 0.95
+          },
+          {
+            "type": "impersonation",
+            "description": "Display name claims to be 'Microsoft Security' while sender address is 'security@example.com' with mismatched reply-to and return-path domains.",
+            "source": "email.from",
+            "severity": "critical",
+            "confidence": 0.95
+          },
+          {
+            "type": "typosquatting_url",
+            "description": "Body link points to typosquatted domain 'micros0ft-login.example.xyz' masquerading as Microsoft login portal.",
+            "source": "urls[0].url",
+            "severity": "critical",
+            "confidence": 0.98
+          },
+          {
+            "type": "qr_phishing",
+            "description": "Image attachment contains a Microsoft logo and a QR code directing users to 'https://fake-login.example' to steal credentials.",
+            "source": "attachments[1].qr_codes[0]",
+            "severity": "critical",
+            "confidence": 0.95
+          },
+          {
+            "type": "urgency",
+            "description": "Subject and body employ artificial urgency claiming password expiration today.",
+            "source": "email.subject",
+            "severity": "medium",
+            "confidence": 0.9
+          }
+        ],
+        "summary": "The email impersonates Microsoft Security using urgency around password expiration to drive the recipient to credential phishing pages via both a typosquatted URL and a quishing QR code. Authentication checks (SPF/DMARC) fail, and sender routing contains conflicting domains.",
+        "recommended_action": "Block the sender domain and associated URLs, quarantine the message across the mail environment, and remind the user not to scan embedded QR codes or submit credentials."
+      }
+    }
+  },
+  "response_schema_valid": true
+}

@@ -1,0 +1,51 @@
+{
+  "started_at": "2026-09-26T09:37:27.515794+00:00",
+  "payload_file": "examples/email_analysis.json",
+  "transport": "FastAPI ASGI with real OpenRouter HTTPS calls",
+  "configured_timeout_seconds": 30.0,
+  "diagnostics": {
+    "llm": {
+      "upstream_or_error_status": 429,
+      "provider_message": "Provider returned error",
+      "exception_chain": [
+        "ProviderError",
+        "OpenAIRateLimitError",
+        "RateLimitError",
+        "HTTPStatusError"
+      ],
+      "elapsed_seconds": 0.48
+    },
+    "jev": {
+      "exception_chain": [
+        "CancelledError",
+        "SSLWantReadError"
+      ],
+      "elapsed_seconds": 30.005
+    }
+  },
+  "health_status": 200,
+  "openapi_status": 200,
+  "elapsed_seconds": 30.407,
+  "http_status": 200,
+  "response": {
+    "llm": {
+      "status": "error",
+      "model": "google/gemma-4-26b-a4b-it:free",
+      "error": {
+        "code": "provider_error",
+        "message": "The analysis provider could not complete the request.",
+        "status_code": 502
+      }
+    },
+    "jev": {
+      "status": "error",
+      "model": "typesafe/jev-router",
+      "error": {
+        "code": "analysis_timeout",
+        "message": "The email analysis timed out. Try again later.",
+        "status_code": 504
+      }
+    }
+  },
+  "response_schema_valid": true
+}

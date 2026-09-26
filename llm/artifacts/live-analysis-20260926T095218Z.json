@@ -1,0 +1,190 @@
+{
+  "started_at": "2026-09-26T09:52:04.081123+00:00",
+  "payload_file": "examples/email_analysis.json",
+  "transport": "FastAPI ASGI with real OpenRouter HTTPS calls",
+  "configured_timeout_seconds": 30.0,
+  "configured_models": {
+    "llm": "openai/gpt-5.6-sol",
+    "jev": "typesafe/jev-router"
+  },
+  "diagnostics": {
+    "llm": {
+      "result_received": true,
+      "elapsed_seconds": 14.019
+    },
+    "jev": {
+      "result_received": true,
+      "elapsed_seconds": 6.435
+    }
+  },
+  "health_status": 200,
+  "openapi_status": 200,
+  "elapsed_seconds": 14.365,
+  "http_status": 200,
+  "response": {
+    "llm": {
+      "status": "success",
+      "model": "openai/gpt-5.6-sol",
+      "result": {
+        "social_engineering_probability": 0.99,
+        "phishing_probability": 0.99,
+        "impersonation_probability": 0.98,
+        "urgency_probability": 0.98,
+        "authority_pressure_probability": 0.78,
+        "secrecy_probability": 0.03,
+        "credential_request_probability": 0.98,
+        "payment_request_probability": 0.38,
+        "personal_data_request_probability": 0.12,
+        "procedure_bypass_probability": 0.86,
+        "requested_action": "provide_credentials",
+        "attack_type": "credential_theft",
+        "evidence": [
+          {
+            "type": "credential_request",
+            "description": "The upstream content analysis explicitly identifies a credential request. Combined with the password-expiration pretext and login destinations, this strongly indicates an attempt to capture account credentials.",
+            "source": "content_signals.contains_credential_request",
+            "severity": "critical",
+            "confidence": 0.99
+          },
+          {
+            "type": "urgency_and_threat",
+            "description": "The subject says the password expires urgently, the body says it expires today, and the content signals identify urgent and threatening language. This pressures the recipient to act quickly.",
+            "source": "email.subject",
+            "severity": "high",
+            "confidence": 0.98
+          },
+          {
+            "type": "impersonation",
+            "description": "The sender is presented as “Microsoft Security,” and the QR image is described as carrying a Microsoft logo, but the supplied sender address is security@example.com rather than a Microsoft domain. This is strong evidence of Microsoft impersonation.",
+            "source": "email.from",
+            "severity": "critical",
+            "confidence": 0.99
+          },
+          {
+            "type": "deceptive_url",
+            "description": "The body link uses the lookalike label “micros0ft” with a zero, and the payload flags a display-domain mismatch. This is strongly consistent with a fake login destination.",
+            "source": "urls[0].url",
+            "severity": "critical",
+            "confidence": 0.99
+          },
+          {
+            "type": "qr_phishing",
+            "description": "The image tells the recipient to scan a QR code to confirm the account; the extracted QR destination is https://fake-login.example. The QR channel may conceal the destination and move authentication outside normal controls.",
+            "source": "attachments[1].qr_codes[0]",
+            "severity": "critical",
+            "confidence": 0.99
+          },
+          {
+            "type": "authentication_failure",
+            "description": "SPF and DMARC are reported as failed, while DKIM is absent. These technical facts undermine the claimed sender identity, although authentication results alone do not establish intent.",
+            "source": "authentication",
+            "severity": "high",
+            "confidence": 0.98
+          },
+          {
+            "type": "sender_mismatch",
+            "description": "The From, Reply-To, and return-path domains differ, and both mismatch flags are true. This routing pattern is inconsistent with a straightforward Microsoft security notification and supports spoofing or impersonation concerns.",
+            "source": "sender",
+            "severity": "high",
+            "confidence": 0.97
+          },
+          {
+            "type": "suspicious_destinations",
+            "description": "The technical analysis counts two URLs and marks both as suspicious. This corroborates the risks independently indicated by the lookalike login URL and QR destination.",
+            "source": "technical_signals.suspicious_url_count",
+            "severity": "high",
+            "confidence": 0.98
+          },
+          {
+            "type": "payment_lure_conflict",
+            "description": "The PDF contains an invoice amount of €4,850 and a payment URL, suggesting a possible secondary payment lure. However, the upstream content signal says no payment request, so an actual payment instruction is not established.",
+            "source": "attachments[0].content_text",
+            "severity": "medium",
+            "confidence": 0.76
+          },
+          {
+            "type": "attachment_safety",
+            "description": "Neither attachment is reported as executable, encrypted, macro-enabled, or mismatched by extension and MIME type. This lowers the evidence for malware delivery but does not mitigate credential phishing through their links or QR content.",
+            "source": "attachments",
+            "severity": "low",
+            "confidence": 0.95
+          },
+          {
+            "type": "absence_of_secrecy",
+            "description": "The content analysis reports no secrecy request. There is no supplied evidence that the recipient is told to conceal the action.",
+            "source": "content_signals.contains_secrecy_request",
+            "severity": "low",
+            "confidence": 0.96
+          },
+          {
+            "type": "absence_of_personal_data_request",
+            "description": "The content analysis reports no explicit request for personal data. The main apparent target is account authentication information rather than general personal information.",
+            "source": "content_signals.contains_personal_data_request",
+            "severity": "low",
+            "confidence": 0.92
+          }
+        ],
+        "summary": "This is almost certainly a Microsoft-themed credential-phishing attempt. It combines urgent password-expiration pressure, a lookalike login URL, a QR code leading to a fake-login destination, failed SPF and DMARC, absent DKIM, and mismatched sender domains. The invoice PDF introduces a possible secondary payment lure, but the strongest supported objective is credential theft.",
+        "recommended_action": "Do not click the link, scan the QR code, reply, enter credentials, or use the invoice payment URL. Report and quarantine the message, then access Microsoft services only through a known official bookmark or manually entered trusted address. If credentials were already entered, reset them through the official service, revoke active sessions, enable MFA, and notify the security team."
+      }
+    },
+    "jev": {
+      "status": "success",
+      "model": "typesafe/jev-router",
+      "result": {
+        "social_engineering_probability": 0.99,
+        "phishing_probability": 0.99,
+        "impersonation_probability": 0.98,
+        "urgency_probability": 0.95,
+        "authority_pressure_probability": 0.85,
+        "secrecy_probability": 0.05,
+        "credential_request_probability": 0.95,
+        "payment_request_probability": 0.35,
+        "personal_data_request_probability": 0.25,
+        "procedure_bypass_probability": 0.65,
+        "requested_action": "provide_credentials",
+        "attack_type": "credential_theft",
+        "evidence": [
+          {
+            "type": "authentication",
+            "description": "SPF and DMARC both failed for domain example.com, and DKIM was not present.",
+            "source": "authentication",
+            "severity": "critical",
+            "confidence": 0.99
+          },
+          {
+            "type": "impersonation",
+            "description": "The sender claims to be Microsoft Security, but the From domain is example.com, Reply-To points to other-domain.com, and Return-Path points to another-domain.com.",
+            "source": "email.from",
+            "severity": "critical",
+            "confidence": 0.98
+          },
+          {
+            "type": "suspicious_url",
+            "description": "The body link points to micros0ft-login.example.xyz, which uses a typosquatted Microsoft brand name, and the embedded QR code redirects to fake-login.example.",
+            "source": "urls[0].url",
+            "severity": "critical",
+            "confidence": 0.98
+          },
+          {
+            "type": "urgency",
+            "description": "The subject and body assert that the recipient's password expires today, creating artificial time pressure to prompt fast action.",
+            "source": "email.subject",
+            "severity": "high",
+            "confidence": 0.95
+          },
+          {
+            "type": "quishing",
+            "description": "Attachment qr_code.png displays a Microsoft logo and instructs the user to scan the QR code to confirm their account.",
+            "source": "attachments[1].content_text",
+            "severity": "high",
+            "confidence": 0.95
+          }
+        ],
+        "summary": "The email impersonates Microsoft Security using urgency around password expiration to harvest user credentials via typosquatted login URLs and a QR code (quishing). Sender domain authentication fails across SPF and DMARC, and routing metadata exhibits significant domain discrepancies.",
+        "recommended_action": "Block the sender and associated domains at the mail gateway, do not interact with links or QR codes, and report the message to security operations."
+      }
+    }
+  },
+  "response_schema_valid": true
+}
