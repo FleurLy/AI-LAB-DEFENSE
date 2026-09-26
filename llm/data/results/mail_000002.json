@@ -1,0 +1,149 @@
+{
+  "analysis": {
+    "social_engineering_probability": 0.97,
+    "phishing_probability": 0.98,
+    "impersonation_probability": 0.96,
+    "urgency_probability": 0.75,
+    "authority_pressure_probability": 0.85,
+    "secrecy_probability": 0.02,
+    "credential_request_probability": 0.95,
+    "payment_request_probability": 0.01,
+    "personal_data_request_probability": 0.8,
+    "procedure_bypass_probability": 0.6,
+    "requested_action": "click_link",
+    "attack_type": "phishing",
+    "evidence": [
+      {
+        "type": "authentication_failure",
+        "description": "SPF, DKIM, and DMARC all failed, indicating the sending domain did not authenticate the message.",
+        "source": "authentication.spf, authentication.dkim, authentication.dmarc",
+        "severity": "high",
+        "confidence": 1.0
+      },
+      {
+        "type": "reply_to_mismatch",
+        "description": "The From domain is 8617.com while the Reply-To domain is secure-auth-login.top, a mismatch consistent with phishing.",
+        "source": "sender.from_domain, sender.reply_to_domain, sender.from_reply_to_mismatch",
+        "severity": "high",
+        "confidence": 1.0
+      },
+      {
+        "type": "impersonation",
+        "description": "The message claims to be from '[ORGANIZATION]' Account Security/Account Review, but the sender address is no-reply-alerts@8617.com and Reply-To is verify-account@secure-auth-login.top, neither matching the claimed organization.",
+        "source": "email.from, email.reply_to, email.body_text",
+        "severity": "high",
+        "confidence": 0.95
+      },
+      {
+        "type": "credential_request",
+        "description": "The body asks the recipient to 'Click here to login and restore your account access' and says they may require the recipient to 'verify or update your Personal Information'.",
+        "source": "email.body_text, content_signals.contains_credential_request",
+        "severity": "high",
+        "confidence": 0.95
+      },
+      {
+        "type": "urgency",
+        "description": "The body uses 'final reminder', 'as soon as possible', and threatens temporary suspension if ignored; content_signals.contains_urgent_language is false, conflicting with the semantic text.",
+        "source": "email.body_text, content_signals.contains_urgent_language",
+        "severity": "medium",
+        "confidence": 0.8
+      },
+      {
+        "type": "threat",
+        "description": "The body states ignoring the request leaves 'no choice but to temporary suspend your account'; content_signals.contains_threat_language is false, conflicting with the semantic text.",
+        "source": "email.body_text, content_signals.contains_threat_language",
+        "severity": "medium",
+        "confidence": 0.8
+      },
+      {
+        "type": "authority_pressure",
+        "description": "The body invokes Account Review Team, User Agreement, anti-fraud teams, and advanced security systems to pressure compliance.",
+        "source": "email.body_text",
+        "severity": "medium",
+        "confidence": 0.85
+      },
+      {
+        "type": "generic_placeholder",
+        "description": "The body repeatedly uses '[ORGANIZATION]' and '[REFERENCE_NUMBER]' placeholders instead of a specific brand or case ID, consistent with a mass phishing template.",
+        "source": "email.body_text, email.body_html",
+        "severity": "medium",
+        "confidence": 0.9
+      },
+      {
+        "type": "date_inconsistency",
+        "description": "The sent date is 2007-05-22, the received date is 2026-09-26, and the body references November 14, 2006, creating an inconsistent timeline.",
+        "source": "email.sent_at, routing.received_at, email.body_text",
+        "severity": "low",
+        "confidence": 0.8
+      },
+      {
+        "type": "missing_url_evidence",
+        "description": "No URLs were extracted and content_signals.contains_external_link is false, yet the body instructs clicking a login link; the destination cannot be analyzed from the supplied payload.",
+        "source": "urls, content_signals.contains_external_link, email.body_text",
+        "severity": "medium",
+        "confidence": 0.9
+      },
+      {
+        "type": "no_attachments_or_qr",
+        "description": "No attachments, QR codes, executable attachments, or encrypted attachments were present, reducing malware risk but not negating credential phishing.",
+        "source": "attachments, technical_signals.attachment_count, technical_signals.qr_code_count",
+        "severity": "low",
+        "confidence": 1.0
+      },
+      {
+        "type": "benign_security_advice",
+        "description": "The body includes advice not to provide passwords to fraudulent websites and to type the organization URL manually; this is common in both legitimate and phishing emails and does not verify sender identity.",
+        "source": "email.body_text",
+        "severity": "low",
+        "confidence": 0.9
+      },
+      {
+        "type": "payment_request_absent",
+        "description": "No payment request is present; content_signals.contains_payment_request is false.",
+        "source": "content_signals.contains_payment_request",
+        "severity": "low",
+        "confidence": 1.0
+      },
+      {
+        "type": "secrecy_absent",
+        "description": "No request for secrecy was observed; content_signals.contains_secrecy_request is false.",
+        "source": "content_signals.contains_secrecy_request",
+        "severity": "low",
+        "confidence": 1.0
+      },
+      {
+        "type": "personal_data_request",
+        "description": "The body says the recipient may be required to verify or update Personal Information, but content_signals.contains_personal_data_request is false; the semantic text suggests possible personal-data collection.",
+        "source": "email.body_text, content_signals.contains_personal_data_request",
+        "severity": "medium",
+        "confidence": 0.75
+      },
+      {
+        "type": "procedure_bypass",
+        "description": "The message asks the recipient to click a login link rather than independently navigate to the organization site, although it also includes advice to type the URL manually; the guidance is mixed.",
+        "source": "email.body_text",
+        "severity": "medium",
+        "confidence": 0.6
+      },
+      {
+        "type": "sender_domain",
+        "description": "The From domain is 8617.com and the return path is null; the numeric From domain is not obviously associated with the claimed organization, and the missing return path provides no additional authentication evidence.",
+        "source": "sender.from_domain, sender.return_path, sender.return_path_domain",
+        "severity": "medium",
+        "confidence": 0.8
+      }
+    ]
+  },
+  "report": {
+    "summary": "This message is assessed as phishing with very high likelihood. It appears to impersonate an organization’s account-security team and asks the recipient to click a login link to restore account access, potentially exposing credentials or personal information.",
+    "risk_explanation": "Key indicators include complete SPF, DKIM, and DMARC authentication failure; a mismatch between the From domain (8617.com) and Reply-To domain (secure-auth-login.top); and sender domains that do not match the claimed organization. The message pressures the recipient with a “final reminder” and threatened account suspension, while invoking account-review and anti-fraud authority. Generic placeholders and inconsistent dates further undermine credibility. No destination URL was extracted, so the link itself could not be analyzed. No attachments, QR codes, payment request, or secrecy request were identified, but that does not reduce the substantial credential-phishing risk.",
+    "recommended_actions": [
+      "Do not click the login link, reply to the message, or provide credentials or personal information.",
+      "Verify any account issue independently by opening the organization’s known official website or app—not through information or links in the message—and contacting support through a trusted channel if needed.",
+      "Report the message as phishing to the organization’s security or IT team and through the mail provider’s reporting function, then quarantine or delete it according to policy.",
+      "If the link was already opened, stop interacting with the page and notify the security or IT team promptly.",
+      "If credentials or personal information were submitted, immediately change the affected password through the official site, change any reused passwords, enable multi-factor authentication where available, and follow the organization’s incident-response guidance."
+    ]
+  },
+  "approach": "jev_then_gpt"
+}

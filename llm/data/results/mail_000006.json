@@ -1,0 +1,128 @@
+{
+  "analysis": {
+    "social_engineering_probability": 0.9,
+    "phishing_probability": 0.88,
+    "impersonation_probability": 0.85,
+    "urgency_probability": 0.3,
+    "authority_pressure_probability": 0.4,
+    "secrecy_probability": 0.0,
+    "credential_request_probability": 0.9,
+    "payment_request_probability": 0.6,
+    "personal_data_request_probability": 0.1,
+    "procedure_bypass_probability": 0.2,
+    "requested_action": "provide_credentials",
+    "attack_type": "phishing",
+    "evidence": [
+      {
+        "type": "authentication_failure",
+        "description": "SPF, DKIM and DMARC all failed for the claimed constantcontact.com sender domain. This is an observed authentication result, not proof of malicious intent by itself, but it is inconsistent with a legitimate Constant Contact message.",
+        "source": "authentication.spf, authentication.dkim, authentication.dmarc",
+        "severity": "high",
+        "confidence": 1.0
+      },
+      {
+        "type": "reply_to_mismatch",
+        "description": "From domain is constantcontact.com but Reply-To domain is secure-auth-login.top. The mismatch is observed, and the reply-to domain name is semantically suggestive of credential harvesting.",
+        "source": "sender.from_reply_to_mismatch, sender.reply_to_domain",
+        "severity": "high",
+        "confidence": 0.95
+      },
+      {
+        "type": "credential_request",
+        "description": "Body text asks the recipient to log in to their account and references 'Login Now'; content_signals.contains_credential_request is true. This is an observed request for account access.",
+        "source": "email.body_text, content_signals.contains_credential_request",
+        "severity": "high",
+        "confidence": 0.9
+      },
+      {
+        "type": "payment_request",
+        "description": "Body text asks the recipient to buy the service and go to 'My Account>Pay for Products', with monthly plan pricing. content_signals.contains_payment_request is false, which conflicts with the body language; the body still contains payment-related persuasion.",
+        "source": "email.body_text, content_signals.contains_payment_request",
+        "severity": "medium",
+        "confidence": 0.7
+      },
+      {
+        "type": "display_name_inconsistency",
+        "description": "Display name 'Account Security Desk' does not match the marketing-trial subject/body or the no-reply-alerts@constantcontact.com address. This is an inference of possible impersonation rather than a verified fact.",
+        "source": "email.from.name, email.from.address, email.subject",
+        "severity": "medium",
+        "confidence": 0.7
+      },
+      {
+        "type": "suspicious_reply_to_domain",
+        "description": "Reply-To domain secure-auth-login.top is not the claimed sender domain and its name resembles a credential-login lure. This is semantic inference from the domain string.",
+        "source": "sender.reply_to_domain",
+        "severity": "high",
+        "confidence": 0.9
+      },
+      {
+        "type": "template_placeholders",
+        "description": "Body contains unresolved placeholders such as [ORGANIZATION], [USERNAME], [NAME], [FINANCIAL_INFO] and [PHONE_NUMBER]. This is observed and can indicate a mass template or misconfigured campaign.",
+        "source": "email.body_text",
+        "severity": "medium",
+        "confidence": 0.8
+      },
+      {
+        "type": "missing_url_evidence",
+        "description": "No URLs were extracted (urls empty, url_count 0), so the actual login destination cannot be verified from the supplied payload. The body contains incomplete 'Login Now [' text but no usable link.",
+        "source": "urls, technical_signals.url_count, email.body_text",
+        "severity": "low",
+        "confidence": 1.0
+      },
+      {
+        "type": "benign_return_path",
+        "description": "Return-Path domain is constantcontact.com and from_return_path_mismatch is false. This is consistent with the claimed from domain and is benign evidence.",
+        "source": "sender.return_path_domain, sender.from_return_path_mismatch",
+        "severity": "low",
+        "confidence": 1.0
+      },
+      {
+        "type": "no_attachment_or_qr",
+        "description": "No attachments and no QR codes are present; attachment_count and qr_code_count are 0. This removes attachment/QR-based attack vectors from the supplied evidence.",
+        "source": "attachments, technical_signals.attachment_count, technical_signals.qr_code_count",
+        "severity": "low",
+        "confidence": 1.0
+      },
+      {
+        "type": "urgency_persuasion",
+        "description": "Subject 'Don't lose your marketing edge' and body 'Your trial may be over' create mild urgency/persuasion, but no explicit deadline or threat is present.",
+        "source": "email.subject, email.body_text, content_signals.contains_urgent_language",
+        "severity": "low",
+        "confidence": 0.5
+      },
+      {
+        "type": "authority_pressure",
+        "description": "Sender display name 'Account Security Desk' and body references to 'Communication Consultants' may imply authority, but the pressure is mild and not explicit.",
+        "source": "email.from.name, email.body_text",
+        "severity": "low",
+        "confidence": 0.4
+      },
+      {
+        "type": "no_secrecy_or_threat",
+        "description": "content_signals reports no secrecy request and no threat language. This is benign evidence against those specific tactics.",
+        "source": "content_signals.contains_secrecy_request, content_signals.contains_threat_language",
+        "severity": "low",
+        "confidence": 1.0
+      },
+      {
+        "type": "authentication_conflict",
+        "description": "The claimed from domain constantcontact.com fails SPF/DKIM/DMARC while the return path also uses constantcontact.com. This conflict means authentication failure is not explained by a simple return-path mismatch.",
+        "source": "authentication.spf, authentication.dkim, authentication.dmarc, sender.return_path_domain",
+        "severity": "high",
+        "confidence": 0.9
+      }
+    ]
+  },
+  "report": {
+    "summary": "The analysis classifies this message as phishing, with a 0.88 phishing probability and a requested action of providing credentials. It also indicates strong social-engineering and impersonation risk. Treat the message as unsafe.",
+    "risk_explanation": "The strongest indicators are failed SPF, DKIM, and DMARC authentication; a mismatch between the claimed constantcontact.com sender and the secure-auth-login.top Reply-To domain; and language asking the recipient to log in. The message also contains payment-related persuasion and unresolved template placeholders. Mild urgency and authority cues are present, but there is no secrecy request, explicit threat, attachment, or QR code. The Return-Path matches the claimed sender domain, which is benign evidence, but it does not resolve the authentication failures. No usable URL was extracted, so the actual login destination could not be assessed from the supplied evidence.",
+    "recommended_actions": [
+      "Do not provide credentials, reply to the message, or use any login or payment prompt contained in it.",
+      "Verify the account independently by navigating to the service through a known official website or trusted application—not through the message.",
+      "Report the message through your organization’s phishing-reporting process, then quarantine or delete it according to policy.",
+      "If credentials were already entered, change the password immediately using the official service, revoke active sessions where available, enable multifactor authentication, and notify the appropriate security team.",
+      "If payment information was already provided, contact the relevant financial institution or payment provider and your security team promptly."
+    ]
+  },
+  "approach": "jev_then_gpt"
+}

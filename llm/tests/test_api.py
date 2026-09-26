@@ -7,7 +7,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 from app.analyzers.base import EmailAnalyzer
-from app.api.dependencies import get_analyzer, get_jev_analyzer, get_report_generator
+from app.api.dependencies import get_jev_analyzer, get_report_generator
 from app.core.errors import (
     AnalysisTimeoutError,
     ConfigurationError,
@@ -20,18 +20,16 @@ from app.models.email import EmailAnalysisRequest
 
 
 @pytest.fixture
-def mock_api(full_analysis, security_analysis, security_report, monkeypatch):
+def mock_api(security_analysis, security_report, monkeypatch):
     monkeypatch.setenv("LLM_MODEL", "openai/gpt-4o-mini")
     monkeypatch.setenv("JEV_MODEL", "test-provider/jev-model")
-    llm, jev, reporter = AsyncMock(), AsyncMock(), AsyncMock()
-    llm.analyze.return_value = full_analysis
+    jev, reporter = AsyncMock(), AsyncMock()
     jev.analyze.return_value = security_analysis
     reporter.generate.return_value = security_report
     app = create_app()
-    app.dependency_overrides[get_analyzer] = lambda: llm
     app.dependency_overrides[get_jev_analyzer] = lambda: jev
     app.dependency_overrides[get_report_generator] = lambda: reporter
-    return app, llm, jev
+    return app, reporter, jev
 
 
 def test_health_without_configuration(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -42,31 +40,29 @@ def test_health_without_configuration(monkeypatch: pytest.MonkeyPatch) -> None:
     assert response.json() == {"status": "ok"}
 
 
-@pytest.mark.parametrize("mode", ["gpt_only", "jev_then_gpt"])
-def test_analyze_returns_common_result(example_payload, mock_api, monkeypatch, mode):
+@pytest.mark.parametrize("mode", ["gpt_only", "jev_then_gpt", "invalid"])
+def test_analyze_always_runs_jev_then_report(example_payload, mock_api, monkeypatch, mode):
     monkeypatch.setenv("ANALYSIS_MODE", mode)
-    app, llm, jev = mock_api
+    app, reporter, jev = mock_api
     reporter = app.dependency_overrides[get_report_generator]()
     with TestClient(app) as client:
         response = client.post("/analyze", json=example_payload)
     assert response.status_code == 200
-    assert response.json() == {**llm.analyze.return_value.model_dump(mode="json"), "approach": mode}
-    active = llm if mode == "gpt_only" else jev
-    inactive = jev if mode == "gpt_only" else llm
-    active.analyze.assert_awaited_once()
-    inactive.analyze.assert_not_awaited()
-    assert active.analyze.call_args.args[0].model_dump(mode="json", by_alias=True) == example_payload
-    if mode == "jev_then_gpt":
-        reporter.generate.assert_awaited_once_with(jev.analyze.return_value)
-    else:
-        reporter.generate.assert_not_awaited()
+    assert response.json() == {
+        "analysis": jev.analyze.return_value.model_dump(mode="json"),
+        "report": reporter.generate.return_value.model_dump(mode="json"),
+        "approach": "jev_then_gpt",
+    }
+    jev.analyze.assert_awaited_once()
+    assert jev.analyze.call_args.args[0].model_dump(mode="json", by_alias=True) == example_payload
+    reporter.generate.assert_awaited_once_with(jev.analyze.return_value)
 
 
 @pytest.mark.parametrize("invalid_json", [False, True])
 def test_invalid_payload_returns_422_without_calling_analyzers(
     invalid_json: bool, mock_api: tuple[FastAPI, AsyncMock, AsyncMock]
 ) -> None:
-    app, llm, jev = mock_api
+    app, reporter, jev = mock_api
     with TestClient(app) as client:
         response = client.post(
             "/analyze", content="{" if invalid_json else "{}",
@@ -74,7 +70,7 @@ def test_invalid_payload_returns_422_without_calling_analyzers(
         )
     assert response.status_code == 422
     assert response.json()["detail"]
-    llm.analyze.assert_not_awaited()
+    reporter.generate.assert_not_awaited()
     jev.analyze.assert_not_awaited()
 
 
@@ -95,7 +91,6 @@ def test_validation_error_does_not_echo_email_content(
         ("OPENROUTER_API_KEY", "   "),
         ("LLM_PROVIDER", "openai"),
         ("LLM_PROVIDER", "unsupported"),
-        ("ANALYSIS_MODE", "invalid"),
         ("LLM_MODEL", ""),
         ("LLM_MODEL", "   "),
         ("LLM_TEMPERATURE", "not-a-number"),
@@ -118,14 +113,14 @@ def test_invalid_jev_model_returns_503_before_analysis(
 ) -> None:
     monkeypatch.setenv("OPENROUTER_API_KEY", "test-openrouter-key")
     monkeypatch.setenv("JEV_MODEL", jev_model)
-    llm = AsyncMock(spec=EmailAnalyzer)
+    jev = AsyncMock(spec=EmailAnalyzer)
     app = create_app()
-    app.dependency_overrides[get_analyzer] = lambda: llm
+    app.dependency_overrides[get_jev_analyzer] = lambda: jev
     with TestClient(app) as client:
         response = client.post("/analyze", json=example_payload)
     assert response.status_code == 503
     assert response.json()["detail"]["code"] == "configuration_error"
-    llm.analyze.assert_not_awaited()
+    jev.analyze.assert_not_awaited()
 
 
 def test_missing_api_key_returns_503(example_payload: dict[str, Any]) -> None:
@@ -146,7 +141,7 @@ def test_openai_key_cannot_replace_openrouter_key(
     assert "unused-legacy-key" not in response.text
 
 
-@pytest.mark.parametrize("failed_name", ["llm", "jev"])
+
 @pytest.mark.parametrize(
     "error, status, code",
     [
@@ -158,11 +153,10 @@ def test_openai_key_cannot_replace_openrouter_key(
     ],
 )
 def test_failed_analysis_returns_error_without_fallback(
-    example_payload, mock_api, monkeypatch, failed_name, error, status, code,
+    example_payload, mock_api, monkeypatch, error, status, code,
 ):
-    monkeypatch.setenv("ANALYSIS_MODE", "gpt_only" if failed_name == "llm" else "jev_then_gpt")
-    app, llm, jev = mock_api
-    active, inactive = (llm, jev) if failed_name == "llm" else (jev, llm)
+    app, reporter, jev = mock_api
+    active = jev
     active.analyze.side_effect = error("secret-provider-details")
     with TestClient(app) as client:
         response = client.post("/analyze", json=example_payload)
@@ -170,7 +164,6 @@ def test_failed_analysis_returns_error_without_fallback(
     assert response.json()["detail"]["code"] == code
     assert "secret-provider-details" not in response.text
     active.analyze.assert_awaited_once()
-    inactive.analyze.assert_not_awaited()
     app.dependency_overrides[get_report_generator]().generate.assert_not_awaited()
 
 
@@ -184,7 +177,7 @@ def test_report_failure_has_distinct_error_without_fallback(
     example_payload, mock_api, monkeypatch, error, status, code,
 ):
     monkeypatch.setenv("ANALYSIS_MODE", "jev_then_gpt")
-    app, llm, jev = mock_api
+    app, reporter, jev = mock_api
     app.dependency_overrides[get_report_generator]().generate.side_effect = error("secret-report")
     with TestClient(app) as client:
         response = client.post("/analyze", json=example_payload)
@@ -192,13 +185,12 @@ def test_report_failure_has_distinct_error_without_fallback(
     assert response.json()["detail"]["code"] == code
     assert "secret-report" not in response.text
     jev.analyze.assert_awaited_once()
-    llm.analyze.assert_not_awaited()
+    reporter.generate.assert_awaited_once()
 
 
-@pytest.mark.parametrize("slow_name", ["llm", "jev"])
 def test_service_timeout_cancels_only_slow_analysis(
     example_payload: dict[str, Any], monkeypatch: pytest.MonkeyPatch,
-    mock_api: tuple[FastAPI, AsyncMock, AsyncMock], slow_name: str,
+    mock_api: tuple[FastAPI, AsyncMock, AsyncMock],
 ) -> None:
     class SlowAnalyzer:
         cancelled = False
@@ -211,11 +203,10 @@ def test_service_timeout_cancels_only_slow_analysis(
                 raise
             raise AssertionError("The analysis should have been cancelled")
 
-    monkeypatch.setenv("ANALYSIS_MODE", "gpt_only" if slow_name == "llm" else "jev_then_gpt")
     analyzer = SlowAnalyzer()
     monkeypatch.setenv("LLM_TIMEOUT_SECONDS", "0.01")
     app = mock_api[0]
-    dependency = get_analyzer if slow_name == "llm" else get_jev_analyzer
+    dependency = get_jev_analyzer
     app.dependency_overrides[dependency] = lambda: analyzer
     with TestClient(app) as client:
         response = client.post("/analyze", json=example_payload)

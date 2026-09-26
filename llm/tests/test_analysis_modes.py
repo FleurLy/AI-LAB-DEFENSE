@@ -15,7 +15,7 @@ from app.services.analysis_service import AnalysisService
 
 def test_report_cannot_mutate_jev_decision(example_payload, security_analysis, security_report):
     snapshot = security_analysis.model_dump()
-    jev, reporter, gpt = AsyncMock(), AsyncMock(), AsyncMock()
+    jev, reporter = AsyncMock(), AsyncMock()
     jev.analyze.return_value = security_analysis
 
     async def generate(decision):
@@ -25,12 +25,11 @@ def test_report_cannot_mutate_jev_decision(example_payload, security_analysis, s
         return security_report
 
     reporter.generate.side_effect = generate
-    service = AnalysisService(analysis_mode="jev_then_gpt", jev_analyzer=jev,
-                              report_generator=reporter, gpt_analyzer=gpt)
+    service = AnalysisService(jev_analyzer=jev,
+                              report_generator=reporter)
     result = asyncio.run(service.analyze(EmailAnalysisRequest.model_validate(example_payload)))
     assert result.analysis.model_dump() == snapshot
     assert security_analysis.model_dump() == snapshot
-    gpt.analyze.assert_not_awaited()
 
 
 @pytest.mark.parametrize("adapter", [GPTEmailAnalyzer, GPTReportGenerator])
@@ -56,7 +55,7 @@ def test_security_schema_forbids_report_fields(security_analysis):
 
 
 def test_report_timeout_cancels_report_without_fallback(example_payload, security_analysis):
-    jev, gpt = AsyncMock(), AsyncMock()
+    jev = AsyncMock()
     jev.analyze.return_value = security_analysis
     cancelled = []
 
@@ -68,19 +67,18 @@ def test_report_timeout_cancels_report_without_fallback(example_payload, securit
                 cancelled.append(True)
                 raise
 
-    service = AnalysisService(analysis_mode="jev_then_gpt", jev_analyzer=jev,
-                              report_generator=SlowReport(), gpt_analyzer=gpt, timeout_seconds=0.01)
+    service = AnalysisService(jev_analyzer=jev,
+                              report_generator=SlowReport(), timeout_seconds=0.01)
     with pytest.raises(ReportGenerationTimeoutError):
         asyncio.run(service.analyze(EmailAnalysisRequest.model_validate(example_payload)))
     assert cancelled == [True]
     jev.analyze.assert_awaited_once()
-    gpt.analyze.assert_not_awaited()
 
 
 def test_invalid_report_is_distinct_error(example_payload, security_analysis):
     jev, reporter = AsyncMock(), AsyncMock()
     jev.analyze.return_value = security_analysis
     reporter.generate.return_value = {"summary": "incomplete"}
-    service = AnalysisService(analysis_mode="jev_then_gpt", jev_analyzer=jev, report_generator=reporter)
+    service = AnalysisService(jev_analyzer=jev, report_generator=reporter)
     with pytest.raises(ReportGenerationError):
         asyncio.run(service.analyze(EmailAnalysisRequest.model_validate(example_payload)))

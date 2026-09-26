@@ -1,0 +1,1267 @@
+[
+  {
+    "sample_path": "/home/user/home/ensimag/ai_hack/AI-LAB-DEFENSE/extraction/datasets/phishing_validation/emails/mail_000001.eml",
+    "normalized_path": "/home/user/home/ensimag/ai_hack/AI-LAB-DEFENSE/extraction/data/normalized/mail_000062.json",
+    "normalized_json": {
+      "schema_version": "1.0",
+      "email": {
+        "internal_id": "mail_000062",
+        "from": {
+          "name": "Cs Team",
+          "address": "employee_30885a0f@cs.umt.edu"
+        },
+        "reply_to": {
+          "name": "Cs Team",
+          "address": "employee_30885a0f@cs.umt.edu"
+        },
+        "to": [
+          "colleague_247e0a5d@media.mit.edu"
+        ],
+        "cc": [],
+        "subject": "Re: Smooth PWM in [PRODUCT]?",
+        "body_text": "At [TIME] [DATE] [TIME], [NAME] wrote:\r\nI apologize for asking a question I think I've seen answered,\r\nbut I can't find it in the mail archives.\r\n\r\nIs it possible to use [NAME]'s smooth PWM routines with\r\n[ORGANIZATION]' commercial [PRODUCT]?  Since they use a different version\r\nof pcode.s19 than the freeware [PRODUCT], I assume the smooth-PWM [PRODUCT]\r\nwould have to be applied to that, and I haven't found a way of doing\r\nso.\r\n\r\nYes, it is possible.  It must be, 'cause I've been doing it.\r\n\r\nYou simply need to download Julian's [FILE_NAME] (rename your other one\r\nfirst) and put it in the [PRODUCT]31\\\\libs directory (or whatever you call it).  [PRODUCT]\r\n3.1 ought to [PRODUCT] load it instead of the original version.  You'll\r\nknow when you've got it, because [PRODUCT] [NAME] give you a warning that you're\r\nusing an out-of-date pcode (due to the old version number in Julian's pcode).\r\n\r\nBTW, no apologies are necessary.  Everyone on the list is more than happy to\r\nhelp, I'm sure.  Good luck, [NAME].\r\n\r\n[NAME]\r\n\\\\_@__|o)\\\\\\\\            (\\\\/\\\\\\\\,\r\n[NAME],             The fellow who agrees with everything you say\r\n[NAME],                      is either a fool or he is getting ready\r\n& [ORGANIZATION]                                   to skin you.  --Kin Hubbard",
+        "body_html": "",
+        "language": "en",
+        "sent_at": "1998-04-12T02:17:11Z",
+        "message_id": "<mail_000001@cs.umt.edu>"
+      },
+      "attachments": [],
+      "urls": [],
+      "authentication": {
+        "spf": "pass",
+        "dkim": "pass",
+        "dmarc": "pass"
+      },
+      "sender": {
+        "from_domain": "cs.umt.edu",
+        "reply_to_domain": "cs.umt.edu",
+        "return_path": "employee_30885a0f@cs.umt.edu",
+        "return_path_domain": "cs.umt.edu",
+        "from_reply_to_mismatch": false,
+        "from_return_path_mismatch": false
+      },
+      "routing": {
+        "source": "smtp",
+        "received_at": "2026-09-26T12:22:17.595204Z",
+        "received_hops": 0
+      },
+      "content_signals": {
+        "contains_credential_request": false,
+        "contains_payment_request": false,
+        "contains_urgent_language": false,
+        "contains_threat_language": false,
+        "contains_secrecy_request": false,
+        "contains_personal_data_request": false,
+        "contains_external_link": false,
+        "contains_attachment": false,
+        "contains_qr_code": false
+      },
+      "technical_signals": {
+        "spf_failed": false,
+        "dkim_failed": false,
+        "dmarc_failed": false,
+        "reply_to_mismatch": false,
+        "return_path_mismatch": false,
+        "url_count": 0,
+        "suspicious_url_count": 0,
+        "attachment_count": 0,
+        "executable_attachment_count": 0,
+        "encrypted_attachment_count": 0,
+        "qr_code_count": 0
+      }
+    },
+    "api_status_code": 200,
+    "api_response": {
+      "analysis": {
+        "social_engineering_probability": 0.03,
+        "phishing_probability": 0.01,
+        "impersonation_probability": 0.01,
+        "urgency_probability": 0.0,
+        "authority_pressure_probability": 0.0,
+        "secrecy_probability": 0.0,
+        "credential_request_probability": 0.0,
+        "payment_request_probability": 0.0,
+        "personal_data_request_probability": 0.0,
+        "procedure_bypass_probability": 0.05,
+        "requested_action": "download_file",
+        "attack_type": "none",
+        "evidence": [
+          {
+            "type": "authentication",
+            "description": "SPF, DKIM, and DMARC all pass; sender from_domain, reply_to_domain, and return_path_domain are all cs.umt.edu with no mismatch. This supports domain alignment but does not prove benign intent.",
+            "source": "authentication.spf, authentication.dkim, authentication.dmarc, sender.from_domain, sender.reply_to_domain, sender.return_path_domain",
+            "severity": "low",
+            "confidence": 0.95
+          },
+          {
+            "type": "content",
+            "description": "Body is a technical mailing-list reply about PWM routines and pcode.s19; it contains no credential, payment, urgency, threat, secrecy, or personal-data request.",
+            "source": "email.body_text, content_signals.contains_credential_request, content_signals.contains_payment_request, content_signals.contains_urgent_language, content_signals.contains_threat_language, content_signals.contains_secrecy_request, content_signals.contains_personal_data_request",
+            "severity": "low",
+            "confidence": 0.9
+          },
+          {
+            "type": "requested_action",
+            "description": "The message instructs the recipient to download a file (Julian's pcode.s19) and place it in a product libs directory. This is the main requested behavior, but no URL or attachment is supplied.",
+            "source": "email.body_text",
+            "severity": "low",
+            "confidence": 0.9
+          },
+          {
+            "type": "technical",
+            "description": "No URLs, attachments, or QR codes are present; url_count, attachment_count, and qr_code_count are all zero. The download instruction is not directly actionable from this email.",
+            "source": "technical_signals.url_count, technical_signals.attachment_count, technical_signals.qr_code_count, urls, attachments",
+            "severity": "low",
+            "confidence": 0.95
+          },
+          {
+            "type": "inconsistency",
+            "description": "The email sent_at is 1998-04-12, while routing.received_at is 2026-09-26. This large gap may indicate an archived/replayed message or a metadata artifact, not necessarily malicious activity.",
+            "source": "email.sent_at, routing.received_at",
+            "severity": "low",
+            "confidence": 0.9
+          },
+          {
+            "type": "sender_identity",
+            "description": "Display name 'Cs Team' is generic, but the address is employee_30885a0f@cs.umt.edu and aligns with reply-to and return-path. No direct evidence of impersonation beyond the generic name.",
+            "source": "email.from.name, email.from.address, email.reply_to.address, sender.return_path",
+            "severity": "low",
+            "confidence": 0.6
+          },
+          {
+            "type": "benign_context",
+            "description": "The body reads as a reply to a prior technical question, includes a quoted question, and uses informal mailing-list language. This is consistent with a legitimate technical support exchange.",
+            "source": "email.body_text, email.subject",
+            "severity": "low",
+            "confidence": 0.8
+          },
+          {
+            "type": "procedure",
+            "description": "The advice suggests replacing an existing pcode file in a libs directory, which could bypass normal update procedures. However, it is framed as technical troubleshooting and no malicious file is attached or linked.",
+            "source": "email.body_text",
+            "severity": "low",
+            "confidence": 0.7
+          },
+          {
+            "type": "content_signal_conflict",
+            "description": "content_signals and technical_signals report no external link, attachment, or QR code, which is consistent with the raw payload. No conflict found between supplied signals and the email content.",
+            "source": "content_signals, technical_signals",
+            "severity": "low",
+            "confidence": 0.9
+          },
+          {
+            "type": "uncertainty",
+            "description": "The body contains anonymization placeholders such as [PRODUCT], [FILE_NAME], and [NAME], so the exact file source and product context cannot be verified from the payload.",
+            "source": "email.body_text",
+            "severity": "low",
+            "confidence": 0.9
+          }
+        ]
+      },
+      "report": {
+        "summary": "The analysis classifies the message as no attack, with very low phishing, impersonation, and social-engineering probabilities. It appears consistent with a legitimate technical mailing-list reply, but it asks the recipient to download a file and replace a file in a product library directory.",
+        "risk_explanation": "SPF, DKIM, and DMARC pass, and the sender, reply-to, and return-path domains align. The message contains no credential, payment, personal-data, secrecy, threat, or urgency request. It also contains no URL, attachment, or QR code, so the requested download is not directly actionable from the message. Limited caution remains because replacing a library file could bypass normal update procedures, the exact file source and product context are obscured by anonymization placeholders, and the large gap between the sent and received timestamps may reflect an archive/replay or metadata artifact rather than malicious activity.",
+        "recommended_actions": [
+          "Do not obtain or install the file from an unverified source.",
+          "If the file is needed, locate it through an approved vendor, project, or organizational repository and verify its integrity and provenance before use.",
+          "Follow normal change-management, update, backup, and testing procedures before replacing any existing library file.",
+          "Confirm the troubleshooting guidance through a trusted technical channel if the timestamp discrepancy or anonymized context creates uncertainty."
+        ]
+      },
+      "approach": "jev_then_gpt"
+    },
+    "errors": [],
+    "duration_seconds": 21.119
+  },
+  {
+    "sample_path": "/home/user/home/ensimag/ai_hack/AI-LAB-DEFENSE/extraction/datasets/phishing_validation/emails/mail_000002.eml",
+    "normalized_path": "/home/user/home/ensimag/ai_hack/AI-LAB-DEFENSE/extraction/data/normalized/mail_000063.json",
+    "normalized_json": {
+      "schema_version": "1.0",
+      "email": {
+        "internal_id": "mail_000063",
+        "from": {
+          "name": "Account Security Desk",
+          "address": "no-reply-alerts@8617.com"
+        },
+        "reply_to": {
+          "name": null,
+          "address": "verify-account@secure-auth-login.top"
+        },
+        "to": [
+          "target-user@flax9.uwaterloo.ca"
+        ],
+        "cc": [],
+        "subject": "[ORGANIZATION] Notification",
+        "body_text": "Notification of Limited\r\nAccount Access\r\nDear [ORGANIZATION] Account Holder,\r\n[ORGANIZATION] is committed to maintaining a safe environment for\r\nits community of buyers and sellers. To protect the security\r\nof your account, [ORGANIZATION] employs some of the most advanced\r\nsecurity systems in the world and our anti-fraud teams\r\nregularly screen the [ORGANIZATION] system for unusual activity.\r\nWe are contacting you to remind you that on November,\r\n14, 2006 our Account Review Team identified some\r\nunusual activity in your account. In accordance with [ORGANIZATION]'s\r\nUser Agreement and to ensure that your account has not been\r\ncompromised, access to your account was limited. Your account\r\naccess will remain limited until this issue has been\r\nresolved.\r\nIn order to secure your account and\r\nquickly restore full access, we may require you to\r\nverify or update your Personal\r\nInformation.If you choose to ignore our request, you leave\r\nus no choice but to temporary suspend your account.\r\nClick\r\nhere to login and restore your account\r\naccess\r\nCase ID Number: [REFERENCE_NUMBER]This is a final\r\nreminder to log\r\nin to [ORGANIZATION] as soon as possible.\r\nThank you for your prompt attention to this matter. Please\r\nunderstand that this is a security measure meant to help\r\nprotect you and your account. We apologize for any\r\ninconvenience.\r\nSincerely,[ORGANIZATION] Account Review [ORGANIZATION]\r\nEmail ID [REFERENCE_NUMBER]\r\nPlease do not reply to this e-mail.\r\nMail sent to this address cannot be answered. For\r\nassistance, log\r\nin to your [ORGANIZATION] account and choose the \"Help\" link\r\nin the footer of any page.\r\n[ORGANIZATION] Email ID\r\n[REFERENCE_NUMBER]\r\nProtect\r\nYour Account Info\r\nMake sure you never\r\nprovide your password to fraudulent websites\r\nTo safely and securely access the [ORGANIZATION]\r\nwebsite or your account, open a new web browser\r\n(e.g. [PRODUCT] or [PRODUCT]) and type in\r\nthe [ORGANIZATION] URL ([URL] to be\r\nsure you are on the real [ORGANIZATION]\r\nsite.[ORGANIZATION] will never ask you to enter\r\nyour password in an email.For more\r\ninformation on protecting yourself from fraud,\r\nplease review our Security Tips at\r\n[URL]\r\nProtect\r\nYour Password\r\nYou should never give your [ORGANIZATION]\r\npassword to anyone, including [ORGANIZATION]\r\nemployees.",
+        "body_html": "<html><body>\r\n<p>Notification of Limited\r\nAccount Access\r\nDear [ORGANIZATION] Account Holder,\r\n[ORGANIZATION] is committed to maintaining a safe environment for\r\nits community of buyers and sellers. To protect the security\r\nof your account, [ORGANIZATION] employs some of the most advanced\r\nsecurity systems in the world and our anti-fraud teams\r\nregularly screen the [ORGANIZATION] system for unusual activity.\r\nWe are contacting you to remind you that on November,\r\n14, 2006 our Account Review Team identified some\r\nunusual activity in your account. In accordance with [ORGANIZATION]'s\r\nUser Agreement and to ensure that your account has not been\r\ncompromised, access to your account was limited. Your account\r\naccess will remain limited until this issue has been\r\nresolved.\r\nIn order to secure your account and\r\nquickly restore full access, we may require you to\r\nverify or update your Personal\r\nInformation.If you choose to ignore our request, you leave\r\nus no choice but to temporary suspend your account.\r\nClick\r\nhere to login and restore your account\r\naccess\r\nCase ID Number: [REFERENCE_NUMBER]This is a final\r\nreminder to log\r\nin to [ORGANIZATION] as soon as possible.\r\nThank you for your prompt attention to this matter. Please\r\nunderstand that this is a security measure meant to help\r\nprotect you and your account. We apologize for any\r\ninconvenience.\r\nSincerely,[ORGANIZATION] Account Review [ORGANIZATION]\r\nEmail ID [REFERENCE_NUMBER]\r\nPlease do not reply to this e-mail.\r\nMail sent to this address cannot be answered. For\r\nassistance, log\r\nin to your [ORGANIZATION] account and choose the \"Help\" link\r\nin the footer of any page.\r\n[ORGANIZATION] Email ID\r\n[REFERENCE_NUMBER]\r\nProtect\r\nYour Account Info\r\nMake sure you never\r\nprovide your password to fraudulent websites\r\nTo safely and securely access the [ORGANIZATION]\r\nwebsite or your account, open a new web browser\r\n(e.g. [PRODUCT] or [PRODUCT]) and type in\r\nthe [ORGANIZATION] URL ([URL] to be\r\nsure you are on the real [ORGANIZATION]\r\nsite.[ORGANIZATION] will never ask you to enter\r\nyour password in an email.For more\r\ninformation on protecting yourself from fraud,\r\nplease review our Security Tips at\r\n[URL]\r\nProtect\r\nYour Password\r\nYou should never give your [ORGANIZATION]\r\npassword to anyone, including [ORGANIZATION]\r\nemployees.</p>\r\n</body></html>",
+        "language": "en",
+        "sent_at": "2007-05-22T05:03:52Z",
+        "message_id": "<mail_000002@8617.com>"
+      },
+      "attachments": [],
+      "urls": [],
+      "authentication": {
+        "spf": "fail",
+        "dkim": "fail",
+        "dmarc": "fail"
+      },
+      "sender": {
+        "from_domain": "8617.com",
+        "reply_to_domain": "secure-auth-login.top",
+        "return_path": null,
+        "return_path_domain": null,
+        "from_reply_to_mismatch": true,
+        "from_return_path_mismatch": false
+      },
+      "routing": {
+        "source": "smtp",
+        "received_at": "2026-09-26T12:22:38.624793Z",
+        "received_hops": 0
+      },
+      "content_signals": {
+        "contains_credential_request": true,
+        "contains_payment_request": false,
+        "contains_urgent_language": false,
+        "contains_threat_language": false,
+        "contains_secrecy_request": false,
+        "contains_personal_data_request": false,
+        "contains_external_link": false,
+        "contains_attachment": false,
+        "contains_qr_code": false
+      },
+      "technical_signals": {
+        "spf_failed": true,
+        "dkim_failed": true,
+        "dmarc_failed": true,
+        "reply_to_mismatch": true,
+        "return_path_mismatch": false,
+        "url_count": 0,
+        "suspicious_url_count": 0,
+        "attachment_count": 0,
+        "executable_attachment_count": 0,
+        "encrypted_attachment_count": 0,
+        "qr_code_count": 0
+      }
+    },
+    "api_status_code": 200,
+    "api_response": {
+      "analysis": {
+        "social_engineering_probability": 0.97,
+        "phishing_probability": 0.98,
+        "impersonation_probability": 0.96,
+        "urgency_probability": 0.75,
+        "authority_pressure_probability": 0.85,
+        "secrecy_probability": 0.02,
+        "credential_request_probability": 0.95,
+        "payment_request_probability": 0.01,
+        "personal_data_request_probability": 0.8,
+        "procedure_bypass_probability": 0.6,
+        "requested_action": "click_link",
+        "attack_type": "phishing",
+        "evidence": [
+          {
+            "type": "authentication_failure",
+            "description": "SPF, DKIM, and DMARC all failed, indicating the sending domain did not authenticate the message.",
+            "source": "authentication.spf, authentication.dkim, authentication.dmarc",
+            "severity": "high",
+            "confidence": 1.0
+          },
+          {
+            "type": "reply_to_mismatch",
+            "description": "The From domain is 8617.com while the Reply-To domain is secure-auth-login.top, a mismatch consistent with phishing.",
+            "source": "sender.from_domain, sender.reply_to_domain, sender.from_reply_to_mismatch",
+            "severity": "high",
+            "confidence": 1.0
+          },
+          {
+            "type": "impersonation",
+            "description": "The message claims to be from '[ORGANIZATION]' Account Security/Account Review, but the sender address is no-reply-alerts@8617.com and Reply-To is verify-account@secure-auth-login.top, neither matching the claimed organization.",
+            "source": "email.from, email.reply_to, email.body_text",
+            "severity": "high",
+            "confidence": 0.95
+          },
+          {
+            "type": "credential_request",
+            "description": "The body asks the recipient to 'Click here to login and restore your account access' and says they may require the recipient to 'verify or update your Personal Information'.",
+            "source": "email.body_text, content_signals.contains_credential_request",
+            "severity": "high",
+            "confidence": 0.95
+          },
+          {
+            "type": "urgency",
+            "description": "The body uses 'final reminder', 'as soon as possible', and threatens temporary suspension if ignored; content_signals.contains_urgent_language is false, conflicting with the semantic text.",
+            "source": "email.body_text, content_signals.contains_urgent_language",
+            "severity": "medium",
+            "confidence": 0.8
+          },
+          {
+            "type": "threat",
+            "description": "The body states ignoring the request leaves 'no choice but to temporary suspend your account'; content_signals.contains_threat_language is false, conflicting with the semantic text.",
+            "source": "email.body_text, content_signals.contains_threat_language",
+            "severity": "medium",
+            "confidence": 0.8
+          },
+          {
+            "type": "authority_pressure",
+            "description": "The body invokes Account Review Team, User Agreement, anti-fraud teams, and advanced security systems to pressure compliance.",
+            "source": "email.body_text",
+            "severity": "medium",
+            "confidence": 0.85
+          },
+          {
+            "type": "generic_placeholder",
+            "description": "The body repeatedly uses '[ORGANIZATION]' and '[REFERENCE_NUMBER]' placeholders instead of a specific brand or case ID, consistent with a mass phishing template.",
+            "source": "email.body_text, email.body_html",
+            "severity": "medium",
+            "confidence": 0.9
+          },
+          {
+            "type": "date_inconsistency",
+            "description": "The sent date is 2007-05-22, the received date is 2026-09-26, and the body references November 14, 2006, creating an inconsistent timeline.",
+            "source": "email.sent_at, routing.received_at, email.body_text",
+            "severity": "low",
+            "confidence": 0.8
+          },
+          {
+            "type": "missing_url_evidence",
+            "description": "No URLs were extracted and content_signals.contains_external_link is false, yet the body instructs clicking a login link; the destination cannot be analyzed from the supplied payload.",
+            "source": "urls, content_signals.contains_external_link, email.body_text",
+            "severity": "medium",
+            "confidence": 0.9
+          },
+          {
+            "type": "no_attachments_or_qr",
+            "description": "No attachments, QR codes, executable attachments, or encrypted attachments were present, reducing malware risk but not negating credential phishing.",
+            "source": "attachments, technical_signals.attachment_count, technical_signals.qr_code_count",
+            "severity": "low",
+            "confidence": 1.0
+          },
+          {
+            "type": "benign_security_advice",
+            "description": "The body includes advice not to provide passwords to fraudulent websites and to type the organization URL manually; this is common in both legitimate and phishing emails and does not verify sender identity.",
+            "source": "email.body_text",
+            "severity": "low",
+            "confidence": 0.9
+          },
+          {
+            "type": "payment_request_absent",
+            "description": "No payment request is present; content_signals.contains_payment_request is false.",
+            "source": "content_signals.contains_payment_request",
+            "severity": "low",
+            "confidence": 1.0
+          },
+          {
+            "type": "secrecy_absent",
+            "description": "No request for secrecy was observed; content_signals.contains_secrecy_request is false.",
+            "source": "content_signals.contains_secrecy_request",
+            "severity": "low",
+            "confidence": 1.0
+          },
+          {
+            "type": "personal_data_request",
+            "description": "The body says the recipient may be required to verify or update Personal Information, but content_signals.contains_personal_data_request is false; the semantic text suggests possible personal-data collection.",
+            "source": "email.body_text, content_signals.contains_personal_data_request",
+            "severity": "medium",
+            "confidence": 0.75
+          },
+          {
+            "type": "procedure_bypass",
+            "description": "The message asks the recipient to click a login link rather than independently navigate to the organization site, although it also includes advice to type the URL manually; the guidance is mixed.",
+            "source": "email.body_text",
+            "severity": "medium",
+            "confidence": 0.6
+          },
+          {
+            "type": "sender_domain",
+            "description": "The From domain is 8617.com and the return path is null; the numeric From domain is not obviously associated with the claimed organization, and the missing return path provides no additional authentication evidence.",
+            "source": "sender.from_domain, sender.return_path, sender.return_path_domain",
+            "severity": "medium",
+            "confidence": 0.8
+          }
+        ]
+      },
+      "report": {
+        "summary": "This message is assessed as phishing with very high likelihood. It appears to impersonate an organization’s account-security team and asks the recipient to click a login link to restore account access, potentially exposing credentials or personal information.",
+        "risk_explanation": "Key indicators include complete SPF, DKIM, and DMARC authentication failure; a mismatch between the From domain (8617.com) and Reply-To domain (secure-auth-login.top); and sender domains that do not match the claimed organization. The message pressures the recipient with a “final reminder” and threatened account suspension, while invoking account-review and anti-fraud authority. Generic placeholders and inconsistent dates further undermine credibility. No destination URL was extracted, so the link itself could not be analyzed. No attachments, QR codes, payment request, or secrecy request were identified, but that does not reduce the substantial credential-phishing risk.",
+        "recommended_actions": [
+          "Do not click the login link, reply to the message, or provide credentials or personal information.",
+          "Verify any account issue independently by opening the organization’s known official website or app—not through information or links in the message—and contacting support through a trusted channel if needed.",
+          "Report the message as phishing to the organization’s security or IT team and through the mail provider’s reporting function, then quarantine or delete it according to policy.",
+          "If the link was already opened, stop interacting with the page and notify the security or IT team promptly.",
+          "If credentials or personal information were submitted, immediately change the affected password through the official site, change any reused passwords, enable multi-factor authentication where available, and follow the organization’s incident-response guidance."
+        ]
+      },
+      "approach": "jev_then_gpt"
+    },
+    "errors": [],
+    "duration_seconds": 35.172
+  },
+  {
+    "sample_path": "/home/user/home/ensimag/ai_hack/AI-LAB-DEFENSE/extraction/datasets/phishing_validation/emails/mail_000003.eml",
+    "normalized_path": "/home/user/home/ensimag/ai_hack/AI-LAB-DEFENSE/extraction/data/normalized/mail_000064.json",
+    "normalized_json": {
+      "schema_version": "1.0",
+      "email": {
+        "internal_id": "mail_000064",
+        "from": {
+          "name": "Psy1 Team",
+          "address": "employee_67223241@psy1.psych.arizona.edu"
+        },
+        "reply_to": {
+          "name": null,
+          "address": null
+        },
+        "to": [
+          "colleague_4ec65daa@psy1.psych.arizona.edu"
+        ],
+        "cc": [],
+        "subject": "[DMDX] Re: DMDX clips WAV files",
+        "body_text": "At [TIME], you wrote:\r\nAt [TIME], you wrote:\r\n\r\nThis interacts in some way with frame duration as set in the parameter line\r\naltering the amount clipped although we have not been able to work out\r\nexactly what this is doing.\r\n\r\nOf course it does, DMDX is tied to the refresh interval, always,\r\nregardless of whether it's displaying audio or visual stimuli.  How would\r\nit work otherwise?\r\n\r\n  If you want precise acoustic relative timing I suggest you build single\r\nwave files per item.  The kind of functionality you need was offered in [PRODUCT],\r\n[PRODUCT] as opposed to [PRODUCT].  It has been left as an orphan\r\nDOS program tied to [ORGANIZATION]' [PRODUCT] drviers as alomost no one needs that\r\nlevel of functionality.\r\n\r\n[NAME] ([INITIALS])\r\n\r\n /\"\\\\\r\n \\\\ /\r\n  X  ASCII RIBBON CAMPAIGN - AGAINST HTML MAIL\r\n / \\\\ \r\n\r\nLaw of Probable Dispersal:\r\n\tWhatever it is that hits the fan will not be evenly\r\ndistributed.",
+        "body_html": "",
+        "language": "en",
+        "sent_at": "1999-12-08T18:21:05Z",
+        "message_id": "<mail_000003@psy1.psych.arizona.edu>"
+      },
+      "attachments": [],
+      "urls": [],
+      "authentication": {
+        "spf": "pass",
+        "dkim": "pass",
+        "dmarc": "pass"
+      },
+      "sender": {
+        "from_domain": "psy1.psych.arizona.edu",
+        "reply_to_domain": null,
+        "return_path": "employee_67223241@psy1.psych.arizona.edu",
+        "return_path_domain": "psy1.psych.arizona.edu",
+        "from_reply_to_mismatch": false,
+        "from_return_path_mismatch": false
+      },
+      "routing": {
+        "source": "smtp",
+        "received_at": "2026-09-26T12:23:13.837602Z",
+        "received_hops": 0
+      },
+      "content_signals": {
+        "contains_credential_request": false,
+        "contains_payment_request": false,
+        "contains_urgent_language": false,
+        "contains_threat_language": false,
+        "contains_secrecy_request": false,
+        "contains_personal_data_request": false,
+        "contains_external_link": false,
+        "contains_attachment": false,
+        "contains_qr_code": false
+      },
+      "technical_signals": {
+        "spf_failed": false,
+        "dkim_failed": false,
+        "dmarc_failed": false,
+        "reply_to_mismatch": false,
+        "return_path_mismatch": false,
+        "url_count": 0,
+        "suspicious_url_count": 0,
+        "attachment_count": 0,
+        "executable_attachment_count": 0,
+        "encrypted_attachment_count": 0,
+        "qr_code_count": 0
+      }
+    },
+    "api_status_code": 200,
+    "api_response": {
+      "analysis": {
+        "social_engineering_probability": 0.02,
+        "phishing_probability": 0.01,
+        "impersonation_probability": 0.01,
+        "urgency_probability": 0.0,
+        "authority_pressure_probability": 0.0,
+        "secrecy_probability": 0.0,
+        "credential_request_probability": 0.0,
+        "payment_request_probability": 0.0,
+        "personal_data_request_probability": 0.0,
+        "procedure_bypass_probability": 0.0,
+        "requested_action": "none",
+        "attack_type": "none",
+        "evidence": [
+          {
+            "type": "authentication",
+            "description": "SPF, DKIM, and DMARC all pass for the claimed domain. This supports domain-level authentication but does not by itself prove benign intent.",
+            "source": "authentication.spf, authentication.dkim, authentication.dmarc",
+            "severity": "low",
+            "confidence": 0.95
+          },
+          {
+            "type": "sender_identity",
+            "description": "The From address and Return-Path both use employee_67223241@psy1.psych.arizona.edu. No Reply-To is set, and the supplied mismatch flags are false.",
+            "source": "email.from.address, sender.return_path, sender.from_reply_to_mismatch, sender.from_return_path_mismatch",
+            "severity": "low",
+            "confidence": 0.95
+          },
+          {
+            "type": "requested_action",
+            "description": "The body is a technical mailing-list discussion about DMDX audio clipping and timing. It does not ask the recipient to click a link, sign in, pay, disclose data, or bypass normal procedures.",
+            "source": "email.body_text",
+            "severity": "low",
+            "confidence": 0.9
+          },
+          {
+            "type": "content_signals",
+            "description": "Supplied content signals report no credential request, payment request, urgent language, threat language, secrecy request, personal data request, external link, attachment, or QR code.",
+            "source": "content_signals",
+            "severity": "low",
+            "confidence": 0.9
+          },
+          {
+            "type": "technical_signals",
+            "description": "Supplied technical signals report no failed authentication, no reply-to or return-path mismatch, zero URLs, zero suspicious URLs, zero attachments, and zero QR codes.",
+            "source": "technical_signals",
+            "severity": "low",
+            "confidence": 0.9
+          },
+          {
+            "type": "attachment",
+            "description": "No attachments are present. There is no attachment text or visual content to support or contradict the message claims.",
+            "source": "attachments",
+            "severity": "low",
+            "confidence": 1.0
+          },
+          {
+            "type": "url",
+            "description": "No URLs or QR-code URLs are present. There is no destination to compare with the claimed sender identity.",
+            "source": "urls, technical_signals.url_count, technical_signals.qr_code_count",
+            "severity": "low",
+            "confidence": 1.0
+          },
+          {
+            "type": "routing_anomaly",
+            "description": "The message has sent_at 1999-12-08 but received_at 2026-09-26 and received_hops 0. This is a temporal/routing inconsistency, but it does not itself indicate social engineering and may reflect archival or replay processing.",
+            "source": "email.sent_at, routing.received_at, routing.received_hops",
+            "severity": "low",
+            "confidence": 0.6
+          },
+          {
+            "type": "language",
+            "description": "The body contains informal technical mailing-list content and an ASCII ribbon campaign signature. No persuasion, authority pressure, urgency, or secrecy request is observed.",
+            "source": "email.body_text",
+            "severity": "low",
+            "confidence": 0.85
+          },
+          {
+            "type": "impersonation",
+            "description": "The display name 'Psy1 Team' and the address are consistent with a departmental mailing-list context. No evidence of a mismatched external sender or lookalike domain is present.",
+            "source": "email.from.name, email.from.address, sender.from_domain",
+            "severity": "low",
+            "confidence": 0.8
+          }
+        ]
+      },
+      "report": {
+        "summary": "The supplied analysis classifies the message as having no attack type and requesting no action. It assigns very low probabilities to social engineering (0.02), phishing (0.01), and impersonation (0.01).",
+        "risk_explanation": "Domain authentication passed, sender fields were consistent, and the technical mailing-list content contained no links, attachments, QR codes, credential or payment requests, urgency, secrecy, authority pressure, or requests to bypass procedures. A date/routing inconsistency was noted: the message is dated 1999 but recorded as received in 2026 with zero received hops. This is low-confidence, low-severity evidence that may reflect archival or replay processing and does not by itself indicate social engineering. Authentication supports domain identity but cannot independently prove benign intent.",
+        "recommended_actions": [
+          "No security action is requested by the message.",
+          "Handle it as ordinary mailing-list correspondence under normal organizational procedures.",
+          "If provenance or timing matters, verify the unusual date and routing metadata through trusted internal records or mail-administration channels."
+        ]
+      },
+      "approach": "jev_then_gpt"
+    },
+    "errors": [],
+    "duration_seconds": 14.543
+  },
+  {
+    "sample_path": "/home/user/home/ensimag/ai_hack/AI-LAB-DEFENSE/extraction/datasets/phishing_validation/emails/mail_000004.eml",
+    "normalized_path": "/home/user/home/ensimag/ai_hack/AI-LAB-DEFENSE/extraction/data/normalized/mail_000065.json",
+    "normalized_json": {
+      "schema_version": "1.0",
+      "email": {
+        "internal_id": "mail_000065",
+        "from": {
+          "name": "Account Security Desk",
+          "address": "no-reply-alerts@yourfunforeveryonetoday.net"
+        },
+        "reply_to": {
+          "name": null,
+          "address": null
+        },
+        "to": [
+          "target-user@enron.com"
+        ],
+        "cc": [],
+        "subject": "More spending power-apply now [EMAIL_ADDRESS]",
+        "body_text": "[DATE] - [TIME] \r\n\r\nNEED TO REBUILD YOUR CREDIT?\r\nMAKE SURE YOU HAVE THE RIGHT TOOL.\r\n\r\nDear [EMAIL_ADDRESS],\r\n\r\nWe want to give you the credit card you need.\r\n\r\nWith your new [ORGANIZATION] [PRODUCT] credit card, you can re-build your credit.\r\n\r\nBy making on time payments and keeping your balance under the limit, you may be able to improve your credit score.\r\nhttp://point.yourfunforeveryonetoday.net/pnt.aspx?id=396685&email=rbuy@enron.com\r\n\r\nOur program is designed to help you re-establish your credit, while you enjoy\r\n\r\nLow Fixed APR on Purchases\r\n24 Hour Account Access by Phone\r\nMonthly Reporting to 4 Major Credit Bureaus\r\n\r\nRe-building better and stronger credit is in your hands-do not wait any longer!\r\n\r\nVisit here and apply today!\r\nhttp://point.yourfunforeveryonetoday.net/pnt.aspx?id=396685&email=rbuy@enron.com\r\n\r\nThank you,\r\n[NAME]\r\nSenior Credit Manager\r\n\r\nThis was sent to you on behalf of [ORGANIZATION] by [ORGANIZATION], a marketing partner of [ORGANIZATION]. To indicate that you would rather not be contacted by [ORGANIZATION], please follow the information below. To indicate that you would rather not be contacted by [ORGANIZATION], visit our website or write to us at: [ORGANIZATION], [ADDRESS].\r\nhttp://point.yourfunforeveryonetoday.net/pnt.aspx?id=396686&email=rbuy@enron.com\r\n\r\n \r\n \r\n \r\n\r\nThe preceding advertisement was sent from [ORGANIZATION].\r\nIf you would like to stop receiving advertisements from [ORGANIZATION] in the future, please opt-out here:\r\nhttp://point.yourfunforeveryonetoday.net/promotions.asp?pointid=86435&GrpId=171&email=rbuy@enron.com&so=1083531\r\nYou may also contact us via postal mail at our address:\r\n[ORGANIZATION]; [ADDRESS][REFERENCE_NUMBER][ORGANIZATION] [PRODUCT] Credit Card\r\nUnable to see graphics? Please go here to[REFERENCE_NUMBER]view this email. +\r\nDear [EMAIL_ADDRESS],\r\nWe want to give you the credit card you need.\r\nWith your new [ORGANIZATION] [PRODUCT] credit card, you can re-build\r\nyour credit.\r\nBy making on time payments and keeping your balance\r\nunder the limit, you may be able to improve your credit score.\r\nOur program is designed to help you re-establish your credit, while you\r\nenjoy\r\nLow fixed APR on purchases\r\n24 Hour Account Access By Phone\r\nMonthly Reporting to 4 Major Credit Bureaus\r\nRe-building better and stronger credit is in your hands-do\r\nnot wait any longer!\r\nClick here to apply\r\ntoday!\r\nThank you,\r\n[NAME]\r\nSenior Credit Manager\r\nThis was sent to you on behalf of [ORGANIZATION] by [ORGANIZATION], a marketing partner\r\nof [ORGANIZATION]. To indicate that you would rather not be contacted\r\nby [ORGANIZATION], please follow the information below. To indicate that you\r\nwould rather not be contacted by [ORGANIZATION], visit\r\nour website or write to us at: [ORGANIZATION], 900 W. Delaware\r\nSt., Sioux Falls, SD 57104.\r\n\r\nThe preceding advertisement was sent from [ORGANIZATION].\r\nIf you would like to stop receiving advertisements from [ORGANIZATION] in the future, please opt-out here.\r\nYou may also contact us via postal mail at our address:\r\n[ORGANIZATION]; [ADDRESS]",
+        "body_html": "<html><body>\r\n<p>[DATE] - [TIME] </p>\r\n<p>NEED TO REBUILD YOUR CREDIT?\r\nMAKE SURE YOU HAVE THE RIGHT TOOL.</p>\r\n<p>Dear [EMAIL_ADDRESS],</p>\r\n<p>We want to give you the credit card you need.</p>\r\n<p>With your new [ORGANIZATION] [PRODUCT] credit card, you can re-build your credit.</p>\r\n<p>By making on time payments and keeping your balance under the limit, you may be able to improve your credit score.\r\n<a href=\"http://point.yourfunforeveryonetoday.net/pnt.aspx?id=396685&amp;email=rbuy@enron.com\">http://point.yourfunforeveryonetoday.net/pnt.aspx?id=396685&amp;email=rbuy@enron.com</a></p>\r\n<p>Our program is designed to help you re-establish your credit, while you enjoy</p>\r\n<p>Low Fixed APR on Purchases\r\n24 Hour Account Access by Phone\r\nMonthly Reporting to 4 Major Credit Bureaus</p>\r\n<p>Re-building better and stronger credit is in your hands-do not wait any longer!</p>\r\n<p>Visit here and apply today!\r\n<a href=\"http://point.yourfunforeveryonetoday.net/pnt.aspx?id=396685&amp;email=rbuy@enron.com\">http://point.yourfunforeveryonetoday.net/pnt.aspx?id=396685&amp;email=rbuy@enron.com</a></p>\r\n<p>Thank you,\r\n[NAME]\r\nSenior Credit Manager</p>\r\n<p>This was sent to you on behalf of [ORGANIZATION] by [ORGANIZATION], a marketing partner of [ORGANIZATION]. To indicate that you would rather not be contacted by [ORGANIZATION], please follow the information below. To indicate that you would rather not be contacted by [ORGANIZATION], visit our website or write to us at: [ORGANIZATION], [ADDRESS].\r\n<a href=\"http://point.yourfunforeveryonetoday.net/pnt.aspx?id=396686&amp;email=rbuy@enron.com\">http://point.yourfunforeveryonetoday.net/pnt.aspx?id=396686&amp;email=rbuy@enron.com</a></p>\r\n<p> \r\n \r\n </p>\r\n<p>The preceding advertisement was sent from [ORGANIZATION].\r\nIf you would like to stop receiving advertisements from [ORGANIZATION] in the future, please opt-out here:\r\n<a href=\"http://point.yourfunforeveryonetoday.net/promotions.asp?pointid=86435&amp;GrpId=171&amp;email=rbuy@enron.com&amp;so=1083531\">http://point.yourfunforeveryonetoday.net/promotions.asp?pointid=86435&amp;GrpId=171&amp;email=rbuy@enron.com&amp;so=1083531</a>\r\nYou may also contact us via postal mail at our address:\r\n[ORGANIZATION]; [ADDRESS][REFERENCE_NUMBER][ORGANIZATION] [PRODUCT] Credit Card\r\nUnable to see graphics? Please go here to[REFERENCE_NUMBER]view this email. +\r\nDear [EMAIL_ADDRESS],\r\nWe want to give you the credit card you need.\r\nWith your new [ORGANIZATION] [PRODUCT] credit card, you can re-build\r\nyour credit.\r\nBy making on time payments and keeping your balance\r\nunder the limit, you may be able to improve your credit score.\r\nOur program is designed to help you re-establish your credit, while you\r\nenjoy\r\nLow fixed APR on purchases\r\n24 Hour Account Access By Phone\r\nMonthly Reporting to 4 Major Credit Bureaus\r\nRe-building better and stronger credit is in your hands-do\r\nnot wait any longer!\r\nClick here to apply\r\ntoday!\r\nThank you,\r\n[NAME]\r\nSenior Credit Manager\r\nThis was sent to you on behalf of [ORGANIZATION] by [ORGANIZATION], a marketing partner\r\nof [ORGANIZATION]. To indicate that you would rather not be contacted\r\nby [ORGANIZATION], please follow the information below. To indicate that you\r\nwould rather not be contacted by [ORGANIZATION], visit\r\nour website or write to us at: [ORGANIZATION], 900 W. Delaware\r\nSt., Sioux Falls, SD 57104.</p>\r\n<p>The preceding advertisement was sent from [ORGANIZATION].\r\nIf you would like to stop receiving advertisements from [ORGANIZATION] in the future, please opt-out here.\r\nYou may also contact us via postal mail at our address:\r\n[ORGANIZATION]; [ADDRESS]</p>\r\n</body></html>",
+        "language": "en",
+        "sent_at": "2002-01-02T19:18:48Z",
+        "message_id": "<mail_000004@yourfunforeveryonetoday.net>"
+      },
+      "attachments": [],
+      "urls": [
+        {
+          "source": "email_body",
+          "display_text": null,
+          "url": "http://point.yourfunforeveryonetoday.net/pnt.aspx?id=396685&email=rbuy@enron.com",
+          "domain": "point.yourfunforeveryonetoday.net",
+          "scheme": "http",
+          "uses_ip_address": false,
+          "uses_punycode": false,
+          "is_shortened": false,
+          "display_domain_mismatch": null
+        },
+        {
+          "source": "email_body",
+          "display_text": null,
+          "url": "http://point.yourfunforeveryonetoday.net/pnt.aspx?id=396686&email=rbuy@enron.com",
+          "domain": "point.yourfunforeveryonetoday.net",
+          "scheme": "http",
+          "uses_ip_address": false,
+          "uses_punycode": false,
+          "is_shortened": false,
+          "display_domain_mismatch": null
+        },
+        {
+          "source": "email_body",
+          "display_text": null,
+          "url": "http://point.yourfunforeveryonetoday.net/promotions.asp?pointid=86435&GrpId=171&email=rbuy@enron.com&so=1083531",
+          "domain": "point.yourfunforeveryonetoday.net",
+          "scheme": "http",
+          "uses_ip_address": false,
+          "uses_punycode": false,
+          "is_shortened": false,
+          "display_domain_mismatch": null
+        },
+        {
+          "source": "email_html",
+          "display_text": "http://point.yourfunforeveryonetoday.net/pnt.aspx?id=396685&email=rbuy@enron.com",
+          "url": "http://point.yourfunforeveryonetoday.net/pnt.aspx?id=396685&email=rbuy@enron.com",
+          "domain": "point.yourfunforeveryonetoday.net",
+          "scheme": "http",
+          "uses_ip_address": false,
+          "uses_punycode": false,
+          "is_shortened": false,
+          "display_domain_mismatch": false
+        },
+        {
+          "source": "email_html",
+          "display_text": "http://point.yourfunforeveryonetoday.net/pnt.aspx?id=396686&email=rbuy@enron.com",
+          "url": "http://point.yourfunforeveryonetoday.net/pnt.aspx?id=396686&email=rbuy@enron.com",
+          "domain": "point.yourfunforeveryonetoday.net",
+          "scheme": "http",
+          "uses_ip_address": false,
+          "uses_punycode": false,
+          "is_shortened": false,
+          "display_domain_mismatch": false
+        },
+        {
+          "source": "email_html",
+          "display_text": "http://point.yourfunforeveryonetoday.net/promotions.asp?pointid=86435&GrpId=171&email=rbuy@enron.com&so=1083531",
+          "url": "http://point.yourfunforeveryonetoday.net/promotions.asp?pointid=86435&GrpId=171&email=rbuy@enron.com&so=1083531",
+          "domain": "point.yourfunforeveryonetoday.net",
+          "scheme": "http",
+          "uses_ip_address": false,
+          "uses_punycode": false,
+          "is_shortened": false,
+          "display_domain_mismatch": false
+        }
+      ],
+      "authentication": {
+        "spf": "fail",
+        "dkim": "fail",
+        "dmarc": "fail"
+      },
+      "sender": {
+        "from_domain": "yourfunforeveryonetoday.net",
+        "reply_to_domain": null,
+        "return_path": "bounce@yourfunforeveryonetoday.net",
+        "return_path_domain": "yourfunforeveryonetoday.net",
+        "from_reply_to_mismatch": false,
+        "from_return_path_mismatch": false
+      },
+      "routing": {
+        "source": "smtp",
+        "received_at": "2026-09-26T12:23:28.399418Z",
+        "received_hops": 0
+      },
+      "content_signals": {
+        "contains_credential_request": false,
+        "contains_payment_request": false,
+        "contains_urgent_language": false,
+        "contains_threat_language": false,
+        "contains_secrecy_request": false,
+        "contains_personal_data_request": false,
+        "contains_external_link": true,
+        "contains_attachment": false,
+        "contains_qr_code": false
+      },
+      "technical_signals": {
+        "spf_failed": true,
+        "dkim_failed": true,
+        "dmarc_failed": true,
+        "reply_to_mismatch": false,
+        "return_path_mismatch": false,
+        "url_count": 6,
+        "suspicious_url_count": 0,
+        "attachment_count": 0,
+        "executable_attachment_count": 0,
+        "encrypted_attachment_count": 0,
+        "qr_code_count": 0
+      }
+    },
+    "api_status_code": 200,
+    "api_response": {
+      "analysis": {
+        "social_engineering_probability": 0.75,
+        "phishing_probability": 0.65,
+        "impersonation_probability": 0.7,
+        "urgency_probability": 0.35,
+        "authority_pressure_probability": 0.15,
+        "secrecy_probability": 0.0,
+        "credential_request_probability": 0.1,
+        "payment_request_probability": 0.15,
+        "personal_data_request_probability": 0.6,
+        "procedure_bypass_probability": 0.05,
+        "requested_action": "click_link",
+        "attack_type": "phishing",
+        "evidence": [
+          {
+            "type": "sender_identity_mismatch",
+            "description": "The sender display name 'Account Security Desk' conflicts with the credit card offer subject and body content, presenting an administrative persona to bypass suspicion.",
+            "source": "email.from.name",
+            "severity": "high",
+            "confidence": 0.85
+          },
+          {
+            "type": "authentication",
+            "description": "SPF, DKIM, and DMARC technical checks all failed for the sending domain yourfunforeveryonetoday.net.",
+            "source": "authentication",
+            "severity": "high",
+            "confidence": 0.95
+          },
+          {
+            "type": "suspicious_links",
+            "description": "Email contains links routing to an unverified third-party domain (point.yourfunforeveryonetoday.net) with recipient tracking parameters to complete an application.",
+            "source": "urls[0].url",
+            "severity": "medium",
+            "confidence": 0.8
+          },
+          {
+            "type": "call_to_action",
+            "description": "The email urges the recipient to click external links to apply for a credit rebuilding card, which normally involves collecting sensitive personal and financial data.",
+            "source": "email.body_text",
+            "severity": "medium",
+            "confidence": 0.75
+          }
+        ]
+      },
+      "report": {
+        "summary": "The completed analysis classifies this message as phishing, with elevated likelihoods of social engineering and impersonation. Its requested action is to click a link related to a credit-card application.",
+        "risk_explanation": "The assessment is supported by a mismatch between the sender name (“Account Security Desk”) and the credit-card offer, failure of SPF, DKIM, and DMARC checks, and links to an unverified third-party domain containing recipient-tracking parameters. The application context may lead to collection of sensitive personal or financial information. The evidence supports significant concern but does not establish certainty, and the original email was not independently examined here.",
+        "recommended_actions": [
+          "Do not click the link or submit personal, financial, account, or credential information.",
+          "Delete or quarantine the message and report it through your organization’s phishing-reporting process or to your email provider.",
+          "If the offer may be legitimate, verify it independently using the financial institution’s official website or a trusted phone number—not contact details or links in the message.",
+          "If you already clicked but submitted nothing, close the page and notify your security team if this is a work device or account.",
+          "If you submitted personal, financial, or credential information, promptly contact the relevant institution through verified channels, change any exposed passwords, and follow its fraud or identity-protection guidance."
+        ]
+      },
+      "approach": "jev_then_gpt"
+    },
+    "errors": [],
+    "duration_seconds": 9.963
+  },
+  {
+    "sample_path": "/home/user/home/ensimag/ai_hack/AI-LAB-DEFENSE/extraction/datasets/phishing_validation/emails/mail_000005.eml",
+    "normalized_path": "/home/user/home/ensimag/ai_hack/AI-LAB-DEFENSE/extraction/data/normalized/mail_000066.json",
+    "normalized_json": {
+      "schema_version": "1.0",
+      "email": {
+        "internal_id": "mail_000066",
+        "from": {
+          "name": "Enron Team",
+          "address": "employee_335cc56b@enron.com"
+        },
+        "reply_to": {
+          "name": null,
+          "address": null
+        },
+        "to": [
+          "colleague_79d9ff02@enron.com"
+        ],
+        "cc": [],
+        "subject": "NOTIFICATION:  [PRODUCT] Outage - Friday, [DATE]",
+        "body_text": "This is a notice to inform you that the server where your [PRODUCT] mailbox resides is scheduled for an outage tonight.  Your mailbox will be temporarily unavailable starting anytime after [TIME] and may continue to be unavailable until [TIME], when all server maintenance work have been completed.  [PRODUCT] Web Access ([PRODUCT]) will also be unavailable during this time.  \r\n\r\n[PRODUCT] users:  Message delivery may be delayed for a few minutes.\r\n \r\nIf you have any questions, please call the Resolution Center at [REFERENCE_NUMBER].",
+        "body_html": "",
+        "language": "en",
+        "sent_at": "2001-12-28T19:55:33Z",
+        "message_id": "<mail_000005@enron.com>"
+      },
+      "attachments": [],
+      "urls": [],
+      "authentication": {
+        "spf": "pass",
+        "dkim": "pass",
+        "dmarc": "pass"
+      },
+      "sender": {
+        "from_domain": "enron.com",
+        "reply_to_domain": null,
+        "return_path": "employee_335cc56b@enron.com",
+        "return_path_domain": "enron.com",
+        "from_reply_to_mismatch": false,
+        "from_return_path_mismatch": false
+      },
+      "routing": {
+        "source": "smtp",
+        "received_at": "2026-09-26T12:23:38.362748Z",
+        "received_hops": 0
+      },
+      "content_signals": {
+        "contains_credential_request": false,
+        "contains_payment_request": false,
+        "contains_urgent_language": false,
+        "contains_threat_language": false,
+        "contains_secrecy_request": false,
+        "contains_personal_data_request": false,
+        "contains_external_link": false,
+        "contains_attachment": false,
+        "contains_qr_code": false
+      },
+      "technical_signals": {
+        "spf_failed": false,
+        "dkim_failed": false,
+        "dmarc_failed": false,
+        "reply_to_mismatch": false,
+        "return_path_mismatch": false,
+        "url_count": 0,
+        "suspicious_url_count": 0,
+        "attachment_count": 0,
+        "executable_attachment_count": 0,
+        "encrypted_attachment_count": 0,
+        "qr_code_count": 0
+      }
+    },
+    "api_status_code": 200,
+    "api_response": {
+      "analysis": {
+        "social_engineering_probability": 0.01,
+        "phishing_probability": 0.01,
+        "impersonation_probability": 0.02,
+        "urgency_probability": 0.05,
+        "authority_pressure_probability": 0.01,
+        "secrecy_probability": 0.0,
+        "credential_request_probability": 0.0,
+        "payment_request_probability": 0.0,
+        "personal_data_request_probability": 0.0,
+        "procedure_bypass_probability": 0.0,
+        "requested_action": "none",
+        "attack_type": "none",
+        "evidence": [
+          {
+            "type": "authentication",
+            "description": "SPF, DKIM, and DMARC checks all passed with matching sender domain and return path.",
+            "source": "authentication",
+            "severity": "low",
+            "confidence": 0.95
+          },
+          {
+            "type": "content_signals",
+            "description": "The email is an internal informational notice about scheduled mailbox maintenance; it contains no links, attachments, or requests for user credentials or actions.",
+            "source": "email.body_text",
+            "severity": "low",
+            "confidence": 0.98
+          }
+        ]
+      },
+      "report": {
+        "summary": "The analysis classifies this message as non-malicious, with no attack type and no requested action. It appears to be an internal informational notice about scheduled mailbox maintenance.",
+        "risk_explanation": "Risk indicators are very low. The supplied evidence states that SPF, DKIM, and DMARC passed with an aligned sender domain and return path. It also states that the message contains no links, attachments, credential requests, payment requests, personal-data requests, or other calls to action. This report is limited to the supplied analysis and evidence; the original email was not independently examined.",
+        "recommended_actions": [
+          "No security-related action is required based on the current analysis.",
+          "Treat the message as informational and follow normal organizational email-handling practices.",
+          "If the message later prompts an unexpected action or contains content not reflected in this analysis, verify it through established internal channels."
+        ]
+      },
+      "approach": "jev_then_gpt"
+    },
+    "errors": [],
+    "duration_seconds": 9.256
+  },
+  {
+    "sample_path": "/home/user/home/ensimag/ai_hack/AI-LAB-DEFENSE/extraction/datasets/phishing_validation/emails/mail_000006.eml",
+    "normalized_path": "/home/user/home/ensimag/ai_hack/AI-LAB-DEFENSE/extraction/data/normalized/mail_000067.json",
+    "normalized_json": {
+      "schema_version": "1.0",
+      "email": {
+        "internal_id": "mail_000067",
+        "from": {
+          "name": "Account Security Desk",
+          "address": "no-reply-alerts@constantcontact.com"
+        },
+        "reply_to": {
+          "name": null,
+          "address": "verify-account@secure-auth-login.top"
+        },
+        "to": [
+          "target-user@flax9.uwaterloo.ca"
+        ],
+        "cc": [],
+        "subject": "Email Marketing Trial - Don't lose your marketing edge",
+        "body_text": "[ORGANIZATION] [\r\n\r\nTime Flies\r\n\r\nYour trial may be over, but your customers still want to hear from you!\r\n\r\nUser Name: [USERNAME]\r\nDear [NAME],\r\nYes, it's true.  Your Email Marketing free trial has ended! We hope you\r\ntook full advantage of your trial to reach out to your customers or members. Now\r\nwe would like you to become our customer.\r\n\r\nOption 1:Buy [ORGANIZATION].\r\nMonthly plans start at just $[FINANCIAL_INFO] for up to 500 email addresses.  Just login\r\n[ to your account and go to My Account>Pay\r\nfor Products to continue enjoying the benefits of [ORGANIZATION].\r\n\r\nLogin Now [\r\nOption 2:Grow your list.\r\nEven though your trial is over, you can still grow your list by capturing website\r\nvisitors using the [ORGANIZATION]'s Visitor Signup Box.  In fact, you can do just\r\nabout everything in your [ORGANIZATION] account except send emails.\r\nIf you haven't already added the signup box to your website, login [\r\nand go to My Settings>Site Visitor Signup.\r\n\r\nOnce you are ready to connect with your customers, give one of our Communication\r\nConsultants a call. They're here to help you!\r\n\r\nQuestions?Please give us a call!\r\n[PHONE_NUMBER]:\r\n[PHONE_NUMBER]:\r\n\r\nTime Flies\r\nYour trial may be over, but your customers still want to hear from you!\r\nUser Name: [USERNAME]\r\nDear [NAME],\r\nYes, it's true.\r\nYour Email Marketing free trial has ended! We hope you took full advantage of your trial to reach out to your customers or members. Now we would like you to become our customer.\r\nOption 1: Buy [ORGANIZATION].\r\nMonthly plans start at just $[FINANCIAL_INFO] for up to 500 email addresses.\r\nJust login to your account and go to My Account>Pay for Products to continue enjoying the benefits of [ORGANIZATION].\r\nOption 2: Grow your list.\r\nEven though your trial is over, you can still grow your list by capturing website visitors using the [ORGANIZATION]'s Visitor Signup Box.\r\nIn fact, you can do just about everything in your [ORGANIZATION] account except send emails. If you haven't already added the signup box to your website, login and go to My Settings>Site Visitor Signup.\r\nOnce you are ready to connect with your customers, give one of our Communication Consultants a call. They're here to help you!\r\nQuestions? Please give us a call!\r\n[PHONE_NUMBER]: \r\n[PHONE_NUMBER]:",
+        "body_html": "<html><body>\r\n<p>[ORGANIZATION] [</p>\r\n<p>Time Flies</p>\r\n<p>Your trial may be over, but your customers still want to hear from you!</p>\r\n<p>User Name: [USERNAME]\r\nDear [NAME],\r\nYes, it's true.  Your Email Marketing free trial has ended! We hope you\r\ntook full advantage of your trial to reach out to your customers or members. Now\r\nwe would like you to become our customer.</p>\r\n<p>Option 1:Buy [ORGANIZATION].\r\nMonthly plans start at just $[FINANCIAL_INFO] for up to 500 email addresses.  Just login\r\n[ to your account and go to My Account&gt;Pay\r\nfor Products to continue enjoying the benefits of [ORGANIZATION].</p>\r\n<p>Login Now [\r\nOption 2:Grow your list.\r\nEven though your trial is over, you can still grow your list by capturing website\r\nvisitors using the [ORGANIZATION]'s Visitor Signup Box.  In fact, you can do just\r\nabout everything in your [ORGANIZATION] account except send emails.\r\nIf you haven't already added the signup box to your website, login [\r\nand go to My Settings&gt;Site Visitor Signup.</p>\r\n<p>Once you are ready to connect with your customers, give one of our Communication\r\nConsultants a call. They're here to help you!</p>\r\n<p>Questions?Please give us a call!\r\n[PHONE_NUMBER]:\r\n[PHONE_NUMBER]:</p>\r\n<p>Time Flies\r\nYour trial may be over, but your customers still want to hear from you!\r\nUser Name: [USERNAME]\r\nDear [NAME],\r\nYes, it's true.\r\nYour Email Marketing free trial has ended! We hope you took full advantage of your trial to reach out to your customers or members. Now we would like you to become our customer.\r\nOption 1: Buy [ORGANIZATION].\r\nMonthly plans start at just $[FINANCIAL_INFO] for up to 500 email addresses.\r\nJust login to your account and go to My Account&gt;Pay for Products to continue enjoying the benefits of [ORGANIZATION].\r\nOption 2: Grow your list.\r\nEven though your trial is over, you can still grow your list by capturing website visitors using the [ORGANIZATION]'s Visitor Signup Box.\r\nIn fact, you can do just about everything in your [ORGANIZATION] account except send emails. If you haven't already added the signup box to your website, login and go to My Settings&gt;Site Visitor Signup.\r\nOnce you are ready to connect with your customers, give one of our Communication Consultants a call. They're here to help you!\r\nQuestions? Please give us a call!\r\n[PHONE_NUMBER]: \r\n[PHONE_NUMBER]:</p>\r\n</body></html>",
+        "language": "en",
+        "sent_at": "2007-05-22T04:22:01Z",
+        "message_id": "<mail_000006@constantcontact.com>"
+      },
+      "attachments": [],
+      "urls": [],
+      "authentication": {
+        "spf": "fail",
+        "dkim": "fail",
+        "dmarc": "fail"
+      },
+      "sender": {
+        "from_domain": "constantcontact.com",
+        "reply_to_domain": "secure-auth-login.top",
+        "return_path": "bounce@constantcontact.com",
+        "return_path_domain": "constantcontact.com",
+        "from_reply_to_mismatch": true,
+        "from_return_path_mismatch": false
+      },
+      "routing": {
+        "source": "smtp",
+        "received_at": "2026-09-26T12:23:47.613293Z",
+        "received_hops": 0
+      },
+      "content_signals": {
+        "contains_credential_request": true,
+        "contains_payment_request": false,
+        "contains_urgent_language": false,
+        "contains_threat_language": false,
+        "contains_secrecy_request": false,
+        "contains_personal_data_request": false,
+        "contains_external_link": false,
+        "contains_attachment": false,
+        "contains_qr_code": false
+      },
+      "technical_signals": {
+        "spf_failed": true,
+        "dkim_failed": true,
+        "dmarc_failed": true,
+        "reply_to_mismatch": true,
+        "return_path_mismatch": false,
+        "url_count": 0,
+        "suspicious_url_count": 0,
+        "attachment_count": 0,
+        "executable_attachment_count": 0,
+        "encrypted_attachment_count": 0,
+        "qr_code_count": 0
+      }
+    },
+    "api_status_code": 200,
+    "api_response": {
+      "analysis": {
+        "social_engineering_probability": 0.9,
+        "phishing_probability": 0.88,
+        "impersonation_probability": 0.85,
+        "urgency_probability": 0.3,
+        "authority_pressure_probability": 0.4,
+        "secrecy_probability": 0.0,
+        "credential_request_probability": 0.9,
+        "payment_request_probability": 0.6,
+        "personal_data_request_probability": 0.1,
+        "procedure_bypass_probability": 0.2,
+        "requested_action": "provide_credentials",
+        "attack_type": "phishing",
+        "evidence": [
+          {
+            "type": "authentication_failure",
+            "description": "SPF, DKIM and DMARC all failed for the claimed constantcontact.com sender domain. This is an observed authentication result, not proof of malicious intent by itself, but it is inconsistent with a legitimate Constant Contact message.",
+            "source": "authentication.spf, authentication.dkim, authentication.dmarc",
+            "severity": "high",
+            "confidence": 1.0
+          },
+          {
+            "type": "reply_to_mismatch",
+            "description": "From domain is constantcontact.com but Reply-To domain is secure-auth-login.top. The mismatch is observed, and the reply-to domain name is semantically suggestive of credential harvesting.",
+            "source": "sender.from_reply_to_mismatch, sender.reply_to_domain",
+            "severity": "high",
+            "confidence": 0.95
+          },
+          {
+            "type": "credential_request",
+            "description": "Body text asks the recipient to log in to their account and references 'Login Now'; content_signals.contains_credential_request is true. This is an observed request for account access.",
+            "source": "email.body_text, content_signals.contains_credential_request",
+            "severity": "high",
+            "confidence": 0.9
+          },
+          {
+            "type": "payment_request",
+            "description": "Body text asks the recipient to buy the service and go to 'My Account>Pay for Products', with monthly plan pricing. content_signals.contains_payment_request is false, which conflicts with the body language; the body still contains payment-related persuasion.",
+            "source": "email.body_text, content_signals.contains_payment_request",
+            "severity": "medium",
+            "confidence": 0.7
+          },
+          {
+            "type": "display_name_inconsistency",
+            "description": "Display name 'Account Security Desk' does not match the marketing-trial subject/body or the no-reply-alerts@constantcontact.com address. This is an inference of possible impersonation rather than a verified fact.",
+            "source": "email.from.name, email.from.address, email.subject",
+            "severity": "medium",
+            "confidence": 0.7
+          },
+          {
+            "type": "suspicious_reply_to_domain",
+            "description": "Reply-To domain secure-auth-login.top is not the claimed sender domain and its name resembles a credential-login lure. This is semantic inference from the domain string.",
+            "source": "sender.reply_to_domain",
+            "severity": "high",
+            "confidence": 0.9
+          },
+          {
+            "type": "template_placeholders",
+            "description": "Body contains unresolved placeholders such as [ORGANIZATION], [USERNAME], [NAME], [FINANCIAL_INFO] and [PHONE_NUMBER]. This is observed and can indicate a mass template or misconfigured campaign.",
+            "source": "email.body_text",
+            "severity": "medium",
+            "confidence": 0.8
+          },
+          {
+            "type": "missing_url_evidence",
+            "description": "No URLs were extracted (urls empty, url_count 0), so the actual login destination cannot be verified from the supplied payload. The body contains incomplete 'Login Now [' text but no usable link.",
+            "source": "urls, technical_signals.url_count, email.body_text",
+            "severity": "low",
+            "confidence": 1.0
+          },
+          {
+            "type": "benign_return_path",
+            "description": "Return-Path domain is constantcontact.com and from_return_path_mismatch is false. This is consistent with the claimed from domain and is benign evidence.",
+            "source": "sender.return_path_domain, sender.from_return_path_mismatch",
+            "severity": "low",
+            "confidence": 1.0
+          },
+          {
+            "type": "no_attachment_or_qr",
+            "description": "No attachments and no QR codes are present; attachment_count and qr_code_count are 0. This removes attachment/QR-based attack vectors from the supplied evidence.",
+            "source": "attachments, technical_signals.attachment_count, technical_signals.qr_code_count",
+            "severity": "low",
+            "confidence": 1.0
+          },
+          {
+            "type": "urgency_persuasion",
+            "description": "Subject 'Don't lose your marketing edge' and body 'Your trial may be over' create mild urgency/persuasion, but no explicit deadline or threat is present.",
+            "source": "email.subject, email.body_text, content_signals.contains_urgent_language",
+            "severity": "low",
+            "confidence": 0.5
+          },
+          {
+            "type": "authority_pressure",
+            "description": "Sender display name 'Account Security Desk' and body references to 'Communication Consultants' may imply authority, but the pressure is mild and not explicit.",
+            "source": "email.from.name, email.body_text",
+            "severity": "low",
+            "confidence": 0.4
+          },
+          {
+            "type": "no_secrecy_or_threat",
+            "description": "content_signals reports no secrecy request and no threat language. This is benign evidence against those specific tactics.",
+            "source": "content_signals.contains_secrecy_request, content_signals.contains_threat_language",
+            "severity": "low",
+            "confidence": 1.0
+          },
+          {
+            "type": "authentication_conflict",
+            "description": "The claimed from domain constantcontact.com fails SPF/DKIM/DMARC while the return path also uses constantcontact.com. This conflict means authentication failure is not explained by a simple return-path mismatch.",
+            "source": "authentication.spf, authentication.dkim, authentication.dmarc, sender.return_path_domain",
+            "severity": "high",
+            "confidence": 0.9
+          }
+        ]
+      },
+      "report": {
+        "summary": "The analysis classifies this message as phishing, with a 0.88 phishing probability and a requested action of providing credentials. It also indicates strong social-engineering and impersonation risk. Treat the message as unsafe.",
+        "risk_explanation": "The strongest indicators are failed SPF, DKIM, and DMARC authentication; a mismatch between the claimed constantcontact.com sender and the secure-auth-login.top Reply-To domain; and language asking the recipient to log in. The message also contains payment-related persuasion and unresolved template placeholders. Mild urgency and authority cues are present, but there is no secrecy request, explicit threat, attachment, or QR code. The Return-Path matches the claimed sender domain, which is benign evidence, but it does not resolve the authentication failures. No usable URL was extracted, so the actual login destination could not be assessed from the supplied evidence.",
+        "recommended_actions": [
+          "Do not provide credentials, reply to the message, or use any login or payment prompt contained in it.",
+          "Verify the account independently by navigating to the service through a known official website or trusted application—not through the message.",
+          "Report the message through your organization’s phishing-reporting process, then quarantine or delete it according to policy.",
+          "If credentials were already entered, change the password immediately using the official service, revoke active sessions where available, enable multifactor authentication, and notify the appropriate security team.",
+          "If payment information was already provided, contact the relevant financial institution or payment provider and your security team promptly."
+        ]
+      },
+      "approach": "jev_then_gpt"
+    },
+    "errors": [],
+    "duration_seconds": 29.495
+  },
+  {
+    "sample_path": "/home/user/home/ensimag/ai_hack/AI-LAB-DEFENSE/extraction/datasets/phishing_validation/emails/mail_000007.eml",
+    "normalized_path": "/home/user/home/ensimag/ai_hack/AI-LAB-DEFENSE/extraction/data/normalized/mail_000068.json",
+    "normalized_json": {
+      "schema_version": "1.0",
+      "email": {
+        "internal_id": "mail_000068",
+        "from": {
+          "name": "Singnet Team",
+          "address": "employee_aa2915ce@singnet.com.sg"
+        },
+        "reply_to": {
+          "name": "Singnet Team",
+          "address": "employee_aa2915ce@singnet.com.sg"
+        },
+        "to": [
+          "colleague_247e0a5d@media.mit.edu"
+        ],
+        "cc": [],
+        "subject": "Using the DC to DC converter",
+        "body_text": "Hi,\r\nI intend to use a [FINANCIAL_INFO] source battery going thru a DC to DC converter to get\r\na [FINANCIAL_INFO] source. Then this [FINANCIAL_INFO] will connect to my diffuse sensor which\r\noperrate at [FINANCIAL_INFO].\r\n\r\n The sensor's current consumption maximum is  [FINANCIAL_INFO].\r\nIf the output Watt of the DC-DC convertor at the [FINANCIAL_INFO] source is [FINANCIAL_INFO], can I\r\nsaid that the the current is   [FINANCIAL_INFO] = [FINANCIAL_INFO]   (P=VI)  ?\r\n\r\nIf the current supply to the sensor is  [FINANCIAL_INFO] and the sensor co\r\nnsumption is max [FINANCIAL_INFO], will it damaged my sensor ? Or should I use less\r\nthan [FINANCIAL_INFO] ? \r\nMy battery source is [FINANCIAL_INFO],[FINANCIAL_INFO] before going thru the convertor.\r\n\r\nrgds,\r\n[NAME]",
+        "body_html": "",
+        "language": "en",
+        "sent_at": "1999-03-18T10:43:54Z",
+        "message_id": "<mail_000007@singnet.com.sg>"
+      },
+      "attachments": [],
+      "urls": [],
+      "authentication": {
+        "spf": "pass",
+        "dkim": "pass",
+        "dmarc": "pass"
+      },
+      "sender": {
+        "from_domain": "singnet.com.sg",
+        "reply_to_domain": "singnet.com.sg",
+        "return_path": "employee_aa2915ce@singnet.com.sg",
+        "return_path_domain": "singnet.com.sg",
+        "from_reply_to_mismatch": false,
+        "from_return_path_mismatch": false
+      },
+      "routing": {
+        "source": "smtp",
+        "received_at": "2026-09-26T12:24:17.112924Z",
+        "received_hops": 0
+      },
+      "content_signals": {
+        "contains_credential_request": false,
+        "contains_payment_request": false,
+        "contains_urgent_language": false,
+        "contains_threat_language": false,
+        "contains_secrecy_request": false,
+        "contains_personal_data_request": false,
+        "contains_external_link": false,
+        "contains_attachment": false,
+        "contains_qr_code": false
+      },
+      "technical_signals": {
+        "spf_failed": false,
+        "dkim_failed": false,
+        "dmarc_failed": false,
+        "reply_to_mismatch": false,
+        "return_path_mismatch": false,
+        "url_count": 0,
+        "suspicious_url_count": 0,
+        "attachment_count": 0,
+        "executable_attachment_count": 0,
+        "encrypted_attachment_count": 0,
+        "qr_code_count": 0
+      }
+    },
+    "api_status_code": 200,
+    "api_response": {
+      "analysis": {
+        "social_engineering_probability": 0.02,
+        "phishing_probability": 0.01,
+        "impersonation_probability": 0.01,
+        "urgency_probability": 0.0,
+        "authority_pressure_probability": 0.0,
+        "secrecy_probability": 0.0,
+        "credential_request_probability": 0.0,
+        "payment_request_probability": 0.0,
+        "personal_data_request_probability": 0.0,
+        "procedure_bypass_probability": 0.0,
+        "requested_action": "provide_credentials",
+        "attack_type": "none",
+        "evidence": [
+          {
+            "type": "authentication",
+            "description": "SPF, DKIM, and DMARC all pass for singnet.com.sg. This supports domain-level authentication but does not prove the sender's intent or identity.",
+            "source": "authentication.spf, authentication.dkim, authentication.dmarc",
+            "severity": "low",
+            "confidence": 0.95
+          },
+          {
+            "type": "sender_metadata",
+            "description": "From, Reply-To, and Return-Path all use employee_aa2915ce@singnet.com.sg. No mismatch is present.",
+            "source": "sender.from_domain, sender.reply_to_domain, sender.return_path_domain, sender.from_reply_to_mismatch, sender.from_return_path_mismatch",
+            "severity": "low",
+            "confidence": 0.95
+          },
+          {
+            "type": "requested_action",
+            "description": "The body asks the recipient to answer a technical question about DC-DC converter current and sensor compatibility. It does not request credentials, payment, sign-in, or sensitive data.",
+            "source": "email.body_text",
+            "severity": "low",
+            "confidence": 0.9
+          },
+          {
+            "type": "content_signals",
+            "description": "All supplied content signals are false: no credential request, payment request, urgency, threat, secrecy, personal data request, external link, attachment, or QR code.",
+            "source": "content_signals",
+            "severity": "low",
+            "confidence": 0.95
+          },
+          {
+            "type": "technical_signals",
+            "description": "All supplied technical signals are false: no failed authentication, reply-to/return-path mismatch, URLs, suspicious URLs, attachments, executables, encrypted attachments, or QR codes.",
+            "source": "technical_signals",
+            "severity": "low",
+            "confidence": 0.95
+          },
+          {
+            "type": "body_content",
+            "description": "The message is a technical inquiry with electrical values redacted as [FINANCIAL_INFO]. The placeholder label is odd, but the surrounding text concerns voltage, current, and power, not financial data.",
+            "source": "email.body_text",
+            "severity": "low",
+            "confidence": 0.8
+          },
+          {
+            "type": "identity_claim",
+            "description": "The display name 'Singnet Team' is generic and the local part is an employee-style address. This is not sufficient to verify a specific person, but no impersonation target is evident.",
+            "source": "email.from.name, email.from.address",
+            "severity": "low",
+            "confidence": 0.7
+          },
+          {
+            "type": "routing_timing",
+            "description": "sent_at is 1999-03-18 while received_at is 2026-09-26 and received_hops is 0. This timing inconsistency is likely a dataset artifact but is unexplained.",
+            "source": "email.sent_at, routing.received_at, routing.received_hops",
+            "severity": "low",
+            "confidence": 0.6
+          },
+          {
+            "type": "attachment_evidence",
+            "description": "No attachments are present, so no attachment text or visual descriptions are available to support or contradict the message.",
+            "source": "attachments, technical_signals.attachment_count",
+            "severity": "low",
+            "confidence": 0.95
+          },
+          {
+            "type": "url_evidence",
+            "description": "No URLs or QR-code URLs are present, so there are no destinations to compare with the claimed identity.",
+            "source": "urls, technical_signals.url_count, technical_signals.qr_code_count",
+            "severity": "low",
+            "confidence": 0.95
+          }
+        ]
+      },
+      "report": {
+        "summary": "The analysis classifies the message as no attack, with very low phishing, impersonation, and social-engineering probabilities. Authentication passed, sender domains align, and no links, attachments, urgency, payment demand, or sensitive-data request were detected.",
+        "risk_explanation": "The message appears to be a technical inquiry about DC-DC converter current and sensor compatibility. Although the structured requested-action field is \"provide_credentials,\" the cited body evidence explicitly says the message does not ask for credentials, sign-in, payment, or sensitive data; this inconsistency remains unresolved. The generic display name does not verify a specific person, and the large sent/received date discrepancy is unexplained but considered likely to be a dataset artifact. Domain authentication supports message authenticity at the domain level but does not prove the sender's identity or intent.",
+        "recommended_actions": [
+          "Do not provide credentials, especially because the evidence indicates none are needed to answer the technical inquiry.",
+          "If the inquiry is expected and within your role, respond only with the necessary non-sensitive technical information.",
+          "If sender identity matters, verify it through a trusted, independent contact method before sharing internal or sensitive details.",
+          "Treat the unexplained timestamp inconsistency as a data-quality limitation and escalate only if it conflicts with organizational records or context."
+        ]
+      },
+      "approach": "jev_then_gpt"
+    },
+    "errors": [],
+    "duration_seconds": 21.697
+  }
+]

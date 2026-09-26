@@ -6,7 +6,7 @@ from pydantic import Field
 from app.models.base import APIModel
 
 Probability = Annotated[float, Field(ge=0, le=1, allow_inf_nan=False, strict=True)]
-AnalysisMode = Literal["jev_then_gpt", "gpt_only"]
+AnalysisMode = Literal["jev_then_gpt"]
 
 
 class RequestedAction(StrEnum):

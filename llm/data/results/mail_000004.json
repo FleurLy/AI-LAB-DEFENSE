@@ -1,0 +1,58 @@
+{
+  "analysis": {
+    "social_engineering_probability": 0.75,
+    "phishing_probability": 0.65,
+    "impersonation_probability": 0.7,
+    "urgency_probability": 0.35,
+    "authority_pressure_probability": 0.15,
+    "secrecy_probability": 0.0,
+    "credential_request_probability": 0.1,
+    "payment_request_probability": 0.15,
+    "personal_data_request_probability": 0.6,
+    "procedure_bypass_probability": 0.05,
+    "requested_action": "click_link",
+    "attack_type": "phishing",
+    "evidence": [
+      {
+        "type": "sender_identity_mismatch",
+        "description": "The sender display name 'Account Security Desk' conflicts with the credit card offer subject and body content, presenting an administrative persona to bypass suspicion.",
+        "source": "email.from.name",
+        "severity": "high",
+        "confidence": 0.85
+      },
+      {
+        "type": "authentication",
+        "description": "SPF, DKIM, and DMARC technical checks all failed for the sending domain yourfunforeveryonetoday.net.",
+        "source": "authentication",
+        "severity": "high",
+        "confidence": 0.95
+      },
+      {
+        "type": "suspicious_links",
+        "description": "Email contains links routing to an unverified third-party domain (point.yourfunforeveryonetoday.net) with recipient tracking parameters to complete an application.",
+        "source": "urls[0].url",
+        "severity": "medium",
+        "confidence": 0.8
+      },
+      {
+        "type": "call_to_action",
+        "description": "The email urges the recipient to click external links to apply for a credit rebuilding card, which normally involves collecting sensitive personal and financial data.",
+        "source": "email.body_text",
+        "severity": "medium",
+        "confidence": 0.75
+      }
+    ]
+  },
+  "report": {
+    "summary": "The completed analysis classifies this message as phishing, with elevated likelihoods of social engineering and impersonation. Its requested action is to click a link related to a credit-card application.",
+    "risk_explanation": "The assessment is supported by a mismatch between the sender name (“Account Security Desk”) and the credit-card offer, failure of SPF, DKIM, and DMARC checks, and links to an unverified third-party domain containing recipient-tracking parameters. The application context may lead to collection of sensitive personal or financial information. The evidence supports significant concern but does not establish certainty, and the original email was not independently examined here.",
+    "recommended_actions": [
+      "Do not click the link or submit personal, financial, account, or credential information.",
+      "Delete or quarantine the message and report it through your organization’s phishing-reporting process or to your email provider.",
+      "If the offer may be legitimate, verify it independently using the financial institution’s official website or a trusted phone number—not contact details or links in the message.",
+      "If you already clicked but submitted nothing, close the page and notify your security team if this is a work device or account.",
+      "If you submitted personal, financial, or credential information, promptly contact the relevant institution through verified channels, change any exposed passwords, and follow its fraud or identity-protection guidance."
+    ]
+  },
+  "approach": "jev_then_gpt"
+}

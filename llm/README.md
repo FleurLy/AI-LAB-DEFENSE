@@ -1,7 +1,7 @@
 # Email social-engineering analysis API
 
 A small FastAPI backend that validates a structured email payload and uses
-LangChain through OpenRouter. It supports two selectable analysis approaches,
+LangChain through OpenRouter. It runs Jev for the security decision, then GPT for the report,
 returning a validated security decision and a human-readable report. This first version provides the inference
 pipeline; it does not implement a complete fraud-detection engine or calibrated
 risk scoring.
@@ -46,9 +46,8 @@ configuration and active model adapters are cached. Credentials are never hardco
 | --- | --- | --- |
 | `OPENROUTER_API_KEY` | Empty | Required for real analysis; stored as a Pydantic `SecretStr`. |
 | `LLM_PROVIDER` | `openrouter` | Provider selection; OpenRouter is the implemented adapter. |
-| `LLM_MODEL` | `google/gemma-4-26b-a4b-it:free` | Full-analysis model, also used for reports unless overridden. Set a GPT model ID for these experiments (see `.env.example`). |
+| `LLM_MODEL` | `google/gemma-4-26b-a4b-it:free` | Default report model unless overridden. Set a GPT model ID (see `.env.example`). |
 | `JEV_MODEL` | `typesafe/jev-router` | Security decision model in `jev_then_gpt`. |
-| `ANALYSIS_MODE` | `gpt_only` | Validated selection: `gpt_only` or `jev_then_gpt`. |
 | `REPORT_MODEL` | Empty | Report model in `jev_then_gpt`; empty or absent falls back to `LLM_MODEL`. |
 | `LLM_TEMPERATURE` | `0` | Sampling temperature, from 0 to 2; must be supported by the chosen model. |
 | `LLM_TIMEOUT_SECONDS` | `30` | Positive timeout applied independently to each analysis/report stage and provider call. |
@@ -70,19 +69,21 @@ a provider or structured-output error rather than an unvalidated analysis.
 `/health` is a liveness check. It does not validate credentials or contact the
 provider. The application and Swagger UI start without an API key.
 
-## Two analysis approaches
+## Analysis pipeline
 
-- `ANALYSIS_MODE=gpt_only`: original email → GPT → analysis + report, in one call.
-- `ANALYSIS_MODE=jev_then_gpt`: original email → Jev → structured analysis → GPT → report.
+Original email → Jev → structured analysis → GPT → report.
 
-Both return `{ "analysis": {...}, "report": {...}, "approach": "..." }`.
+The pipeline is fixed. `ANALYSIS_MODE` is no longer used, including any old value
+remaining in `.env`. Models remain configurable through `JEV_MODEL`, `LLM_MODEL`
+and the optional `REPORT_MODEL` override.
+
+The API returns `{ "analysis": {...}, "report": {...}, "approach": "jev_then_gpt" }`.
 `SecurityAnalysis` contains the ten probabilities, attack type, requested action,
 and evidence. `SecurityReport` contains `summary`, `risk_explanation`, and
-`recommended_actions`. In Jev mode, GPT receives **only** the structured decision,
+`recommended_actions`. GPT receives **only** the structured decision,
 never the original email. Its dedicated prompt prohibits reclassification or new
 conclusions; its output schema contains report fields only. The service preserves
-Jev's decision unchanged. There is no automatic fallback between modes.
-Change `ANALYSIS_MODE` in `.env` and restart the API to switch approaches.
+Jev's decision unchanged. There is no automatic fallback to GPT analysis.
 
 ## Architecture
 
@@ -108,7 +109,7 @@ app/
     gpt.py                      # GPT decision + report in one call
     report.py                   # Report from a completed decision
   services/
-    analysis_service.py         # Mode selection, stage sequencing and timeouts
+    analysis_service.py         # Jev then report sequencing and timeouts
     comparison_service.py       # Legacy standalone comparison utility
   prompts/
     email_analysis.py           # Shared security prompt and request serialization
@@ -130,13 +131,13 @@ pytest.ini
 ```
 
 Request flow: FastAPI route → `AnalysisService` → active analyzer(s) → LangChain
-`ChatOpenAI` → OpenRouter. Mode selection belongs to the service; routes contain
+`ChatOpenAI` → OpenRouter. The service runs Jev followed by the report generator; routes contain
 no inference logic. OpenRouter configuration stays in the settings and provider
 factory. Swagger at `/docs` describes the common `FinalAnalysisResult` schema.
 
 The active adapters use `with_structured_output(..., method="json_schema", strict=True)`
 and asynchronous `ainvoke`: `SecurityAnalysis` for Jev, `SecurityReport` for the
-report generator, and `GPTFullAnalysis` for GPT-only. There is no manual JSON
+report generator. There is no manual JSON
 parsing of model responses. The original `LLMEmailAnalyzer`, `AIAnalysisResult`,
 and standalone `ComparisonService` remain available for compatibility, but are
 not used by `/analyze`. See the [LangChain integration documentation](https://docs.langchain.com/oss/python/integrations/chat/openai)
@@ -169,8 +170,7 @@ jev_analyzer = JevEmailAnalyzer(jev_model)
 
 All selections use OpenRouter, its API key, attribution headers, temperature,
 and timeout. Defaults are used when model variables are absent; explicit empty
-`LLM_MODEL` and `JEV_MODEL` values are rejected. Only adapters required by the active
-mode are constructed. `JEV_MODEL` configures a chat model, not a separate inference
+`LLM_MODEL` and `JEV_MODEL` values are rejected. Only the Jev and report adapters are constructed. `JEV_MODEL` configures a chat model, not a separate inference
 engine or invented API.
 
 `JevEmailAnalyzer` focuses on claimed identity, requested actions and technical
@@ -179,8 +179,8 @@ share async execution, structured-output validation and error translation.
 The complete input retains its original JSON field names, and the prompts treat
 embedded email content as untrusted evidence.
 
-The dependency layer caches active adapters. `get_analyzer` uses `LLM_MODEL`,
-`get_jev_analyzer` uses `JEV_MODEL`, and `get_report_generator` uses `REPORT_MODEL`
+The dependency layer caches both adapters. `get_jev_analyzer` uses `JEV_MODEL`,
+and `get_report_generator` uses `REPORT_MODEL`
 or `LLM_MODEL`. `get_analysis_service` injects them through small protocols.
 
 ## Payload and error behavior
@@ -204,7 +204,7 @@ or `LLM_MODEL`. `get_analysis_service` injects them through small protocols.
 
 | HTTP status | Meaning |
 | --- | --- |
-| `200` | Complete analysis and report, with the selected `approach`. |
+| `200` | Complete analysis and report, with `approach="jev_then_gpt"`. |
 | `422` | Invalid input; validation details omit input values. |
 | `503` | Missing/invalid configuration or analysis-stage credential/permission failure. |
 | `502` | Provider/structured-output failure, or `report_generation_error` in the report stage. |
@@ -225,11 +225,11 @@ python -m pytest -q
 ```
 
 Tests cover the exact example, field preservation, required and nullable fields,
-empty lists, probability bounds, both modes and their common response, configuration
+empty lists, probability bounds, the fixed pipeline and its response, configuration
 errors, provider failures, stage timeouts, and cancellation. They verify that the
 report receives only Jev's analysis, cannot mutate the returned decision, and never
 triggers fallback. Simulated HTTP transports exercise the full API and real
-LangChain parsing for both modes. Existing standalone comparison tests retain
+LangChain parsing for the full pipeline. Existing standalone comparison tests retain
 concurrency and independent-payload coverage.
 Provider tests cover environment settings, optional headers, rejection of legacy
 credentials, and sanitization of errors containing credentials or email content.
@@ -240,3 +240,56 @@ Remaining work: assess both analyzers on labeled emails and calibrate
 probabilities before using them for
 automated decisions. A live provider smoke test requires your API key and a model
 available to your account.
+
+## Tests du dataset avec l’API d’analyse
+
+Guide complet : [scripts/README.md](scripts/README.md).
+
+Lancer d’abord le pipeline SMTP (`localhost:1025`, voir ci-dessus) et l’API FastAPI
+(`http://127.0.0.1:8000`). Depuis `llm/`, avec les dépendances installées
+(`pip install -r requirements.txt`), exécuter :
+
+```bash
+python scripts/run_dataset.py
+```
+
+Le script parcourt récursivement tous les `.eml` sous `../extraction/`, appelle `../extraction/scripts/replay.py`,
+attend le nouveau JSON correspondant, puis envoie son contenu à `/analyze`.
+Les emails sont traités un par un. La correspondance est vérifiée avec le fichier
+`../extraction/data/raw/<id>.eml` pour ignorer les sorties tardives d’autres emails.
+Les sources `.eml` ne sont pas modifiées.
+
+`data/results/results.json` contient une liste avec, pour chaque sample :
+`sample_path`, `normalized_path`, `normalized_json`, `api_status_code`,
+`api_response`, `errors` (étape, type et message) et `duration_seconds`.
+Le fichier est remplacé au début de chaque exécution et sauvegardé atomiquement
+après chaque sample. Une erreur SMTP, de normalisation ou d’API est enregistrée
+et le traitement continue. Le code de sortie final vaut 1 si un sample a échoué.
+
+Les fichiers EML sources sont recherchés par défaut dans tout `extraction/` (notamment `samples/` et `datasets/`). Le dossier généré `extraction/data/` est exclu pour ne pas rejouer les copies SMTP. Les données SMTP sont recherchées dans `extraction/data/`.
+Les résultats sont toujours sauvegardés dans `llm/data/results/results.json`,
+indépendamment du répertoire de lancement et de `--data-dir`. Pour un autre dataset ou des délais plus longs :
+
+```bash
+python scripts/run_dataset.py --samples ../extraction/datasets/phishing_validation/emails \
+  --normalization-timeout 120 --api-timeout 180
+```
+
+Options supplémentaires : `--data-dir`, `--api-url`, `--smtp-host`, `--smtp-port`
+et `--replay-timeout`. `--data-dir` doit pointer vers les données réellement
+écrites par le pipeline SMTP, avec les sous-dossiers `raw/` et `normalized/`.
+Le délai réseau interne à `replay.py` reste inchangé (15 secondes).
+Une exécution réelle appelle les modèles configurés dans l’API d’analyse.
+
+Pour chaque analyse réussie, le runner écrit aussi `data/results/<sample>.json`
+(réponse API seule) et `data/results/<sample>.md` (rapport lisible). Le Markdown
+est généré localement et de manière déterministe à partir des champs disponibles
+via `generate_markdown(result)`, sans appel LLM supplémentaire. Le fichier global
+`results.json` conserve les détails de tous les samples, y compris les erreurs.
+Pour les samples placés sous `benign/`, le résultat est `SUCCESS` lorsque
+`attack_type` vaut `none`. Sous `suspicious/`, il est `SUCCESS` lorsque
+`attack_type` contient une autre valeur. Pour le dataset de validation, le runner
+lit la vérité terrain dans `manifest.csv` (`safe` ou `phishing`) sans la transmettre
+au LLM. Chaque rapport Markdown évalué commence par le flag `SUCCESS` ou `FAIL`.
+En cas de noms de samples identiques, ou de nom `results.eml`, un suffixe stable
+évite d’écraser un autre rapport ou le fichier global.

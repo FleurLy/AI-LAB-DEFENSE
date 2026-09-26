@@ -11,7 +11,7 @@ from pydantic import ValidationError
 
 from app.analyzers.llm import LLMEmailAnalyzer
 from app.analyzers.providers import create_chat_model
-from app.api.dependencies import get_analyzer, get_jev_analyzer
+from app.api.dependencies import get_jev_analyzer, get_report_generator
 from app.core.config import Settings, get_settings
 from app.core.errors import ConfigurationError
 from app.main import create_app
@@ -147,8 +147,8 @@ def test_adapter_value_error_does_not_expose_raw_response(
     )
     analyzer = LLMEmailAnalyzer(model)
     app = create_app()
-    app.dependency_overrides[get_analyzer] = lambda: analyzer
     app.dependency_overrides[get_jev_analyzer] = lambda: analyzer
+    app.dependency_overrides[get_report_generator] = lambda: AsyncMock()
     with TestClient(app) as client:
         response = client.post("/analyze", json=example_payload)
     assert response.status_code == 502
@@ -211,19 +211,14 @@ def test_report_model_override_and_fallback(report_model):
     assert create_chat_model(settings, model_type="report").model_name == ((report_model or "").strip() or settings.llm_model)
 
 
-@pytest.mark.parametrize("mode", ["gpt_only", "jev_then_gpt"])
-def test_only_active_models_are_constructed(monkeypatch, mode):
-    from app.api.dependencies import get_report_generator
+@pytest.mark.parametrize("mode", ["gpt_only", "jev_then_gpt", "invalid"])
+def test_only_jev_and_report_are_constructed(monkeypatch, mode):
     monkeypatch.setenv("ANALYSIS_MODE", mode)
     with patch("app.api.dependencies.create_chat_model") as factory:
-        get_analyzer()
         get_jev_analyzer()
         get_report_generator()
-    assert [call.kwargs.get("model_type", "llm") for call in factory.call_args_list] == (
-        ["llm"] if mode == "gpt_only" else ["jev", "report"]
-    )
+    assert [call.kwargs["model_type"] for call in factory.call_args_list] == ["jev", "report"]
 
 
-def test_invalid_analysis_mode_is_rejected():
-    with pytest.raises(ValidationError):
-        Settings(analysis_mode="parallel")
+def test_analysis_mode_is_no_longer_configurable():
+    assert "analysis_mode" not in Settings.model_fields

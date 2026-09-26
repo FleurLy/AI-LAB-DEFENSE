@@ -124,11 +124,10 @@ def test_invalid_analyzer_result_preserves_valid_result(
     assert result.jev.result == analysis_result
 
 
-@pytest.mark.parametrize("mode", ["gpt_only", "jev_then_gpt"])
+@pytest.mark.parametrize("mode", ["jev_then_gpt"])
 def test_api_pipeline_with_real_langchain_and_mock_http(
     example_payload, full_analysis, security_analysis, security_report, monkeypatch, mode,
 ):
-    from app.prompts.gpt_analysis import GPT_ONLY_ANALYSIS_PROMPT
     from app.prompts.security_report import GPT_REPORT_PROMPT
 
     monkeypatch.setenv("ANALYSIS_MODE", mode)
@@ -136,13 +135,10 @@ def test_api_pipeline_with_real_langchain_and_mock_http(
     monkeypatch.setenv("LLM_MODEL", "openai/gpt-4o-mini")
     monkeypatch.setenv("JEV_MODEL", "test-provider/jev-model")
     monkeypatch.setenv("REPORT_MODEL", "test-provider/report-model")
-    expected = (
-        [("openai/gpt-4o-mini", GPT_ONLY_ANALYSIS_PROMPT, example_payload, full_analysis)]
-        if mode == "gpt_only" else [
-            ("test-provider/jev-model", JEV_SYSTEM_PROMPT, example_payload, security_analysis),
-            ("test-provider/report-model", GPT_REPORT_PROMPT, security_analysis.model_dump(mode="json"), security_report),
-        ]
-    )
+    expected = [
+        ("test-provider/jev-model", JEV_SYSTEM_PROMPT, example_payload, security_analysis),
+        ("test-provider/report-model", GPT_REPORT_PROMPT, security_analysis.model_dump(mode="json"), security_report),
+    ]
     calls = []
 
     def handler(request):

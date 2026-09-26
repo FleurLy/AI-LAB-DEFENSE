@@ -4,7 +4,7 @@ from typing import Any
 
 import pytest
 
-from app.api.dependencies import get_analyzer, get_jev_analyzer, get_report_generator
+from app.api.dependencies import get_jev_analyzer, get_report_generator
 from app.core.config import get_settings
 from app.models.analysis import AIAnalysisResult
 
@@ -39,11 +39,9 @@ def isolate_configuration(monkeypatch: pytest.MonkeyPatch, tmp_path: Path):
     monkeypatch.setenv("LANGSMITH_TRACING", "false")
     monkeypatch.setenv("LANGCHAIN_TRACING_V2", "false")
     get_settings.cache_clear()
-    get_analyzer.cache_clear()
     get_jev_analyzer.cache_clear()
     get_report_generator.cache_clear()
     yield
-    get_analyzer.cache_clear()
     get_jev_analyzer.cache_clear()
     get_report_generator.cache_clear()
     get_settings.cache_clear()

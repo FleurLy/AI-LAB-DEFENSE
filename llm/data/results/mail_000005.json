@@ -1,0 +1,42 @@
+{
+  "analysis": {
+    "social_engineering_probability": 0.01,
+    "phishing_probability": 0.01,
+    "impersonation_probability": 0.02,
+    "urgency_probability": 0.05,
+    "authority_pressure_probability": 0.01,
+    "secrecy_probability": 0.0,
+    "credential_request_probability": 0.0,
+    "payment_request_probability": 0.0,
+    "personal_data_request_probability": 0.0,
+    "procedure_bypass_probability": 0.0,
+    "requested_action": "none",
+    "attack_type": "none",
+    "evidence": [
+      {
+        "type": "authentication",
+        "description": "SPF, DKIM, and DMARC checks all passed with matching sender domain and return path.",
+        "source": "authentication",
+        "severity": "low",
+        "confidence": 0.95
+      },
+      {
+        "type": "content_signals",
+        "description": "The email is an internal informational notice about scheduled mailbox maintenance; it contains no links, attachments, or requests for user credentials or actions.",
+        "source": "email.body_text",
+        "severity": "low",
+        "confidence": 0.98
+      }
+    ]
+  },
+  "report": {
+    "summary": "The analysis classifies this message as non-malicious, with no attack type and no requested action. It appears to be an internal informational notice about scheduled mailbox maintenance.",
+    "risk_explanation": "Risk indicators are very low. The supplied evidence states that SPF, DKIM, and DMARC passed with an aligned sender domain and return path. It also states that the message contains no links, attachments, credential requests, payment requests, personal-data requests, or other calls to action. This report is limited to the supplied analysis and evidence; the original email was not independently examined.",
+    "recommended_actions": [
+      "No security-related action is required based on the current analysis.",
+      "Treat the message as informational and follow normal organizational email-handling practices.",
+      "If the message later prompts an unexpected action or contains content not reflected in this analysis, verify it through established internal channels."
+    ]
+  },
+  "approach": "jev_then_gpt"
+}

@@ -8,6 +8,7 @@ from pydantic import (
     Field,
     StrictBool,
     TypeAdapter,
+    model_serializer,
 )
 
 from app.models.base import APIModel
@@ -30,21 +31,44 @@ class EmailAddress(APIModel):
     address: EmailStr
 
 
+class OptionalEmailAddress(APIModel):
+    name: str | None
+    address: str | None
+
+
 class EmailData(APIModel):
+    internal_id: str | None = None
     from_: EmailAddress = Field(alias="from")
-    reply_to: EmailStr | None
-    to: list[EmailStr]
-    cc: list[EmailStr]
+    reply_to: EmailStr | OptionalEmailAddress | None
+    to: list[str]
+    cc: list[str]
     subject: str
     body_text: str
+    body_html: str | None = None
     language: str | None
-    sent_at: AwareDatetime
-    message_id: str
+    sent_at: AwareDatetime | None
+    message_id: str | None
+
+    @model_serializer(mode="wrap")
+    def preserve_input_shape(self, handler):
+        data = handler(self)
+        for field in ("internal_id", "body_html"):
+            if field not in self.model_fields_set:
+                data.pop(field, None)
+        return data
 
 
 class ExtractionInfo(APIModel):
     method: str
     success: StrictBool
+    error: str | None = None
+
+    @model_serializer(mode="wrap")
+    def preserve_input_shape(self, handler):
+        data = handler(self)
+        if "error" not in self.model_fields_set:
+            data.pop("error", None)
+        return data
 
 
 class AttachmentSecurity(APIModel):
@@ -56,7 +80,9 @@ class AttachmentSecurity(APIModel):
 
 class Attachment(APIModel):
     name: str
-    mime_type: str
+    mime_type: str | None = None
+    mime_type_declared: str | None = None
+    mime_type_detected: str | None = None
     size_bytes: NonNegativeCount
     # Keep the supplied value: the example contains abbreviated hashes.
     sha256: str
@@ -67,16 +93,32 @@ class Attachment(APIModel):
     qr_codes: list[URLString]
     security: AttachmentSecurity
 
+    @model_serializer(mode="wrap")
+    def preserve_input_shape(self, handler):
+        data = handler(self)
+        for field in ("mime_type", "mime_type_declared", "mime_type_detected"):
+            if field not in self.model_fields_set:
+                data.pop(field, None)
+        return data
+
 
 class UrlInfo(APIModel):
     source: str
     display_text: str | None
     url: URLString
-    domain: str
+    domain: str | None
+    scheme: str | None = None
     uses_ip_address: StrictBool
     uses_punycode: StrictBool
     is_shortened: StrictBool
-    display_domain_mismatch: StrictBool
+    display_domain_mismatch: StrictBool | None
+
+    @model_serializer(mode="wrap")
+    def preserve_input_shape(self, handler):
+        data = handler(self)
+        if "scheme" not in self.model_fields_set:
+            data.pop("scheme", None)
+        return data
 
 
 class Authentication(APIModel):
@@ -87,7 +129,7 @@ class Authentication(APIModel):
 
 
 class SenderInfo(APIModel):
-    from_domain: str
+    from_domain: str | None
     reply_to_domain: str | None
     return_path: str | None
     return_path_domain: str | None

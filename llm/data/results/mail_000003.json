@@ -1,0 +1,98 @@
+{
+  "analysis": {
+    "social_engineering_probability": 0.02,
+    "phishing_probability": 0.01,
+    "impersonation_probability": 0.01,
+    "urgency_probability": 0.0,
+    "authority_pressure_probability": 0.0,
+    "secrecy_probability": 0.0,
+    "credential_request_probability": 0.0,
+    "payment_request_probability": 0.0,
+    "personal_data_request_probability": 0.0,
+    "procedure_bypass_probability": 0.0,
+    "requested_action": "none",
+    "attack_type": "none",
+    "evidence": [
+      {
+        "type": "authentication",
+        "description": "SPF, DKIM, and DMARC all pass for the claimed domain. This supports domain-level authentication but does not by itself prove benign intent.",
+        "source": "authentication.spf, authentication.dkim, authentication.dmarc",
+        "severity": "low",
+        "confidence": 0.95
+      },
+      {
+        "type": "sender_identity",
+        "description": "The From address and Return-Path both use employee_67223241@psy1.psych.arizona.edu. No Reply-To is set, and the supplied mismatch flags are false.",
+        "source": "email.from.address, sender.return_path, sender.from_reply_to_mismatch, sender.from_return_path_mismatch",
+        "severity": "low",
+        "confidence": 0.95
+      },
+      {
+        "type": "requested_action",
+        "description": "The body is a technical mailing-list discussion about DMDX audio clipping and timing. It does not ask the recipient to click a link, sign in, pay, disclose data, or bypass normal procedures.",
+        "source": "email.body_text",
+        "severity": "low",
+        "confidence": 0.9
+      },
+      {
+        "type": "content_signals",
+        "description": "Supplied content signals report no credential request, payment request, urgent language, threat language, secrecy request, personal data request, external link, attachment, or QR code.",
+        "source": "content_signals",
+        "severity": "low",
+        "confidence": 0.9
+      },
+      {
+        "type": "technical_signals",
+        "description": "Supplied technical signals report no failed authentication, no reply-to or return-path mismatch, zero URLs, zero suspicious URLs, zero attachments, and zero QR codes.",
+        "source": "technical_signals",
+        "severity": "low",
+        "confidence": 0.9
+      },
+      {
+        "type": "attachment",
+        "description": "No attachments are present. There is no attachment text or visual content to support or contradict the message claims.",
+        "source": "attachments",
+        "severity": "low",
+        "confidence": 1.0
+      },
+      {
+        "type": "url",
+        "description": "No URLs or QR-code URLs are present. There is no destination to compare with the claimed sender identity.",
+        "source": "urls, technical_signals.url_count, technical_signals.qr_code_count",
+        "severity": "low",
+        "confidence": 1.0
+      },
+      {
+        "type": "routing_anomaly",
+        "description": "The message has sent_at 1999-12-08 but received_at 2026-09-26 and received_hops 0. This is a temporal/routing inconsistency, but it does not itself indicate social engineering and may reflect archival or replay processing.",
+        "source": "email.sent_at, routing.received_at, routing.received_hops",
+        "severity": "low",
+        "confidence": 0.6
+      },
+      {
+        "type": "language",
+        "description": "The body contains informal technical mailing-list content and an ASCII ribbon campaign signature. No persuasion, authority pressure, urgency, or secrecy request is observed.",
+        "source": "email.body_text",
+        "severity": "low",
+        "confidence": 0.85
+      },
+      {
+        "type": "impersonation",
+        "description": "The display name 'Psy1 Team' and the address are consistent with a departmental mailing-list context. No evidence of a mismatched external sender or lookalike domain is present.",
+        "source": "email.from.name, email.from.address, sender.from_domain",
+        "severity": "low",
+        "confidence": 0.8
+      }
+    ]
+  },
+  "report": {
+    "summary": "The supplied analysis classifies the message as having no attack type and requesting no action. It assigns very low probabilities to social engineering (0.02), phishing (0.01), and impersonation (0.01).",
+    "risk_explanation": "Domain authentication passed, sender fields were consistent, and the technical mailing-list content contained no links, attachments, QR codes, credential or payment requests, urgency, secrecy, authority pressure, or requests to bypass procedures. A date/routing inconsistency was noted: the message is dated 1999 but recorded as received in 2026 with zero received hops. This is low-confidence, low-severity evidence that may reflect archival or replay processing and does not by itself indicate social engineering. Authentication supports domain identity but cannot independently prove benign intent.",
+    "recommended_actions": [
+      "No security action is requested by the message.",
+      "Handle it as ordinary mailing-list correspondence under normal organizational procedures.",
+      "If provenance or timing matters, verify the unusual date and routing metadata through trusted internal records or mail-administration channels."
+    ]
+  },
+  "approach": "jev_then_gpt"
+}
