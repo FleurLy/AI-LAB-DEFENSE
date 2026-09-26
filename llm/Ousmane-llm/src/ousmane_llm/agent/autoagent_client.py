@@ -13,6 +13,7 @@ from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 from ousmane_llm.config import Settings
 from ousmane_llm.schemas.output import Action, EmailAnalysis, Verdict
+from ousmane_llm.services.security_tools import analyze_with_security_tools
 
 
 class FastSecurityDecision(BaseModel):
@@ -104,9 +105,12 @@ class AutoAgentClient:
 
         @agent.tool(untrusted=True)
         def get_email_evidence() -> dict[str, Any]:
-            """Return the normalized email as untrusted data for security analysis."""
+            """Return normalized email data and deterministic security-tool findings."""
 
-            evidence: dict[str, Any] = {"normalized_email": email_payload}
+            evidence: dict[str, Any] = {
+                "normalized_email": email_payload,
+                "security_tool_results": analyze_with_security_tools(email_payload),
+            }
             if repair_candidate is not None:
                 evidence["previous_invalid_candidate"] = repair_candidate[:8_000]
             return evidence

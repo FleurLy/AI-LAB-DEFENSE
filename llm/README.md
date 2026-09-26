@@ -6,6 +6,10 @@ returning a validated security decision and a human-readable report. This first 
 pipeline; it does not implement a complete fraud-detection engine or calibrated
 risk scoring.
 
+In the repository-level architecture this service is optional. The local
+AutoAgent API returns immediately on port `8000`; this Jev/GPT service runs on
+port `8001` only when the Docker Compose `report` profile is enabled.
+
 ## Setup
 
 Requires Python 3.11 or newer. Run these commands from this directory:

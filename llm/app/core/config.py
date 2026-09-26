@@ -13,9 +13,13 @@ class Settings(BaseSettings):
     )
 
     report_model: str | None = None
-    llm_provider: str | None = None
-    llm_model: str | None = None
-    jev_model: str | None = None
+    llm_provider: Literal["openrouter"] = "openrouter"
+    llm_model: str = Field(
+        default="google/gemma-4-26b-a4b-it:free", min_length=1, pattern=r"\S"
+    )
+    jev_model: str = Field(
+        default="typesafe/jev-router", min_length=1, pattern=r"\S"
+    )
     llm_temperature: float = Field(default=0, ge=0, le=2, allow_inf_nan=False)
     llm_timeout_seconds: float = Field(default=30, gt=0, allow_inf_nan=False)
     openrouter_api_key: SecretStr | None = None

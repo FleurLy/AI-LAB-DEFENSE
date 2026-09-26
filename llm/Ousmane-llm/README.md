@@ -3,6 +3,11 @@
 Consumes one normalized JSON from `extraction/`, analyzes it through
 [AutoAgent](https://github.com/laazizi/autoagent) and local Qwen 3.5, then writes one English classification JSON.
 
+The normalized email first passes through the five deterministic checks in
+`../../agent/tools.py`. AutoAgent receives their scores and flags together with
+the original normalized evidence; tool scores support the decision but never
+override contradictory evidence automatically.
+
 ## Docker: start in one command
 
 Requirements: Docker Desktop with at least 6 GB available memory. From this directory:
@@ -108,6 +113,7 @@ RUN_OLLAMA_INTEGRATION=1 pytest -m integration -v
 ## Security design
 
 - Email and attachment content enters AutoAgent through an `untrusted=True` tool.
+- The same evidence is evaluated by all five local Python checks in `agent/tools.py`.
 - The model has no browser, shell, filesystem, URL-fetching, or malware-execution tool.
 - Output is submitted through a strict Pydantic-backed tool and validated again by the host.
 - One controlled repair is allowed for malformed model output.

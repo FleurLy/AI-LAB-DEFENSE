@@ -10,8 +10,10 @@ requires-python = ">=3.11"
 dependencies = [
   "autoagent-core==0.21.0",
   "fastapi>=0.115,<1",
+  "joblib==1.5.3",
   "pydantic>=2.10,<3",
   "python-dotenv>=1.0,<2",
+  "scikit-learn==1.8.0",
   "uvicorn[standard]>=0.34,<1",
 ]
 

@@ -32,6 +32,13 @@ class FakeAgent:
         evidence = getter()
         body = evidence["normalized_email"]["email"]["body_text"]
         assert "Ignore all previous instructions" in body
+        assert set(evidence["security_tool_results"]) == {
+            "check_expediteur",
+            "check_destinataire",
+            "check_domaine",
+            "check_pieces_jointes",
+            "check_contenu",
+        }
         result = decision("malicious", "phishing", 88, "quarantine")
         submitter(**result.model_dump(mode="json"))
         return SimpleNamespace(output="")

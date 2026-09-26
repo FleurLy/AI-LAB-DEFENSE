@@ -1,8 +1,9 @@
 import re
 import difflib
+import ipaddress
 import joblib
 from pathlib import Path
-from urllib.parse import urlparse
+from typing import Any
 
 # ============================================================
 # 0. CHARGEMENT DU MODÈLE ENTRAÎNÉ (agent/spam_email_classifier/model)
@@ -19,8 +20,8 @@ def get_model():
     if _MODEL is None:
         if not SPAM_MODEL_PATH.exists():
             raise FileNotFoundError(
-                f"Modèle introuvable à {SPAM_MODEL_PATH}. "
-                "Vérifie que agent/spam_email_classifier/model/ contient bien le .joblib."
+                f"Model not found at {SPAM_MODEL_PATH}. "
+                "Make sure agent/spam_email_classifier/model/ contains the .joblib file."
             )
         _MODEL = joblib.load(SPAM_MODEL_PATH)
     return _MODEL
@@ -30,9 +31,29 @@ def get_model():
 # ============================================================
 KNOWN_DOMAINS = ["paypal.com", "google.com", "amazon.com", "microsoft.com"]  # à étendre
 
+
+def _email_section(data: dict[str, Any]) -> dict[str, Any]:
+    email = data.get("email", {})
+    return email if isinstance(email, dict) else {}
+
+
+def _address(value: Any) -> str:
+    if isinstance(value, str):
+        return value
+    if isinstance(value, dict):
+        address = value.get("address")
+        return address if isinstance(address, str) else ""
+    return ""
+
+
 def check_expediteur(data: dict) -> dict:
-    sender = data.get("sender", "")
-    reply_to = data.get("reply_to", "")
+    email = _email_section(data)
+    sender = _address(email.get("from", data.get("sender", "")))
+    reply_to = _address(email.get("reply_to", data.get("reply_to", "")))
+    authentication = data.get("authentication", {})
+    authentication = authentication if isinstance(authentication, dict) else {}
+    sender_signals = data.get("sender", {})
+    sender_signals = sender_signals if isinstance(sender_signals, dict) else {}
     flags = []
     score = 0.0
 
@@ -46,9 +67,17 @@ def check_expediteur(data: dict) -> dict:
             score += 0.5
 
     # Mismatch From / Reply-To
-    if reply_to and reply_to.split("@")[-1].lower() != domain:
+    if (
+        sender_signals.get("from_reply_to_mismatch") is True
+        or (reply_to and reply_to.split("@")[-1].lower() != domain)
+    ):
         flags.append("reply_to_mismatch")
         score += 0.4
+
+    for protocol in ("spf", "dkim", "dmarc"):
+        if str(authentication.get(protocol, "")).lower() == "fail":
+            flags.append(f"{protocol}_failed")
+            score += 0.15
 
     # Caractères suspects (chiffres à la place de lettres, ex: paypa1)
     if re.search(r'\d', domain.split(".")[0]):
@@ -62,7 +91,8 @@ def check_expediteur(data: dict) -> dict:
 # 2. CHECK DESTINATAIRE (to)
 # ============================================================
 def check_destinataire(data: dict) -> dict:
-    to = data.get("to", "")
+    email = _email_section(data)
+    to = email.get("to", data.get("to", ""))
     flags = []
     score = 0.0
 
@@ -85,26 +115,43 @@ def check_destinataire(data: dict) -> dict:
 SUSPICIOUS_TLDS = [".ru", ".tk", ".xyz", ".top", ".click", ".info"]
 
 def check_domaine(data: dict) -> dict:
-    sender = data.get("sender", "")
-    domain = sender.split("@")[-1].lower() if "@" in sender else ""
+    urls = data.get("urls", [])
+    urls = urls if isinstance(urls, list) else []
     flags = []
     score = 0.0
 
-    if any(domain.endswith(tld) for tld in SUSPICIOUS_TLDS):
-        flags.append("suspicious_tld")
-        score += 0.4
+    for entry in urls:
+        if not isinstance(entry, dict):
+            continue
+        domain = str(entry.get("domain") or "").lower().strip(".")
+        if entry.get("uses_ip_address") is True:
+            flags.append(f"raw_ip_url:{domain}")
+            score += 0.6
+        else:
+            try:
+                ipaddress.ip_address(domain)
+            except ValueError:
+                pass
+            else:
+                flags.append(f"raw_ip_url:{domain}")
+                score += 0.6
+        if entry.get("uses_punycode") is True or "xn--" in domain:
+            flags.append(f"punycode_domain:{domain}")
+            score += 0.5
+        if entry.get("display_domain_mismatch") is True:
+            flags.append(f"display_domain_mismatch:{domain}")
+            score += 0.5
+        if any(domain.endswith(tld) for tld in SUSPICIOUS_TLDS):
+            flags.append(f"suspicious_tld:{domain}")
+            score += 0.4
+        if domain.count(".") > 2:
+            flags.append(f"excessive_subdomains:{domain}")
+            score += 0.3
+        if domain.count("-") >= 2:
+            flags.append(f"multiple_hyphens:{domain}")
+            score += 0.3
 
-    # Sous-domaines multiples (ex: secure.paypal.verify-account.com)
-    if domain.count(".") > 2:
-        flags.append("excessive_subdomains")
-        score += 0.3
-
-    # Tirets multiples (souvent utilisé pour imiter un vrai domaine)
-    if domain.count("-") >= 2:
-        flags.append("multiple_hyphens_in_domain")
-        score += 0.3
-
-    return {"score": min(score, 1.0), "flags": flags}
+    return {"score": min(score, 1.0), "flags": sorted(set(flags))}
 
 
 # ============================================================
@@ -117,7 +164,14 @@ def check_pieces_jointes(data: dict) -> dict:
     flags = []
     score = 0.0
 
-    for fname in attachments:
+    for attachment in attachments:
+        if isinstance(attachment, dict):
+            fname = str(attachment.get("name") or "")
+            security = attachment.get("security", {})
+            security = security if isinstance(security, dict) else {}
+        else:
+            fname = str(attachment)
+            security = {}
         fname_lower = fname.lower()
 
         # Double extension (facture.pdf.exe)
@@ -130,6 +184,19 @@ def check_pieces_jointes(data: dict) -> dict:
         if any(fname_lower.endswith(ext) for ext in DANGEROUS_EXT):
             flags.append(f"dangerous_extension:{fname}")
             score += 0.6
+
+        if security.get("extension_mime_mismatch") is True:
+            flags.append(f"extension_mime_mismatch:{fname}")
+            score += 0.5
+        if security.get("contains_macro") is True:
+            flags.append(f"contains_macro:{fname}")
+            score += 0.6
+        if security.get("contains_executable") is True:
+            flags.append(f"contains_executable:{fname}")
+            score += 0.8
+        if security.get("encrypted") is True:
+            flags.append(f"encrypted_attachment:{fname}")
+            score += 0.25
 
     return {"score": min(score, 1.0), "flags": flags}
 
@@ -147,8 +214,9 @@ def check_contenu(data: dict, model=None) -> dict:
     if model is None:
         model = get_model()
 
-    subject = data.get("subject", "")
-    body = data.get("body", "")
+    email = _email_section(data)
+    subject = email.get("subject", data.get("subject", ""))
+    body = email.get("body_text", data.get("body", ""))
     text = f"{subject} {body}"
 
     # Adapter l'input du modèle : la plupart des modèles sklearn
@@ -161,3 +229,15 @@ def check_contenu(data: dict, model=None) -> dict:
         flags.append("high_ml_confidence_phishing")
 
     return {"score": float(proba), "flags": flags}
+
+
+def run_security_tools(data: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    """Run every deterministic security tool against one normalized email."""
+
+    return {
+        "check_expediteur": check_expediteur(data),
+        "check_destinataire": check_destinataire(data),
+        "check_domaine": check_domaine(data),
+        "check_pieces_jointes": check_pieces_jointes(data),
+        "check_contenu": check_contenu(data),
+    }

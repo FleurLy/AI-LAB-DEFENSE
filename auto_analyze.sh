@@ -19,10 +19,10 @@ SEEN_FILE="$(mktemp)"
 trap 'rm -f "$SEEN_FILE"' EXIT
 
 echo "=========================================================="
-echo "👀 Surveillance automatique de : $NORMALIZED_DIR"
-echo "   Dès qu'un email est extrait (JSON finalisé), il est envoyé"
-echo "   automatiquement au LLM ($LLM_URL)."
-echo "   Ctrl+C pour arrêter."
+echo "👀 Automatically monitoring: $NORMALIZED_DIR"
+echo "   As soon as an email is extracted (finalized JSON), it is sent"
+echo "   automatically to the LLM ($LLM_URL)."
+echo "   Press Ctrl+C to stop."
 echo "=========================================================="
 
 # On ignore les emails déjà présents au démarrage pour ne pas les
@@ -39,13 +39,13 @@ while true; do
         if ! grep -qxF "$JSON_FILE" "$SEEN_FILE" 2>/dev/null; then
             echo "$JSON_FILE" >> "$SEEN_FILE"
             echo ""
-            echo "[+] Extraction terminée pour : $JSON_FILE"
-            echo "[*] Lancement automatique de l'analyse LLM (AutoAgent + Qwen)..."
+            echo "[+] Extraction completed for: $JSON_FILE"
+            echo "[*] Starting the LLM analysis automatically (AutoAgent + Qwen)..."
 
             RESPONSE=$(curl -s -X POST "$LLM_URL" \
                 -H "Content-Type: application/json" \
                 --data-binary @"$JSON_FILE") || {
-                    echo "[-] Erreur : impossible de contacter l'API LLM ($LLM_URL)."
+                    echo "[-] Error: unable to reach the LLM API ($LLM_URL)."
                     continue
                 }
 

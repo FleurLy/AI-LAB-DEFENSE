@@ -23,6 +23,7 @@ services:
       RESULTS_DIR: /app/data/results
       API_HOST: 0.0.0.0
       API_PORT: 8000
+      AGENT_TOOLS_PATH: /opt/email-agent/tools.py
     extra_hosts:
       - "host.docker.internal:host-gateway"
     ports:
@@ -30,4 +31,16 @@ services:
     volumes:
       - ./llm/Ousmane-llm/data/results:/app/data/results
       - ./extraction/data/normalized:/input:ro
+      - ./agent:/opt/email-agent:ro
     restart: unless-stopped
+
+  nawesaf-report:
+    profiles: ["report"]
+    build:
+      context: llm
+    env_file:
+      - path: llm/.env
+        required: false
+    ports:
+      - "8001:8000"
+    restart: "no"
