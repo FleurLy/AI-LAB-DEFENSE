@@ -4,7 +4,7 @@ from typing import Any
 
 import pytest
 
-from app.api.dependencies import get_analyzer, get_jev_analyzer
+from app.api.dependencies import get_analyzer, get_jev_analyzer, get_report_generator
 from app.core.config import get_settings
 from app.models.analysis import AIAnalysisResult
 
@@ -23,6 +23,8 @@ def isolate_configuration(monkeypatch: pytest.MonkeyPatch, tmp_path: Path):
         "OPENAI_ORG_ID",
         "OPENAI_ORGANIZATION",
         "OPENAI_PROJECT_ID",
+        "ANALYSIS_MODE",
+        "REPORT_MODEL",
         "LLM_PROVIDER",
         "LLM_MODEL",
         "JEV_MODEL",
@@ -39,9 +41,11 @@ def isolate_configuration(monkeypatch: pytest.MonkeyPatch, tmp_path: Path):
     get_settings.cache_clear()
     get_analyzer.cache_clear()
     get_jev_analyzer.cache_clear()
+    get_report_generator.cache_clear()
     yield
     get_analyzer.cache_clear()
     get_jev_analyzer.cache_clear()
+    get_report_generator.cache_clear()
     get_settings.cache_clear()
 
 
@@ -78,3 +82,21 @@ def analysis_result() -> AIAnalysisResult:
         summary="The message combines urgency with suspicious sender metadata.",
         recommended_action="Verify the request through a known trusted channel.",
     )
+
+
+@pytest.fixture
+def security_analysis(analysis_result):
+    from app.models.analysis import SecurityAnalysis
+    return SecurityAnalysis.model_validate(analysis_result.model_dump(exclude={"summary", "recommended_action"}))
+
+
+@pytest.fixture
+def security_report():
+    from app.models.analysis import SecurityReport
+    return SecurityReport(summary="Suspicious request.", risk_explanation="Urgency and credential request.", recommended_actions=["Verify through a trusted channel."])
+
+
+@pytest.fixture
+def full_analysis(security_analysis, security_report):
+    from app.models.analysis import GPTFullAnalysis
+    return GPTFullAnalysis(analysis=security_analysis, report=security_report)

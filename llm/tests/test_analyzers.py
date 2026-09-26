@@ -21,7 +21,7 @@ from app.core.errors import (
     ProviderError,
     StructuredOutputError,
 )
-from app.models.analysis import AIAnalysisResult
+from app.models.analysis import AIAnalysisResult, SecurityAnalysis
 from app.models.email import EmailAnalysisRequest
 from app.prompts.email_analysis import SYSTEM_PROMPT
 from app.prompts.jev_analysis import JEV_SYSTEM_PROMPT, build_jev_analysis_messages
@@ -32,6 +32,8 @@ def test_analyzer_uses_shared_schema_and_complete_prompt(
     example_payload: dict[str, Any], analysis_result: AIAnalysisResult,
     analyzer_type: type[LLMEmailAnalyzer],
 ) -> None:
+    if analyzer_type is JevEmailAnalyzer:
+        analysis_result = SecurityAnalysis.model_validate(analysis_result.model_dump(exclude={"summary", "recommended_action"}))
     model = MagicMock(spec=BaseChatModel)
     runnable = AsyncMock()
     runnable.ainvoke.return_value = analysis_result
@@ -40,7 +42,7 @@ def test_analyzer_uses_shared_schema_and_complete_prompt(
     result = asyncio.run(analyzer.analyze(EmailAnalysisRequest.model_validate(example_payload)))
     assert result == analysis_result
     model.with_structured_output.assert_called_once_with(
-        AIAnalysisResult, method="json_schema", strict=True
+        type(analysis_result), method="json_schema", strict=True
     )
     messages = runnable.ainvoke.call_args.args[0]
     expected_prompt = JEV_SYSTEM_PROMPT if analyzer_type is JevEmailAnalyzer else SYSTEM_PROMPT
@@ -109,6 +111,8 @@ def test_real_langchain_pipeline_with_mock_http(
 ) -> None:
     """Exercise the configured OpenRouter pipeline without an external request."""
     expected_model = "openai/gpt-4o-mini" if model_type == "llm" else "test-provider/jev-model"
+    if model_type == "jev":
+        analysis_result = SecurityAnalysis.model_validate(analysis_result.model_dump(exclude={"summary", "recommended_action"}))
     response_data = analysis_result.model_dump(mode="json")
     if invalid_probability:
         response_data["phishing_probability"] = 1.5

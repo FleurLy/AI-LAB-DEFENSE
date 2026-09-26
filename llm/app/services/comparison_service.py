@@ -12,7 +12,7 @@ from app.models.comparison import (
     AnalyzerSuccess,
 )
 from app.models.email import EmailAnalysisRequest
-from app.services.analysis_service import AnalysisService
+from app.services.analysis_service import run_with_timeout
 
 
 class ComparisonService:
@@ -25,8 +25,9 @@ class ComparisonService:
         jev_model: str,
         timeout_seconds: float = 30,
     ) -> None:
-        self._llm_service = AnalysisService(llm_analyzer, timeout_seconds)
-        self._jev_service = AnalysisService(jev_analyzer, timeout_seconds)
+        self._llm_service = llm_analyzer
+        self._jev_service = jev_analyzer
+        self._timeout_seconds = timeout_seconds
         self._llm_model = llm_model
         self._jev_model = jev_model
 
@@ -38,12 +39,12 @@ class ComparisonService:
         return AnalysisComparisonResult(llm=llm, jev=jev)
 
     async def _analyze_one(
-        self, service: AnalysisService, model: str, payload: EmailAnalysisRequest
+        self, service: EmailAnalyzer, model: str, payload: EmailAnalysisRequest
     ) -> AnalyzerOutcome:
         error: AnalysisError
         try:
             # Independent copies prevent one analyzer from changing the other's evidence.
-            result = await service.analyze(payload.model_copy(deep=True))
+            result = await run_with_timeout(service.analyze(payload.model_copy(deep=True)), self._timeout_seconds)
             return AnalyzerSuccess(model=model, result=result)
         except AnalysisError as exc:
             error = exc

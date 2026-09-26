@@ -5,6 +5,7 @@ from pydantic import Field, SecretStr, ValidationError
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from app.core.errors import ConfigurationError
+from app.models.analysis import AnalysisMode
 
 
 class Settings(BaseSettings):
@@ -12,6 +13,8 @@ class Settings(BaseSettings):
         env_file=".env", env_file_encoding="utf-8", extra="ignore"
     )
 
+    analysis_mode: AnalysisMode = "gpt_only"
+    report_model: str | None = None
     llm_provider: Literal["openrouter"] = "openrouter"
     llm_model: str = Field(default="google/gemma-4-26b-a4b-it:free", min_length=1, pattern=r"\S")
     jev_model: str = Field(default="typesafe/jev-router", min_length=1, pattern=r"\S")

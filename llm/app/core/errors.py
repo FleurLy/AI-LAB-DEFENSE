@@ -28,3 +28,15 @@ class AnalysisTimeoutError(AnalysisError):
     status_code = 504
     code = "analysis_timeout"
     message = "The email analysis timed out. Try again later."
+
+
+class ReportGenerationError(AnalysisError):
+    status_code = 502
+    code = "report_generation_error"
+    message = "The report could not be generated from the completed security analysis."
+
+
+class ReportGenerationTimeoutError(ReportGenerationError):
+    status_code = 504
+    code = "report_generation_timeout"
+    message = "Report generation timed out. Try again later."

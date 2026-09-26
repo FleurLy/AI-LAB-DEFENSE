@@ -2,7 +2,7 @@ from langchain_core.messages import BaseMessage, HumanMessage, SystemMessage
 
 from app.models.email import EmailAnalysisRequest
 
-SYSTEM_PROMPT = """You are a security analyst assessing email social engineering.
+SECURITY_ANALYSIS_PROMPT = """You are a security analyst assessing email social engineering.
 Consider ALL evidence in the supplied email analysis payload, including headers,
 body text, URLs, QR-code URLs, extracted attachment text, visual descriptions,
 attachment security flags, SPF/DKIM/DMARC, sender metadata and routing information.
@@ -29,6 +29,9 @@ Explain the assessment with structured evidence. For each item, provide a signal
 type, a concise description that separates observation from inference, an exact
 payload field path as source, severity, and confidence between 0 and 1. Include
 relevant benign evidence and uncertainty as well as suspicious indicators.
+"""
+
+SYSTEM_PROMPT = SECURITY_ANALYSIS_PROMPT + """
 Give a concise summary and a practical defensive recommendation.
 Return only information represented by the AIAnalysisResult output schema.
 """

@@ -1,10 +1,10 @@
 from langchain_core.messages import BaseMessage, HumanMessage, SystemMessage
 
 from app.models.email import EmailAnalysisRequest
-from app.prompts.email_analysis import SYSTEM_PROMPT
+from app.prompts.email_analysis import SECURITY_ANALYSIS_PROMPT
 
 # Share the security rules while giving the Jev model its own assessment focus.
-JEV_SYSTEM_PROMPT = SYSTEM_PROMPT + """
+JEV_SYSTEM_PROMPT = SECURITY_ANALYSIS_PROMPT + """
 For this Jev assessment, evaluate the supplied email independently by connecting
 claimed identity, requested behavior and supporting evidence.
 
@@ -27,9 +27,10 @@ Do not invent the contents of missing or unsuccessfully extracted attachments.
 Assess each probability separately according to its supporting evidence. Select
 the primary requested_action and the best-supported attack_type from the schema;
 use none when appropriate and other only when the available categories do not fit.
-In the summary, distinguish the strongest observations from uncertain inference.
-Recommend a concrete defensive step without reproducing suspicious links as
-instructions to the recipient. Return only the structured AIAnalysisResult.
+Distinguish observations from uncertain inference in the evidence descriptions.
+Return only SecurityAnalysis: probabilities, requested_action, attack_type and
+structured evidence. Do not generate a summary, recommendations or a report;
+a separate stage will explain your authoritative decision to the reader.
 """
 
 

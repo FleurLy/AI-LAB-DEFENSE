@@ -1,8 +1,8 @@
 # Email social-engineering analysis API
 
-A small FastAPI backend that validates a structured email payload and runs two
-LangChain analyzers through OpenRouter in parallel. It returns both validated
-security assessments for comparison. This first version provides the inference
+A small FastAPI backend that validates a structured email payload and uses
+LangChain through OpenRouter. It supports two selectable analysis approaches,
+returning a validated security decision and a human-readable report. This first version provides the inference
 pipeline; it does not implement a complete fraud-detection engine or calibrated
 risk scoring.
 
@@ -40,16 +40,18 @@ curl --fail-with-body http://127.0.0.1:8000/analyze \
 ## Configuration
 
 Environment variables override `.env`. Restart the process after changing settings;
-configuration and both analyzers are cached. Credentials are never hardcoded.
+configuration and active model adapters are cached. Credentials are never hardcoded.
 
 | Variable | Default | Purpose |
 | --- | --- | --- |
 | `OPENROUTER_API_KEY` | Empty | Required for real analysis; stored as a Pydantic `SecretStr`. |
 | `LLM_PROVIDER` | `openrouter` | Provider selection; OpenRouter is the implemented adapter. |
-| `LLM_MODEL` | `google/gemma-4-26b-a4b-it:free` | First OpenRouter model ID, using the original prompt. |
-| `JEV_MODEL` | `typesafe/jev-router` | Second OpenRouter model ID, using the Jev prompt. |
+| `LLM_MODEL` | `google/gemma-4-26b-a4b-it:free` | Full-analysis model, also used for reports unless overridden. Set a GPT model ID for these experiments (see `.env.example`). |
+| `JEV_MODEL` | `typesafe/jev-router` | Security decision model in `jev_then_gpt`. |
+| `ANALYSIS_MODE` | `gpt_only` | Validated selection: `gpt_only` or `jev_then_gpt`. |
+| `REPORT_MODEL` | Empty | Report model in `jev_then_gpt`; empty or absent falls back to `LLM_MODEL`. |
 | `LLM_TEMPERATURE` | `0` | Sampling temperature, from 0 to 2; must be supported by the chosen model. |
-| `LLM_TIMEOUT_SECONDS` | `30` | Positive timeout applied independently to each analysis and provider call. |
+| `LLM_TIMEOUT_SECONDS` | `30` | Positive timeout applied independently to each analysis/report stage and provider call. |
 | `OPENROUTER_SITE_URL` | Empty | Optional `HTTP-Referer` attribution header. |
 | `OPENROUTER_APP_NAME` | Empty | Optional `X-Title` attribution header. |
 
@@ -68,6 +70,20 @@ a provider or structured-output error rather than an unvalidated analysis.
 `/health` is a liveness check. It does not validate credentials or contact the
 provider. The application and Swagger UI start without an API key.
 
+## Two analysis approaches
+
+- `ANALYSIS_MODE=gpt_only`: original email → GPT → analysis + report, in one call.
+- `ANALYSIS_MODE=jev_then_gpt`: original email → Jev → structured analysis → GPT → report.
+
+Both return `{ "analysis": {...}, "report": {...}, "approach": "..." }`.
+`SecurityAnalysis` contains the ten probabilities, attack type, requested action,
+and evidence. `SecurityReport` contains `summary`, `risk_explanation`, and
+`recommended_actions`. In Jev mode, GPT receives **only** the structured decision,
+never the original email. Its dedicated prompt prohibits reclassification or new
+conclusions; its output schema contains report fields only. The service preserves
+Jev's decision unchanged. There is no automatic fallback between modes.
+Change `ANALYSIS_MODE` in `.env` and restart the API to switch approaches.
+
 ## Architecture
 
 ```text
@@ -82,19 +98,23 @@ app/
   models/
     base.py                     # Shared Pydantic configuration
     email.py                    # Complete nested request schema
-    analysis.py                 # AI result, enums, evidence and probabilities
-    comparison.py               # Two model outcomes with model IDs and status
+    analysis.py                 # Decision, report, common result, enums and evidence
+    comparison.py               # Legacy standalone comparison schemas
   analyzers/
-    base.py                     # EmailAnalyzer protocol
+    base.py                     # Analyzer and report protocols
     providers.py                # LangChain provider construction
     llm.py                      # Async structured-output integration
-    jev.py                      # Jev chat analyzer with a dedicated prompt
+    jev.py                      # Jev security decision
+    gpt.py                      # GPT decision + report in one call
+    report.py                   # Report from a completed decision
   services/
-    analysis_service.py         # Single analyzer invocation and timeout
-    comparison_service.py       # Concurrent calls and independent error handling
+    analysis_service.py         # Mode selection, stage sequencing and timeouts
+    comparison_service.py       # Legacy standalone comparison utility
   prompts/
     email_analysis.py           # Shared security prompt and request serialization
     jev_analysis.py             # Dedicated Jev assessment prompt
+    gpt_analysis.py             # Full GPT analysis prompt
+    security_report.py          # Report-only GPT prompt
 examples/
   email_analysis.json           # Exact supplied input example
 tests/
@@ -109,35 +129,17 @@ requirements.txt
 pytest.ini
 ```
 
-Request flow: FastAPI route → `ComparisonService` → two concurrent
-`AnalysisService` calls → `LLMEmailAnalyzer` / `JevEmailAnalyzer` → LangChain
-`ChatOpenAI` → OpenRouter. Each analyzer receives an independent copy of the same
-validated input and returns `AIAnalysisResult`. Routes contain no inference logic;
-OpenRouter configuration stays in the settings and provider factory.
+Request flow: FastAPI route → `AnalysisService` → active analyzer(s) → LangChain
+`ChatOpenAI` → OpenRouter. Mode selection belongs to the service; routes contain
+no inference logic. OpenRouter configuration stays in the settings and provider
+factory. Swagger at `/docs` describes the common `FinalAnalysisResult` schema.
 
-`POST /analyze` now returns `AnalysisComparisonResult` instead of a single
-`AIAnalysisResult`. Each named entry contains its configured model ID, a status,
-and either the full analysis or a sanitized error. Successful response shape
-(`result` objects abbreviated):
-
-```text
-{
-  "llm": {"status": "success", "model": "<LLM_MODEL>", "result": {...}},
-  "jev": {"status": "success", "model": "<JEV_MODEL>", "result": {...}}
-}
-```
-
-The `llm` entry uses the original prompt and `LLM_MODEL`; `jev` uses its dedicated
-prompt and `JEV_MODEL`. These are independent assessments, not successive stages.
-Each request attempts two provider calls; their outputs are kept separate without
-averaging scores. The two IDs may be identical if comparing prompts on one model.
-Swagger at `/docs` describes the complete response schema.
-
-`LLMEmailAnalyzer` receives a LangChain chat model and calls
-`with_structured_output(AIAnalysisResult, method="json_schema", strict=True)`
-followed by asynchronous `ainvoke`. The same result model defines FastAPI's
-response schema and the model's output contract. There is no manual JSON parsing
-of model responses. See the [LangChain integration documentation](https://docs.langchain.com/oss/python/integrations/chat/openai)
+The active adapters use `with_structured_output(..., method="json_schema", strict=True)`
+and asynchronous `ainvoke`: `SecurityAnalysis` for Jev, `SecurityReport` for the
+report generator, and `GPTFullAnalysis` for GPT-only. There is no manual JSON
+parsing of model responses. The original `LLMEmailAnalyzer`, `AIAnalysisResult`,
+and standalone `ComparisonService` remain available for compatibility, but are
+not used by `/analyze`. See the [LangChain integration documentation](https://docs.langchain.com/oss/python/integrations/chat/openai)
 and [OpenRouter structured-output documentation](https://openrouter.ai/docs/guides/features/structured-outputs).
 
 Only `langchain-core` and `langchain-openai` are needed for this pipeline; the
@@ -150,7 +152,7 @@ To use another LangChain provider, extend the allowed setting values and
 optional structured-output method for providers that use function calling. Adapt
 provider-specific exception translation when adding that integration.
 
-The factory can create either configured chat model:
+The factory can create each configured chat model:
 
 ```python
 from app.analyzers.jev import JevEmailAnalyzer
@@ -160,28 +162,26 @@ from app.core.config import get_settings
 settings = get_settings()
 llm_model = create_chat_model(settings)                   # LLM_MODEL
 jev_model = create_chat_model(settings, model_type="jev")  # JEV_MODEL
+report_model = create_chat_model(settings, model_type="report")  # REPORT_MODEL or LLM_MODEL
 jev_analyzer = JevEmailAnalyzer(jev_model)
 # result = await jev_analyzer.analyze(payload)
 ```
 
-Both selections use OpenRouter, its API key, attribution headers, temperature,
-and timeout. The configured defaults are used when model variables are absent;
-explicit empty values are rejected. `/analyze` prepares both analyzers before
-making provider calls. Here, `JEV_MODEL` names a second chat model; it does not
-implement a separate Jev inference engine.
+All selections use OpenRouter, its API key, attribution headers, temperature,
+and timeout. Defaults are used when model variables are absent; explicit empty
+`LLM_MODEL` and `JEV_MODEL` values are rejected. Only adapters required by the active
+mode are constructed. `JEV_MODEL` configures a chat model, not a separate inference
+engine or invented API.
 
-`JevEmailAnalyzer` uses a dedicated prompt to compare claimed identity, requested
-actions and technical evidence, including conflicting signals and benign
-explanations. It inherits async execution, structured-output validation and error
-handling from `LLMEmailAnalyzer`; both return the same `AIAnalysisResult`.
-The complete payload is serialized with the original JSON field names, and shared
-security instructions treat embedded email content as untrusted evidence.
+`JevEmailAnalyzer` focuses on claimed identity, requested actions and technical
+evidence, including conflicting signals and benign explanations. The adapters
+share async execution, structured-output validation and error translation.
+The complete input retains its original JSON field names, and the prompts treat
+embedded email content as untrusted evidence.
 
-The dependency layer creates and caches both analyzers: `get_analyzer` uses
-`LLM_MODEL`, and `get_jev_analyzer` uses `JEV_MODEL`. `get_comparison_service` wires
-them into the comparison service through the `EmailAnalyzer` protocol.
-A separate native Jev engine could still be implemented as another adapter once
-its official API/client is available; this implementation uses LangChain/OpenRouter.
+The dependency layer caches active adapters. `get_analyzer` uses `LLM_MODEL`,
+`get_jev_analyzer` uses `JEV_MODEL`, and `get_report_generator` uses `REPORT_MODEL`
+or `LLM_MODEL`. `get_analysis_service` injects them through small protocols.
 
 ## Payload and error behavior
 
@@ -204,36 +204,19 @@ its official API/client is available; this implementation uses LangChain/OpenRou
 
 | HTTP status | Meaning |
 | --- | --- |
-| `200` | Both attempts completed; inspect each entry's `status`, including when both failed. |
-| `422` | Invalid request; `detail` lists field locations and validation messages without echoing input values. |
-| `503` | Missing or invalid configuration before analysis starts, including an empty model ID or absent API key. |
+| `200` | Complete analysis and report, with the selected `approach`. |
+| `422` | Invalid input; validation details omit input values. |
+| `503` | Missing/invalid configuration or analysis-stage credential/permission failure. |
+| `502` | Provider/structured-output failure, or `report_generation_error` in the report stage. |
+| `504` | `analysis_timeout` or `report_generation_timeout`, depending on the stage. |
+| `500` | Unexpected analysis failure. |
 
-A failure during inference affects only that model's entry. Its successful peer's
-result is preserved. For example, a timeout produces this entry:
-
-```json
-{
-  "status": "error",
-  "model": "provider/model",
-  "error": {
-    "code": "analysis_timeout",
-    "message": "The email analysis timed out. Try again later.",
-    "status_code": 504
-  }
-}
-```
-
-Within each entry, `error.status_code` describes the failure: `503` for rejected
-credentials or permissions, `502` for provider or structured-output failures,
-`504` for a timeout, and `500` for an unexpected analyzer error. The comparison
-response itself remains HTTP `200`, even if both entries have `status="error"`.
-Each analysis has its own timeout; cancellation of the comparison cancels both
-pending tasks. Clients must inspect both statuses before reading `result`.
-
-Configuration errors before execution retain the
-`{"detail": {"code": "...", "message": "..."}}` response format. All error messages
-are fixed public messages. Provider exception details, credentials, and raw model
-responses are not returned. Automatic provider retries are disabled.
+Errors use `{"detail": {"code": "...", "message": "..."}}`. If Jev fails, the
+report stage is not called. If its report fails, the API returns a distinct report
+error without redoing the decision with GPT. Each stage has its own timeout;
+cancellation propagates to the pending call. All public messages are fixed:
+provider details, credentials and raw model responses are not returned. Automatic
+provider retries are disabled.
 
 ## Tests and remaining work
 
@@ -242,12 +225,12 @@ python -m pytest -q
 ```
 
 Tests cover the exact example, field preservation, required and nullable fields,
-empty lists, probability bounds, the two-result API response, configuration errors,
-provider failures, partial success, independent timeouts, and cancellation.
-Concurrency tests verify that both calls start before either completes and that
-an analyzer cannot modify the other's payload. A simulated HTTP transport also
-exercises the complete two-model route and real LangChain structured parsing
-through the configured OpenRouter adapter.
+empty lists, probability bounds, both modes and their common response, configuration
+errors, provider failures, stage timeouts, and cancellation. They verify that the
+report receives only Jev's analysis, cannot mutate the returned decision, and never
+triggers fallback. Simulated HTTP transports exercise the full API and real
+LangChain parsing for both modes. Existing standalone comparison tests retain
+concurrency and independent-payload coverage.
 Provider tests cover environment settings, optional headers, rejection of legacy
 credentials, and sanitization of errors containing credentials or email content.
 No test needs an API key or calls a live LLM. Tests ignore local `.env` files and

@@ -124,38 +124,48 @@ def test_invalid_analyzer_result_preserves_valid_result(
     assert result.jev.result == analysis_result
 
 
-def test_api_calls_both_models_with_their_own_prompts(
-    example_payload: dict[str, Any], analysis_result: AIAnalysisResult,
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
+@pytest.mark.parametrize("mode", ["gpt_only", "jev_then_gpt"])
+def test_api_pipeline_with_real_langchain_and_mock_http(
+    example_payload, full_analysis, security_analysis, security_report, monkeypatch, mode,
+):
+    from app.prompts.gpt_analysis import GPT_ONLY_ANALYSIS_PROMPT
+    from app.prompts.security_report import GPT_REPORT_PROMPT
+
+    monkeypatch.setenv("ANALYSIS_MODE", mode)
     monkeypatch.setenv("OPENROUTER_API_KEY", "test-openrouter-key")
     monkeypatch.setenv("LLM_MODEL", "openai/gpt-4o-mini")
     monkeypatch.setenv("JEV_MODEL", "test-provider/jev-model")
-    model_names = {"llm": "openai/gpt-4o-mini", "jev": "test-provider/jev-model"}
-    expected_prompts = {"llm": SYSTEM_PROMPT, "jev": JEV_SYSTEM_PROMPT}
-    results = {"llm": analysis_result.model_dump(mode="json")}
-    results["jev"] = {**results["llm"], "phishing_probability": 0.2}
+    monkeypatch.setenv("REPORT_MODEL", "test-provider/report-model")
+    expected = (
+        [("openai/gpt-4o-mini", GPT_ONLY_ANALYSIS_PROMPT, example_payload, full_analysis)]
+        if mode == "gpt_only" else [
+            ("test-provider/jev-model", JEV_SYSTEM_PROMPT, example_payload, security_analysis),
+            ("test-provider/report-model", GPT_REPORT_PROMPT, security_analysis.model_dump(mode="json"), security_report),
+        ]
+    )
     calls = []
 
-    def handler(request: httpx.Request) -> httpx.Response:
+    def handler(request):
         assert str(request.url) == "https://openrouter.ai/api/v1/chat/completions"
         assert request.headers["Authorization"] == "Bearer test-openrouter-key"
         body = json.loads(request.content)
-        name = next(name for name, model in model_names.items() if model == body["model"])
-        calls.append(name)
-        assert body["messages"][0]["content"] == expected_prompts[name]
-        assert json.loads(body["messages"][1]["content"]) == example_payload
-        assert body["response_format"]["json_schema"]["strict"] is True
+        model, prompt, human, result = expected[len(calls)]
+        calls.append(body)
+        assert body["model"] == model
+        assert body["messages"][0]["content"] == prompt
+        assert json.loads(body["messages"][1]["content"]) == human
+        schema = body["response_format"]["json_schema"]
+        assert schema["strict"] is True
+        assert set(schema["schema"]["properties"]) == set(type(result).model_fields)
         return httpx.Response(200, json={
-            "id": f"chatcmpl-{name}", "object": "chat.completion", "created": 1,
-            "model": body["model"],
-            "choices": [{
-                "index": 0, "finish_reason": "stop",
-                "message": {"role": "assistant", "content": json.dumps(results[name])},
-            }],
+            "id": "chatcmpl-test", "object": "chat.completion", "created": 1,
+            "model": model,
+            "choices": [{"index": 0, "finish_reason": "stop", "message": {
+                "role": "assistant", "content": result.model_dump_json(),
+            }}],
         })
 
-    async def run() -> httpx.Response:
+    async def run():
         async with httpx.AsyncClient(transport=httpx.MockTransport(handler)) as provider_client:
             with patch("app.analyzers.providers.ChatOpenAI", side_effect=lambda **kwargs: (
                 ChatOpenAI(**kwargs, http_async_client=provider_client)
@@ -167,8 +177,5 @@ def test_api_calls_both_models_with_their_own_prompts(
 
     response = asyncio.run(run())
     assert response.status_code == 200
-    assert sorted(calls) == ["jev", "llm"]
-    assert response.json() == {
-        name: {"status": "success", "model": model_names[name], "result": results[name]}
-        for name in ("llm", "jev")
-    }
+    assert len(calls) == len(expected)
+    assert response.json() == {**full_analysis.model_dump(mode="json"), "approach": mode}

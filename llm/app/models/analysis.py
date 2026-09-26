@@ -1,11 +1,12 @@
 from enum import StrEnum
-from typing import Annotated
+from typing import Annotated, Literal
 
 from pydantic import Field
 
 from app.models.base import APIModel
 
 Probability = Annotated[float, Field(ge=0, le=1, allow_inf_nan=False, strict=True)]
+AnalysisMode = Literal["jev_then_gpt", "gpt_only"]
 
 
 class RequestedAction(StrEnum):
@@ -49,7 +50,7 @@ class EvidenceItem(APIModel):
     confidence: Probability
 
 
-class AIAnalysisResult(APIModel):
+class SecurityAnalysis(APIModel):
     social_engineering_probability: Probability
     phishing_probability: Probability
     impersonation_probability: Probability
@@ -63,5 +64,25 @@ class AIAnalysisResult(APIModel):
     requested_action: RequestedAction
     attack_type: AttackType
     evidence: list[EvidenceItem]
+
+
+class AIAnalysisResult(SecurityAnalysis):
+    """Original result retained for the standalone analyzer/comparison utilities."""
+
     summary: str = Field(description="Concise explanation of the overall assessment.")
     recommended_action: str = Field(description="Concise defensive recommendation.")
+
+
+class SecurityReport(APIModel):
+    summary: str
+    risk_explanation: str
+    recommended_actions: list[str]
+
+
+class GPTFullAnalysis(APIModel):
+    analysis: SecurityAnalysis
+    report: SecurityReport
+
+
+class FinalAnalysisResult(GPTFullAnalysis):
+    approach: AnalysisMode

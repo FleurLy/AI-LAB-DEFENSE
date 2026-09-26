@@ -9,15 +9,17 @@ from app.core.errors import ConfigurationError
 
 
 def create_chat_model(
-    settings: Settings, *, model_type: Literal["llm", "jev"] = "llm"
+    settings: Settings, *, model_type: Literal["llm", "jev", "report"] = "llm"
 ) -> BaseChatModel:
-    """Create the LLM_MODEL or JEV_MODEL chat model through OpenRouter."""
+    """Create a configured chat model through OpenRouter."""
     if settings.llm_provider != "openrouter":
         raise ConfigurationError()
     if model_type == "llm":
         model_name = settings.llm_model
     elif model_type == "jev":
         model_name = settings.jev_model
+    elif model_type == "report":
+        model_name = (settings.report_model or "").strip() or settings.llm_model
     else:
         raise ConfigurationError()
     if model_name is None or not model_name.strip():
